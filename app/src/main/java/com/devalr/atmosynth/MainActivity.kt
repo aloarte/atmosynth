@@ -9,7 +9,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.devalr.atmosynth.ui.theme.AtmosynthTheme
 import com.devalr.dayweather.DayWeatherScreen
-import com.devalr.dayweather.DayWeatherViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +19,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    DayWeatherScreen(viewModel = DayWeatherViewModel())
+                    DayWeatherScreen()
                 }
             }
         }

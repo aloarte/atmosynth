@@ -6,9 +6,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.devalr.framework.CustomText
+import org.koin.compose.koinInject
 
 @Composable
-fun DayWeatherScreen(viewModel: DayWeatherViewModel) {
+fun DayWeatherScreen(viewModel: DayWeatherViewModel = koinInject()) {
 
     val state by viewModel.state.collectAsState()
     Column {
@@ -22,5 +23,5 @@ fun DayWeatherScreen(viewModel: DayWeatherViewModel) {
 @Preview(showSystemUi = true)
 @Composable
 fun BakingScreenPreview() {
-    DayWeatherScreen(viewModel = DayWeatherViewModel())
+    DayWeatherScreen()
 }

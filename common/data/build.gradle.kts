@@ -35,6 +35,7 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.generativeai)
+    implementation(libs.koin.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

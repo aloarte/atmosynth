@@ -1,10 +1,9 @@
 package com.devalr.domain
 
-import com.devalr.data.GeminiDatasourceImpl
+import com.devalr.data.GeminiDatasource
 
-class GeminiRepositoryImpl : GeminiRepository {
+class GeminiRepositoryImpl(private val datasource: GeminiDatasource) : GeminiRepository {
     override suspend fun generateDaySummary(dataForPrompt: String): List<String> {
-        val ds = GeminiDatasourceImpl()
-        return ds.generateDaySummary(dataForPrompt = dataForPrompt)
+        return datasource.generateDaySummary(dataForPrompt = dataForPrompt)
     }
 }

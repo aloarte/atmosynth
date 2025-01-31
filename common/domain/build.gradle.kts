@@ -35,6 +35,9 @@ android {
 dependencies {
 
     implementation(project(":common:data"))
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.compose.nav)
     implementation(libs.androidx.core.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -41,6 +41,9 @@ dependencies {
 
     implementation(project(":common:domain"))
     implementation(project(":common:framework"))
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.compose.nav)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
