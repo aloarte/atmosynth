@@ -31,7 +31,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.4.2
       - name: Build app
-        run: ./gradlew :commons:data:build
+        run: ./gradlew :common:data:build
 
   build_commons:
     needs: [ build_data ]
@@ -53,7 +53,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.4.2
       - name: Build app
-        run: ./gradlew :commons:${{ matrix.module }}:build
+        run: ./gradlew :common:${{ matrix.module }}:build
 
   build_features:
     needs: [ build_commons ]
@@ -117,7 +117,7 @@ jobs:
           cache: gradle
 
       - name: Run Unit Tests for Commons
-        run: ./gradlew :commons:${{ matrix.module }}:test
+        run: ./gradlew :common:${{ matrix.module }}:test
 
   test_framework:
     runs-on: ubuntu-latest
@@ -140,4 +140,4 @@ jobs:
           cache: gradle
 
       - name: Run Unit Tests for Commons
-        run: ./gradlew :featyre:${{ matrix.module }}:test
+        run: ./gradlew :feature:${{ matrix.module }}:test
