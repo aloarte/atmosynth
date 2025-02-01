@@ -14,71 +14,8 @@ jobs:
         with:
           access_token: ${{ secrets.GH_TOKEN }}
 
-  build_data:
-    needs: [avoid_redundancy]
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v3
-      - name: Give execute permission to Gradle wrapper
-        run: chmod +x gradlew
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.4.2
-      - name: Build app
-        run: ./gradlew :common:data:build
-
-  build_commons:
-    needs: [ build_data ]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        module: [ domain, framework ]
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v3
-      - name: Give execute permission to Gradle wrapper
-        run: chmod +x gradlew
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.4.2
-      - name: Build app
-        run: ./gradlew :common:${{ matrix.module }}:build
-
-  build_features:
-    needs: [ build_commons ]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        module: [ cityselector, dayweather ]
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v3
-      - name: Give execute permission to Gradle wrapper
-        run: chmod +x gradlew
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.4.2
-      - name: Build app
-        run: ./gradlew :feature:${{ matrix.module }}:build
-
-  build_app:
-    needs: [ build_features ]
+  build:
+    needs: [ avoid_redundancy ]
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
@@ -96,12 +33,9 @@ jobs:
       - name: Build app
         run: ./gradlew :app:build
 
-  test_commons:
+  test:
     runs-on: ubuntu-latest
-    needs: build_app
-    strategy:
-      matrix:
-        module: [ data, domain, framework ]
+    needs: build
     steps:
       - name: checkout code
         uses: actions/checkout@v3
@@ -117,27 +51,4 @@ jobs:
           cache: gradle
 
       - name: Run Unit Tests for Commons
-        run: ./gradlew :common:${{ matrix.module }}:test
-
-  test_framework:
-    runs-on: ubuntu-latest
-    needs: build_app
-    strategy:
-      matrix:
-        module: [ cityselector, dayweather ]
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v3
-      - name: Give execute permission to Gradle wrapper
-        run: chmod +x gradlew
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.4.2
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
-
-      - name: Run Unit Tests for Commons
-        run: ./gradlew :feature:${{ matrix.module }}:test
+        run: ./gradlew test
