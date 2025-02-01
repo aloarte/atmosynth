@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ktlint)
-    kotlin("plugin.serialization") version "1.6.10"
+    alias(libs.plugins.serialization)
 }
 
 ktlint {
@@ -47,10 +47,8 @@ dependencies {
     // Koin
     implementation(libs.koin.android)
     // Ktor
-    implementation(libs.ktor.client.android)
-    implementation(libs.ktor.client.serialization)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.ktor.client.logging.jvm)
+    implementation(libs.bundles.ktor)
+
     implementation(libs.androidx.core.ktx)
 
     // Testing

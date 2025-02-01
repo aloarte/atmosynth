@@ -1,4 +1,4 @@
-package com.devalr.data
+package com.devalr.data.datasources
 
 interface GeminiDatasource {
     suspend fun generateDaySummary(dataForPrompt: String): List<String>

@@ -2,7 +2,8 @@ package com.devalr.dayweather
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devalr.domain.GeminiRepository
+import com.devalr.domain.repositories.GeminiRepository
+import com.devalr.domain.repositories.WeatherRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 
 class DayWeatherViewModel(
     private val geminiRepository: GeminiRepository,
+    private val weatherRepository: WeatherRepository,
 ) : ViewModel() {
     private val _state = MutableStateFlow(State())
     val state =
@@ -23,6 +25,7 @@ class DayWeatherViewModel(
     private fun generateDaySummary() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = geminiRepository.generateDaySummary("Cold")
+            val resultW = weatherRepository.fetchDailyWeather("13034")
 
             _state.update { currentState ->
                 currentState.copy(promptResult = result.joinToString())
