@@ -10,14 +10,11 @@ import org.koin.compose.koinInject
 
 @Composable
 fun DayWeatherScreen(viewModel: DayWeatherViewModel = koinInject()) {
-
     val state by viewModel.state.collectAsState()
     Column {
         CustomText(text = "prompt result:")
         CustomText(text = state.promptResult)
     }
-
-
 }
 
 @Preview(showSystemUi = true)

@@ -18,7 +18,6 @@ class AtmosynthApplication : Application() {
             androidContext(this@AtmosynthApplication)
             // Load modules
             modules(featureCitySelectorModules, featureDayWeatherModules)
-
         }
     }
 }

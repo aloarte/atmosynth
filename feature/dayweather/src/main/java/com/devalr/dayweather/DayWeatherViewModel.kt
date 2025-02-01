@@ -11,12 +11,14 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class DayWeatherViewModel(private val geminiRepository: GeminiRepository) : ViewModel() {
-
+class DayWeatherViewModel(
+    private val geminiRepository: GeminiRepository,
+) : ViewModel() {
     private val _state = MutableStateFlow(State())
-    val state = _state.onStart { generateDaySummary() }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), State())
-
+    val state =
+        _state
+            .onStart { generateDaySummary() }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), State())
 
     private fun generateDaySummary() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -27,5 +29,4 @@ class DayWeatherViewModel(private val geminiRepository: GeminiRepository) : View
             }
         }
     }
-
 }
