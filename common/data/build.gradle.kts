@@ -16,6 +16,12 @@ android {
     namespace = "com.devalr.data"
     compileSdk = 35
 
+    externalNativeBuild {
+        cmake {
+            path = file("CMakeLists.txt")
+        }
+    }
+
     defaultConfig {
         minSdk = 28
 
@@ -50,6 +56,8 @@ dependencies {
     implementation(libs.bundles.ktor)
 
     implementation(libs.androidx.core.ktx)
+
+    implementation("io.github.cdimascio:dotenv-kotlin:6.5.0")
 
     // Testing
     testImplementation(libs.junit)

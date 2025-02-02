@@ -222,4 +222,4 @@ obj/
 .idea/jarRepositories.xml
 .idea/navEditor.xml
 /.idea/
-/settings.properties
+/.env

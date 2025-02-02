@@ -1,6 +1,7 @@
 package com.devalr.data.datasources.impl
 
 import android.util.Log
+import com.devalr.data.Secrets
 import com.devalr.data.datasources.WeatherDatasource
 import com.devalr.data.dto.DataResponse
 import io.ktor.client.HttpClient
@@ -20,6 +21,7 @@ class WeatherDatasourceImpl(
     }
 
     override suspend fun fetchDailyWeather(cityCode: String): List<String> {
+        val apiKey1 = Secrets.getApiKeyFromNative()
         val response =
             httpClient.get {
                 url {
@@ -30,7 +32,7 @@ class WeatherDatasourceImpl(
                 parameter("param1", "value1")
                 header(
                     "api_key",
-                    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG9hcnRlci5kZXZAZ21haWwuY29tIiwianRpIjoiYTM1NzBmMmUtNDdjOS00Mjg5LTlhZDMtNDg2NTgyMjc4MjRmIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE3MzgwMTIxMTgsInVzZXJJZCI6ImEzNTcwZjJlLTQ3YzktNDI4OS05YWQzLTQ4NjU4MjI3ODI0ZiIsInJvbGUiOiIifQ.Ls-t-mEXJpfU3ya3B-OntLju69raFiri2veows1mb78",
+                    apiKey1,
                 )
             }
 
