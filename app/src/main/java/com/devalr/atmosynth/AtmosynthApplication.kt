@@ -1,6 +1,7 @@
 package com.devalr.atmosynth
 
 import android.app.Application
+import com.devalr.atmosynth.di.appModule
 import com.devalr.cityselector.di.featureCitySelectorModules
 import com.devalr.dayweather.di.featureDayWeatherModules
 import org.koin.android.ext.koin.androidContext
@@ -17,7 +18,7 @@ class AtmosynthApplication : Application() {
             // Reference Android context
             androidContext(this@AtmosynthApplication)
             // Load modules
-            modules(featureCitySelectorModules, featureDayWeatherModules)
+            modules(appModule, featureCitySelectorModules, featureDayWeatherModules)
         }
     }
 }

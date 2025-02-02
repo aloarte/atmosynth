@@ -1,5 +1,6 @@
 package com.devalr.data.di
 
+import com.devalr.data.Secrets
 import com.devalr.data.datasources.GeminiDatasource
 import com.devalr.data.datasources.WeatherDatasource
 import com.devalr.data.datasources.impl.GeminiDatasourceImpl
@@ -18,6 +19,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 private val dataSourcesModule =
@@ -26,16 +28,19 @@ private val dataSourcesModule =
             GeminiDatasourceImpl(get())
         }
         factory<WeatherDatasource> {
-            WeatherDatasourceImpl(get())
+            WeatherDatasourceImpl(get(), get())
         }
     }
 
 private val dataFrameworkModule =
     module {
+
+        single { Secrets(context = get(named("AppContext"))) }
+
         single<GenerativeModel> {
             GenerativeModel(
                 modelName = "gemini-1.5-flash",
-                apiKey = "",
+                apiKey = get<Secrets>().getGeminiApiKey(),
             )
         }
         single<HttpClient> {

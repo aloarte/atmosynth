@@ -221,3 +221,5 @@ obj/
 .idea/gradle.xml
 .idea/jarRepositories.xml
 .idea/navEditor.xml
+/src/main/assets/aemet_api_key
+/src/main/assets/gemini_api_key

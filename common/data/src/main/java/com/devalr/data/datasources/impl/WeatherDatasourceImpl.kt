@@ -14,6 +14,7 @@ import io.ktor.http.encodedPath
 
 class WeatherDatasourceImpl(
     private val httpClient: HttpClient,
+    private val secrets: Secrets,
 ) : WeatherDatasource {
     companion object {
         const val AEMET_HOST = "opendata.aemet.es"
@@ -21,7 +22,7 @@ class WeatherDatasourceImpl(
     }
 
     override suspend fun fetchDailyWeather(cityCode: String): List<String> {
-        val apiKey1 = Secrets.getApiKeyFromNative()
+        val aemetApiKey = secrets.getAemetApiKey()
         val response =
             httpClient.get {
                 url {
@@ -32,7 +33,7 @@ class WeatherDatasourceImpl(
                 parameter("param1", "value1")
                 header(
                     "api_key",
-                    apiKey1,
+                    aemetApiKey,
                 )
             }
 
