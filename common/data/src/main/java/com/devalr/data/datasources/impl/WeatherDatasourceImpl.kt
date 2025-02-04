@@ -1,16 +1,18 @@
 package com.devalr.data.datasources.impl
 
-import android.util.Log
 import com.devalr.data.Secrets
 import com.devalr.data.datasources.WeatherDatasource
 import com.devalr.data.dto.DataResponse
+import com.devalr.data.dto.WeatherDataDaily
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.header
-import io.ktor.client.request.parameter
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
 import io.ktor.http.encodedPath
+import kotlinx.serialization.json.Json
 
 class WeatherDatasourceImpl(
     private val httpClient: HttpClient,
@@ -18,27 +20,36 @@ class WeatherDatasourceImpl(
 ) : WeatherDatasource {
     companion object {
         const val AEMET_HOST = "opendata.aemet.es"
-        const val FETCH_WEATHER_PATH = ""
+        const val FETCH_DAILY_WEATHER_PATH = "opendata/api/prediccion/especifica/municipio/horaria/"
     }
 
-    override suspend fun fetchDailyWeather(cityCode: String): List<String> {
-        val aemetApiKey = secrets.getAemetApiKey()
+    override suspend fun fetchDailyWeather(cityCode: String): WeatherDataDaily? {
+        val weatherDataUrl = fetchWeatherDataUrl(cityCode)
+        return fetchDailyWeatherData(weatherDataUrl)
+    }
+
+    private suspend fun fetchWeatherDataUrl(cityCode: String): String {
         val response =
             httpClient.get {
                 url {
                     protocol = URLProtocol.HTTPS
                     host = AEMET_HOST
-                    encodedPath = "opendata/api/prediccion/especifica/municipio/horaria/$cityCode"
+                    encodedPath = "$FETCH_DAILY_WEATHER_PATH$cityCode"
                 }
-                parameter("param1", "value1")
-                header(
-                    "api_key",
-                    aemetApiKey,
-                )
+                header("api_key", secrets.getAemetApiKey())
             }
 
-        val r = response.body<DataResponse>()
-        Log.d("ALRALR", "Resultado: $r")
-        return emptyList()
+        return response.body<DataResponse>().requestDataUrl
+    }
+
+    private suspend fun fetchDailyWeatherData(url: String): WeatherDataDaily? {
+        val response =
+            httpClient.get(url) {
+                header(HttpHeaders.ContentType, ContentType.Application.Json)
+            }
+
+        return Json
+            .decodeFromString<List<WeatherDataDaily>>(response.body() as String)
+            .firstOrNull()
     }
 }

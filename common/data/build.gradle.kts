@@ -57,8 +57,6 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
 
-    implementation("io.github.cdimascio:dotenv-kotlin:6.5.0")
-
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
