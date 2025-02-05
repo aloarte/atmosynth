@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WeatherDataDaily(
+data class DailyWeatherDto(
     @SerialName("origen") val origen: DataOrigins,
     @SerialName("elaborado") val made: String,
     @SerialName("nombre") val name: String,
@@ -25,11 +25,11 @@ data class WeatherDataDaily(
 
     @Serializable
     data class Prediction(
-        @SerialName("dia") val day: List<Dia>,
+        @SerialName("dia") val day: List<Day>,
     )
 
     @Serializable
-    data class Dia(
+    data class Day(
         @SerialName("estadoCielo") val skyState: List<SkyValueInTime>,
         @SerialName("precipitacion") val rain: List<ValueInTime>,
         @SerialName("probPrecipitacion") val rainProbability: List<ValueInTime>,

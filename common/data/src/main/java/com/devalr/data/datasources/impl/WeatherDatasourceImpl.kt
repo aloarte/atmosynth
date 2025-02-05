@@ -2,8 +2,8 @@ package com.devalr.data.datasources.impl
 
 import com.devalr.data.Secrets
 import com.devalr.data.datasources.WeatherDatasource
+import com.devalr.data.dto.DailyWeatherDto
 import com.devalr.data.dto.DataResponse
-import com.devalr.data.dto.WeatherDataDaily
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -23,7 +23,7 @@ class WeatherDatasourceImpl(
         const val FETCH_DAILY_WEATHER_PATH = "opendata/api/prediccion/especifica/municipio/horaria/"
     }
 
-    override suspend fun fetchDailyWeather(cityCode: String): WeatherDataDaily? {
+    override suspend fun fetchDailyWeather(cityCode: String): DailyWeatherDto? {
         val weatherDataUrl = fetchWeatherDataUrl(cityCode)
         return fetchDailyWeatherData(weatherDataUrl)
     }
@@ -42,14 +42,14 @@ class WeatherDatasourceImpl(
         return response.body<DataResponse>().requestDataUrl
     }
 
-    private suspend fun fetchDailyWeatherData(url: String): WeatherDataDaily? {
+    private suspend fun fetchDailyWeatherData(url: String): DailyWeatherDto? {
         val response =
             httpClient.get(url) {
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
             }
 
         return Json
-            .decodeFromString<List<WeatherDataDaily>>(response.body() as String)
+            .decodeFromString<List<DailyWeatherDto>>(response.body() as String)
             .firstOrNull()
     }
 }
