@@ -7,11 +7,14 @@ import com.devalr.data.dto.dailyweather.ValueInTimeDto
 import com.devalr.domain.mappers.DailyWeatherMapper
 import com.devalr.domain.mappers.DayMapper
 import com.devalr.domain.mappers.Mapper
+import com.devalr.domain.mappers.RainMapper
 import com.devalr.domain.mappers.TemperatureMapper
 import com.devalr.domain.mappers.TimeMapper
+import com.devalr.domain.mergers.DayMerger
 import com.devalr.domain.model.WeatherTime
 import com.devalr.domain.model.weather.DailyPredictionBo
 import com.devalr.domain.model.weather.DailyWeatherBo
+import com.devalr.domain.model.weather.RainRelationBo
 import com.devalr.domain.model.weather.TemperatureRelationBo
 import com.devalr.domain.repositories.GeminiRepository
 import com.devalr.domain.repositories.WeatherRepository
@@ -37,11 +40,15 @@ private val mapperModules =
             DailyWeatherMapper(get(named("DayMapper")))
         }
         factory<Mapper<DayDto, DailyPredictionBo>>(named("DayMapper")) {
-            DayMapper(get(named("TemperatureMapper")))
+            DayMapper(get(named("TemperatureMapper")), get(named("RainMapper")), get())
         }
 
         factory<Mapper<ValueInTimeDto, TemperatureRelationBo>>(named("TemperatureMapper")) {
             TemperatureMapper(get(named("TimeMapper")))
+        }
+
+        factory<Mapper<ValueInTimeDto, RainRelationBo>>(named("RainMapper")) {
+            RainMapper(get(named("TimeMapper")))
         }
 
         factory<Mapper<String, WeatherTime>>(named("TimeMapper")) {
@@ -49,7 +56,14 @@ private val mapperModules =
         }
     }
 
+private val mergerModules =
+    module {
+        factory {
+            DayMerger()
+        }
+    }
+
 val domainModules =
     module {
-        includes(mapperModules, repositoriesModules, dataModules)
+        includes(mergerModules, mapperModules, repositoriesModules, dataModules)
     }
