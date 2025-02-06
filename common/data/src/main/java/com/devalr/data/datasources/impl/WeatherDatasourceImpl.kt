@@ -2,8 +2,8 @@ package com.devalr.data.datasources.impl
 
 import com.devalr.data.Secrets
 import com.devalr.data.datasources.WeatherDatasource
-import com.devalr.data.dto.DailyWeatherDto
 import com.devalr.data.dto.DataResponse
+import com.devalr.data.dto.dailyweather.DailyWeatherDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

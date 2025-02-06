@@ -1,9 +1,9 @@
 package com.devalr.domain.repositories.impl
 
 import com.devalr.data.datasources.WeatherDatasource
-import com.devalr.data.dto.DailyWeatherDto
+import com.devalr.data.dto.dailyweather.DailyWeatherDto
 import com.devalr.domain.mappers.Mapper
-import com.devalr.domain.model.DailyWeatherBo
+import com.devalr.domain.model.weather.DailyWeatherBo
 import com.devalr.domain.repositories.WeatherRepository
 
 class WeatherRepositoryImpl(

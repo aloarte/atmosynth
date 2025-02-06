@@ -1,5 +1,6 @@
 package com.devalr.dayweather
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devalr.domain.repositories.GeminiRepository
@@ -26,6 +27,7 @@ class DayWeatherViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val result = geminiRepository.generateDaySummary("Cold")
             val resultW = weatherRepository.fetchDailyWeather("13034")
+            Log.d("ALRALR", "$resultW")
 
             _state.update { currentState ->
                 currentState.copy(promptResult = result.joinToString())
