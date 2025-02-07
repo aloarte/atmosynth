@@ -1,5 +1,6 @@
 package com.devalr.domain.mappers
 
+import androidx.core.text.isDigitsOnly
 import com.devalr.data.dto.dailyweather.ValueInTimeDto
 import com.devalr.domain.model.WeatherTime
 import com.devalr.domain.model.weather.SnowRelationBo
@@ -9,7 +10,7 @@ class SnowMapper(
 ) : Mapper<ValueInTimeDto, SnowRelationBo>() {
     override fun transform(data: ValueInTimeDto): SnowRelationBo =
         SnowRelationBo(
-            snowProbability = data.value.toFloat(),
+            snowProbability = data.value.takeIf { it.isDigitsOnly() }?.toFloat() ?: 0f,
             time = timeMapper.transform(data.time),
         )
 }
