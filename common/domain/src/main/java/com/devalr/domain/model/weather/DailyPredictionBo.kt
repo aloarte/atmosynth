@@ -1,9 +1,9 @@
 package com.devalr.domain.model.weather
 
-import com.devalr.domain.SunEventData
+import com.devalr.domain.HourlyEventData
 
 data class DailyPredictionBo(
     val date: String,
     val hourlyData: List<HourlyWeatherBo>,
-    val sunEvents: List<SunEventData>
+    val sunEvents: List<HourlyEventData>
 )

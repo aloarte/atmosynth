@@ -3,8 +3,9 @@ package com.devalr.domain.mappers
 import com.devalr.data.dto.dailyweather.DayDto
 import com.devalr.data.dto.dailyweather.SkyValueInTimeDto
 import com.devalr.data.dto.dailyweather.ValueInTimeDto
-import com.devalr.domain.SunEventData
+import com.devalr.domain.HourlyEventData
 import com.devalr.domain.mergers.DayMerger
+import com.devalr.domain.model.SunEvent
 import com.devalr.domain.model.weather.DailyPredictionBo
 import com.devalr.domain.model.weather.HumidityRelationBo
 import com.devalr.domain.model.weather.RainRelationBo
@@ -18,7 +19,6 @@ class DayMapper(
     private val rainMapper: Mapper<ValueInTimeDto, RainRelationBo>,
     private val skyMapper: Mapper<SkyValueInTimeDto, SkyRelationBo>,
     private val snowMapper: Mapper<ValueInTimeDto, SnowRelationBo>,
-    private val sunEventsMapper: Mapper<Map<String, String>, List<SunEventData>>,
     private val temperatureMapper: Mapper<ValueInTimeDto, TemperatureRelationBo>,
     private val thermalMapper: Mapper<ValueInTimeDto, ThermalRelationBo>,
     private val dayMerger: DayMerger
@@ -36,11 +36,9 @@ class DayMapper(
                     thermalList = data.thermalSensation.map { thermalMapper.transform(it) }
                 ),
             sunEvents =
-                sunEventsMapper.transform(
-                    mapOf(
-                        "SUNRISE" to data.sunriseTime,
-                        "SUNSET" to data.sunsetTime
-                    )
+                listOf(
+                    HourlyEventData(event = SunEvent.Sunrise, time = data.sunriseTime),
+                    HourlyEventData(event = SunEvent.Sunset, time = data.sunsetTime)
                 )
         )
 }

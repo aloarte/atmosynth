@@ -3,6 +3,6 @@ package com.devalr.dayweather.model
 import com.devalr.dayweather.model.enums.HourlyEvent
 
 class HourlyEventVo(
-    val event: HourlyEvent,
-    val time: String
+    override val hour: String,
+    val event: HourlyEvent
 ) : HourlyDataVo()

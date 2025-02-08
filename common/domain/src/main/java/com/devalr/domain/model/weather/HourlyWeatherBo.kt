@@ -11,4 +11,4 @@ data class HourlyWeatherBo(
     val temperature: Int,
     val thermalSensation: Int,
     val time: WeatherTime
-) : HourlyDataBo()
+)

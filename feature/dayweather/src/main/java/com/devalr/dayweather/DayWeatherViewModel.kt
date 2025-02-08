@@ -6,6 +6,7 @@ import com.devalr.dayweather.interactions.Event
 import com.devalr.dayweather.interactions.Event.ChangeCity
 import com.devalr.dayweather.interactions.Event.LoadScreen
 import com.devalr.dayweather.interactions.State
+import com.devalr.dayweather.mergers.HourlyMerger
 import com.devalr.domain.repositories.GeminiRepository
 import com.devalr.domain.repositories.WeatherRepository
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 
 class DayWeatherViewModel(
     private val geminiRepository: GeminiRepository,
-    private val weatherRepository: WeatherRepository
+    private val weatherRepository: WeatherRepository,
+    private val hourlyMerger: HourlyMerger
 ) : ViewModel() {
     private val _state = MutableStateFlow(State())
     val state =
@@ -36,7 +38,10 @@ class DayWeatherViewModel(
 
     private fun loadData() {
         viewModelScope.launch(Dispatchers.IO) {
-            val resultW = weatherRepository.fetchDailyWeather("13034")
+            val weatherData = weatherRepository.fetchDailyWeather("13034")
+            weatherData?.predictions?.first()?.let {
+                hourlyMerger.merge(it.hourlyData, it.sunEvents)
+            }
 
             /*_state.update { currentState ->
                 currentState.copy(promptResult = resultW.joinToString())

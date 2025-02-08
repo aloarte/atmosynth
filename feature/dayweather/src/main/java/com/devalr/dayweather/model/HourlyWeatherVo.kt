@@ -1,11 +1,10 @@
 package com.devalr.dayweather.model
 
 data class HourlyWeatherVo(
-    val date: String,
-    val hour: String,
-    val temperature: String,
+    override val hour: String,
     val humidity: String,
-    val thermalSensation: String,
-    val snowProbability: String,
     val rainProbability: String,
+    val snowProbability: String,
+    val temperature: String,
+    val thermalSensation: String
 ) : HourlyDataVo()

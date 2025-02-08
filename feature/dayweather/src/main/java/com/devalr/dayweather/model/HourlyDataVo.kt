@@ -1,3 +1,5 @@
 package com.devalr.dayweather.model
 
-sealed class HourlyDataVo
+abstract class HourlyDataVo {
+    abstract val hour: String
+}
