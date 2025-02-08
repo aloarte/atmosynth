@@ -1,6 +1,6 @@
 package com.devalr.domain.mergers
 
-import com.devalr.domain.model.weather.HourlyDataBo
+import com.devalr.domain.model.weather.HourlyWeatherBo
 import com.devalr.domain.model.weather.HumidityRelationBo
 import com.devalr.domain.model.weather.RainRelationBo
 import com.devalr.domain.model.weather.SkyRelationBo
@@ -15,8 +15,8 @@ class DayMerger {
         skyList: List<SkyRelationBo>,
         snow: List<SnowRelationBo>,
         temperatureList: List<TemperatureRelationBo>,
-        thermalList: List<ThermalRelationBo>,
-    ): List<HourlyDataBo> =
+        thermalList: List<ThermalRelationBo>
+    ): List<HourlyWeatherBo> =
         temperatureList.mapNotNull { temperatureRelation ->
             val humidity = humidityList.find { it.time == temperatureRelation.time }
             val rainProbability = rainList.find { it.time == temperatureRelation.time }
@@ -29,14 +29,14 @@ class DayMerger {
                 snowProbability != null &&
                 thermalSensation != null
             ) {
-                HourlyDataBo(
+                HourlyWeatherBo(
                     humidity = humidity.humidity,
                     rainProbability = rainProbability.rainProbability,
                     skyState = skyState.skyState,
                     snowProbability = snowProbability.snowProbability,
                     temperature = temperatureRelation.temperature,
                     thermalSensation = thermalSensation.thermalSensation,
-                    time = temperatureRelation.time,
+                    time = temperatureRelation.time
                 )
             } else {
                 null

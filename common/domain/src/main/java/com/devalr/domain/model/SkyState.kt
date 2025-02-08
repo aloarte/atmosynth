@@ -16,4 +16,6 @@ enum class SkyState {
     DAY_HIGH_CLOUDS,
     DAY_CLOUDY_SOFT_RAIN,
     DAY_CLOUDY_STORM_SOFT_RAIN,
+    NIGHT_MISTS,
+    DAY_MISTS,
 }

@@ -5,6 +5,7 @@ import com.devalr.data.dto.dailyweather.DailyWeatherDto
 import com.devalr.data.dto.dailyweather.DayDto
 import com.devalr.data.dto.dailyweather.SkyValueInTimeDto
 import com.devalr.data.dto.dailyweather.ValueInTimeDto
+import com.devalr.domain.SunEventData
 import com.devalr.domain.mappers.DailyWeatherMapper
 import com.devalr.domain.mappers.DayMapper
 import com.devalr.domain.mappers.HumidityMapper
@@ -13,6 +14,7 @@ import com.devalr.domain.mappers.RainMapper
 import com.devalr.domain.mappers.SkyMapper
 import com.devalr.domain.mappers.SkyStateMapper
 import com.devalr.domain.mappers.SnowMapper
+import com.devalr.domain.mappers.SunEventsMapper
 import com.devalr.domain.mappers.TemperatureMapper
 import com.devalr.domain.mappers.ThermalMapper
 import com.devalr.domain.mappers.TimeMapper
@@ -56,9 +58,10 @@ private val mapperModules =
                 get(named("RainMapper")),
                 get(named("SkyMapper")),
                 get(named("SnowMapper")),
+                get(named("SunEventsMapper")),
                 get(named("TemperatureMapper")),
                 get(named("ThermalMapper")),
-                get(),
+                get()
             )
         }
 
@@ -76,6 +79,10 @@ private val mapperModules =
 
         factory<Mapper<ValueInTimeDto, SnowRelationBo>>(named("SnowMapper")) {
             SnowMapper(get(named("TimeEnumMapper")))
+        }
+
+        factory<Mapper<Map<String, String>, List<SunEventData>>>(named("SunEventsMapper")) {
+            SunEventsMapper()
         }
 
         factory<Mapper<ValueInTimeDto, TemperatureRelationBo>>(named("TemperatureMapper")) {

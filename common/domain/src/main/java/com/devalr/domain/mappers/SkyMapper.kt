@@ -12,6 +12,7 @@ class SkyMapper : Mapper<String, SkyState>() {
             "17n" -> SkyState.NIGHT_HIGH_CLOUDS
             "46n" -> SkyState.NIGHT_CLOUDY_SOFT_RAIN
             "64n" -> SkyState.NIGHT_CLOUDY_STORM_SOFT_RAIN
+            "82n" -> SkyState.NIGHT_MISTS
             "11" -> SkyState.DAY_CLEAR
             "12" -> SkyState.DAY_LOW_CLOUDS
             "15" -> SkyState.DAY_VERY_CLOUDY
@@ -19,6 +20,7 @@ class SkyMapper : Mapper<String, SkyState>() {
             "17" -> SkyState.DAY_HIGH_CLOUDS
             "46" -> SkyState.DAY_CLOUDY_SOFT_RAIN
             "64" -> SkyState.DAY_CLOUDY_STORM_SOFT_RAIN
+            "82" -> SkyState.DAY_MISTS
             else -> SkyState.UNKNOWN
         }
 }

@@ -11,7 +11,7 @@ data class DailyWeatherDto(
     @SerialName("provincia") val province: String,
     @SerialName("prediccion") val prediction: PredictionDto,
     @SerialName("id") val id: String,
-    @SerialName("version") val version: String,
+    @SerialName("version") val version: String
 ) {
     @Serializable
     data class DataOrigins(
@@ -20,6 +20,6 @@ data class DailyWeatherDto(
         @SerialName("enlace") val link: String,
         @SerialName("language") val language: String,
         @SerialName("copyright") val copyright: String,
-        @SerialName("notaLegal") val legalDisclaimer: String,
+        @SerialName("notaLegal") val legalDisclaimer: String
     )
 }
