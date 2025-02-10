@@ -10,6 +10,7 @@ class HourlyEventMapper : Mapper<HourlyEventData, HourlyEventVo>() {
     override fun transform(data: HourlyEventData): HourlyEventVo =
         HourlyEventVo(
             hour = data.time.hour.toString(),
+            completeTime = data.time,
             event =
                 when (data.event) {
                     SunEvent.Sunrise -> HourlyEvent.Sunrise

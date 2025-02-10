@@ -7,33 +7,40 @@ import com.devalr.domain.HourlyEventData
 import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.weather.DailyPredictionBo
 import com.devalr.domain.model.weather.HourlyWeatherBo
+import java.time.LocalDateTime
 
 class HourlyMerger(
     private val eventMapper: Mapper<HourlyEventData, HourlyEventVo>,
     private val hourlyMapper: Mapper<HourlyWeatherBo, HourlyWeatherVo>
 ) {
-    fun merge(dailyPredictionBo: List<DailyPredictionBo>) {
+    fun merge(
+        dailyPredictionBo: List<DailyPredictionBo>,
+        initBracket: Long,
+        endBracket: Long
+    ): List<HourlyDataVo> {
+        if (initBracket > endBracket || initBracket < 1) {
+            return emptyList()
+        }
         val allHoursList = mutableListOf<HourlyDataVo>()
-        // TODO: Fetch all data together from the 3 days and then get only the first 24h, calling the method below
-        // TODO: This feature may belong to other component. Something like DayHourlyRetirever that calls this merger or something like that.
         dailyPredictionBo.forEach {
-            allHoursList += merge(it.date, it.hourlyData, it.sunEvents)
+            allHoursList += merge(it.hourlyData, it.sunEvents)
+        }
+        val now = LocalDateTime.now()
+        val prev2Hours = now.minusHours(initBracket)
+        val next24Hours = now.plusHours(endBracket)
+        return allHoursList.filter {
+            it.completeTime.isAfter(prev2Hours) &&
+                it.completeTime.isBefore(next24Hours)
         }
     }
 
-    fun merge(
-        date: String,
+    private fun merge(
         hourlyWeatherData: List<HourlyWeatherBo>,
         events: List<HourlyEventData>
-    ): List<HourlyDataVo> {
-        val eventsVo = events.map { eventMapper.transform(it) }
-        val hourlyWeatherDataVo = hourlyWeatherData.map { hourlyMapper.transform(it) }
-        val retList =
-            mutableListOf<HourlyDataVo>().apply {
-                addAll(eventsVo)
-                addAll(hourlyWeatherDataVo)
-                sortBy { it.hour }
-            }
-        return retList
-    }
+    ): List<HourlyDataVo> =
+        mutableListOf<HourlyDataVo>().apply {
+            addAll(events.map { eventMapper.transform(it) })
+            addAll(hourlyWeatherData.map { hourlyMapper.transform(it) })
+            sortBy { it.completeTime }
+        }
 }

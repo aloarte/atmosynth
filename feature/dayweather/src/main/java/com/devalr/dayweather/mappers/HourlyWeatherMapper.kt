@@ -8,6 +8,7 @@ class HourlyWeatherMapper : Mapper<HourlyWeatherBo, HourlyWeatherVo>() {
     override fun transform(data: HourlyWeatherBo): HourlyWeatherVo =
         HourlyWeatherVo(
             hour = data.time.text,
+            completeTime = data.completeTime,
             humidity = data.humidity.toString(),
             rainProbability = data.rainProbability.toString(),
             snowProbability = data.snowProbability.toString(),

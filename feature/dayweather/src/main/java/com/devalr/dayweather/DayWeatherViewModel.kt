@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DayWeatherViewModel(
@@ -40,12 +41,10 @@ class DayWeatherViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val weatherData = weatherRepository.fetchDailyWeather("13034")
             weatherData?.predictions?.let {
-                hourlyMerger.merge(it)
+                _state.update { currentState ->
+                    currentState.copy(weatherByHours = hourlyMerger.merge(it, 2, 24))
+                }
             }
-
-            /*_state.update { currentState ->
-                currentState.copy(promptResult = resultW.joinToString())
-            }*/
         }
     }
 }
