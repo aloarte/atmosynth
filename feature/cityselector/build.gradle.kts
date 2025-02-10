@@ -2,14 +2,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ktlint)
-}
-
-ktlint {
-    debug = true
-    android = true
-    outputToConsole = true
-    outputColorName = "RED"
 }
 
 android {
@@ -46,10 +38,8 @@ android {
 }
 
 dependencies {
-
     implementation(project(":common:domain"))
     implementation(project(":common:framework"))
-    ktlintRuleset(libs.ktlint.compose)
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
     implementation(libs.koin.compose.nav)

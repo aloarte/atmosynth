@@ -3,14 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
-    alias(libs.plugins.ktlint)
-}
-
-ktlint {
-    debug = true
-    android = true
-    outputToConsole = true
-    outputColorName = "RED"
 }
 
 android {
@@ -54,7 +46,6 @@ android {
 dependencies {
     implementation(project(":feature:cityselector"))
     implementation(project(":feature:dayweather"))
-    ktlintRuleset(libs.ktlint.compose)
     implementation(libs.koin.android)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

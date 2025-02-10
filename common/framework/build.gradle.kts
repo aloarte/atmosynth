@@ -2,15 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ktlint)
 }
 
-ktlint {
-    debug = true
-    android = true
-    outputToConsole = true
-    outputColorName = "RED"
-}
 
 android {
     namespace = "com.devalr.framework"
@@ -46,8 +39,6 @@ android {
 }
 
 dependencies {
-
-    ktlintRuleset(libs.ktlint.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

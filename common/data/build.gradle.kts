@@ -1,15 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ktlint)
     alias(libs.plugins.serialization)
-}
-
-ktlint {
-    debug = true
-    android = true
-    outputToConsole = true
-    outputColorName = "RED"
 }
 
 android {
