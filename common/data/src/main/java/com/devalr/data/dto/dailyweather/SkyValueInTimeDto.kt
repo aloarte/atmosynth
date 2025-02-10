@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class SkyValueInTimeDto(
     @SerialName("value") val value: String,
     @SerialName("periodo") val time: String,
-    @SerialName("descripcion") val description: String,
+    @SerialName("descripcion") val description: String
 )

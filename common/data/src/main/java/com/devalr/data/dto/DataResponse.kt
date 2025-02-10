@@ -12,5 +12,5 @@ data class DataResponse(
     @SerialName("datos")
     val requestDataUrl: String,
     @SerialName("metadatos")
-    val requestMetadataUrl: String,
+    val requestMetadataUrl: String
 )

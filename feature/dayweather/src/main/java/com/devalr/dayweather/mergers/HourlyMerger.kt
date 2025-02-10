@@ -30,17 +30,16 @@ class HourlyMerger(
         val next24Hours = now.plusHours(endBracket)
         return allHoursList.filter {
             it.completeTime.isAfter(prev2Hours) &&
-                it.completeTime.isBefore(next24Hours)
+                    it.completeTime.isBefore(next24Hours)
         }
     }
 
     private fun merge(
         hourlyWeatherData: List<HourlyWeatherBo>,
         events: List<HourlyEventData>
-    ): List<HourlyDataVo> =
-        mutableListOf<HourlyDataVo>().apply {
-            addAll(events.map { eventMapper.transform(it) })
-            addAll(hourlyWeatherData.map { hourlyMapper.transform(it) })
-            sortBy { it.completeTime }
-        }
+    ): List<HourlyDataVo> = mutableListOf<HourlyDataVo>().apply {
+        addAll(events.map { eventMapper.transform(it) })
+        addAll(hourlyWeatherData.map { hourlyMapper.transform(it) })
+        sortBy { it.completeTime }
+    }
 }

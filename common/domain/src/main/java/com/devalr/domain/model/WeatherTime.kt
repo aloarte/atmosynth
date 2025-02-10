@@ -27,5 +27,5 @@ enum class WeatherTime(
     PM_10("22:00"),
     PM_11("23:00"),
     PM_12("00:00"),
-    UNKNOWN("99:99"),
+    UNKNOWN("99:99")
 }

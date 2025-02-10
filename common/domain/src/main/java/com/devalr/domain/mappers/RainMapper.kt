@@ -10,10 +10,9 @@ class RainMapper(
 ) : Mapper<ValueInTimeDto, RainRelationBo>() {
     override fun transform(data: ValueInTimeDto): RainRelationBo =
         RainRelationBo(
-            rainProbability =
-                data.value
-                    .takeIf { it.isDigitsOnly() }
-                    ?.toFloat() ?: 0f,
+            rainProbability = data.value
+                .takeIf { it.isDigitsOnly() }
+                ?.toFloat() ?: 0f,
             time = timeMapper.transform(data.time)
         )
 }

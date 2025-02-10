@@ -11,11 +11,10 @@ class HourlyEventMapper : Mapper<HourlyEventData, HourlyEventVo>() {
         HourlyEventVo(
             hour = "${data.time.hour}:${data.time.minute}",
             completeTime = data.time,
-            event =
-                when (data.event) {
-                    SunEvent.Sunrise -> HourlyEvent.Sunrise
-                    SunEvent.Sunset -> HourlyEvent.Sunset
-                    SunEvent.Unknown -> HourlyEvent.Unknown
-                }
+            event = when (data.event) {
+                SunEvent.Sunrise -> HourlyEvent.Sunrise
+                SunEvent.Sunset -> HourlyEvent.Sunset
+                SunEvent.Unknown -> HourlyEvent.Unknown
+            }
         )
 }

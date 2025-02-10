@@ -16,7 +16,7 @@ import kotlinx.serialization.json.Json
 
 class WeatherDatasourceImpl(
     private val httpClient: HttpClient,
-    private val secrets: Secrets,
+    private val secrets: Secrets
 ) : WeatherDatasource {
     companion object {
         const val AEMET_HOST = "opendata.aemet.es"

@@ -10,8 +10,6 @@ class DailyWeatherMapper(
 ) : Mapper<DailyWeatherDto?, DailyWeatherBo?>() {
     override fun transform(data: DailyWeatherDto?): DailyWeatherBo? =
         data?.let {
-            DailyWeatherBo(
-                predictions = data.prediction.day.map { dayMapper.transform(it) },
-            )
+            DailyWeatherBo(predictions = data.prediction.day.map { dayMapper.transform(it) })
         }
 }

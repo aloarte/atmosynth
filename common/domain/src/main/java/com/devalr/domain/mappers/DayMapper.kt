@@ -30,30 +30,25 @@ class DayMapper(
     override fun transform(data: DayDto): DailyPredictionBo =
         DailyPredictionBo(
             date = data.date,
-            hourlyData =
-                dayMerger.merge(
-                    humidityList = data.relativeHumidity.map { humidityMapper.transform(it) },
-                    rainList = data.rain.map { rainMapper.transform(it) },
-                    skyList = data.skyState.map { skyMapper.transform(it) },
-                    snow = data.snow.map { snowMapper.transform(it) },
-                    temperatureList =
-                        data.temperature.map {
-                            temperatureMapper.transform(
-                                ValueInTimeParams(it, data.date)
-                            )
-                        },
-                    thermalList = data.thermalSensation.map { thermalMapper.transform(it) }
+            hourlyData = dayMerger.merge(
+                humidityList = data.relativeHumidity.map { humidityMapper.transform(it) },
+                rainList = data.rain.map { rainMapper.transform(it) },
+                skyList = data.skyState.map { skyMapper.transform(it) },
+                snow = data.snow.map { snowMapper.transform(it) },
+                temperatureList = data.temperature.map {
+                    temperatureMapper.transform(ValueInTimeParams(it, data.date))
+                },
+                thermalList = data.thermalSensation.map { thermalMapper.transform(it) }
+            ),
+            sunEvents = listOf(
+                HourlyEventData(
+                    event = SunEvent.Sunrise,
+                    time = dateMapper.transform(DateMapperParams(data.date, data.sunriseTime))
                 ),
-            sunEvents =
-                listOf(
-                    HourlyEventData(
-                        event = SunEvent.Sunrise,
-                        time = dateMapper.transform(DateMapperParams(data.date, data.sunriseTime))
-                    ),
-                    HourlyEventData(
-                        event = SunEvent.Sunset,
-                        time = dateMapper.transform(DateMapperParams(data.date, data.sunsetTime))
-                    )
+                HourlyEventData(
+                    event = SunEvent.Sunset,
+                    time = dateMapper.transform(DateMapperParams(data.date, data.sunsetTime))
                 )
+            )
         )
 }

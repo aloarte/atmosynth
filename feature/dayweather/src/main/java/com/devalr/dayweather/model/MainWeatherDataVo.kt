@@ -6,5 +6,5 @@ data class MainWeatherDataVo(
     val temperature: String,
     val thermalSensation: String,
     val humidity: String,
-    val wind: String,
+    val wind: String
 )

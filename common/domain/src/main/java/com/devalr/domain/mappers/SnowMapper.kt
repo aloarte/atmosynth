@@ -10,10 +10,9 @@ class SnowMapper(
 ) : Mapper<ValueInTimeDto, SnowRelationBo>() {
     override fun transform(data: ValueInTimeDto): SnowRelationBo =
         SnowRelationBo(
-            snowProbability =
-                data.value
-                    .takeIf { it.isDigitsOnly() }
-                    ?.toFloat() ?: 0f,
+            snowProbability = data.value
+                .takeIf { it.isDigitsOnly() }
+                ?.toFloat() ?: 0f,
             time = timeMapper.transform(data.time)
         )
 }

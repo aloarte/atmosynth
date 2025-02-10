@@ -24,9 +24,6 @@ jobs:
         run: chmod +x gradlew
       - name: Build app
         run: ./gradlew :app:build
-      - name: Run ktlint check
-        run: ./gradlew ktlintCheck
-
   test:
     runs-on: ubuntu-latest
     needs: build

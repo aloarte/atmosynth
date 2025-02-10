@@ -17,5 +17,5 @@ data class DayDto(
     @SerialName("vientoAndRachaMax") val wind: List<WindInTimeDto>,
     @SerialName("fecha") val date: String,
     @SerialName("orto") val sunriseTime: String,
-    @SerialName("ocaso") val sunsetTime: String,
+    @SerialName("ocaso") val sunsetTime: String
 )

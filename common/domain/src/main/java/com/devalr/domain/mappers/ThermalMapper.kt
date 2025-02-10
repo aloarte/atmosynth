@@ -10,10 +10,9 @@ class ThermalMapper(
 ) : Mapper<ValueInTimeDto, ThermalRelationBo>() {
     override fun transform(data: ValueInTimeDto): ThermalRelationBo =
         ThermalRelationBo(
-            thermalSensation =
-                data.value
-                    .takeIf { it.isDigitsOnly() }
-                    ?.toInt() ?: 0,
+            thermalSensation = data.value
+                .takeIf { it.isDigitsOnly() }
+                ?.toInt() ?: 0,
             time = timeMapper.transform(data.time)
         )
 }

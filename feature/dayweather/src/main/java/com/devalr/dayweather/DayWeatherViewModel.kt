@@ -23,10 +23,9 @@ class DayWeatherViewModel(
     private val hourlyMerger: HourlyMerger
 ) : ViewModel() {
     private val _state = MutableStateFlow(State())
-    val state =
-        _state
-            .onStart { handleEvent(LoadScreen) }
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), State())
+    val state = _state
+        .onStart { handleEvent(LoadScreen) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), State())
 
     fun handleEvent(event: Event) {
         when (event) {

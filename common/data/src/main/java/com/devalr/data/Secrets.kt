@@ -3,9 +3,7 @@ package com.devalr.data
 import android.content.Context
 import android.content.res.AssetManager
 
-class Secrets(
-    context: Context,
-) {
+class Secrets(context: Context) {
     init {
         System.loadLibrary("secrets")
     }

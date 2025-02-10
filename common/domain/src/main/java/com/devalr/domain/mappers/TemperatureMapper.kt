@@ -14,10 +14,9 @@ class TemperatureMapper(
     override fun transform(data: ValueInTimeParams): TemperatureRelationBo {
         val time = timeMapper.transform(data.data.time)
         return TemperatureRelationBo(
-            temperature =
-                data.data.value
-                    .takeIf { it.isDigitsOnly() }
-                    ?.toInt() ?: 0,
+            temperature = data.data.value
+                .takeIf { it.isDigitsOnly() }
+                ?.toInt() ?: 0,
             time = time,
             completeTime = dateMapper.transform(DateMapperParams(data.date, time.text))
         )
