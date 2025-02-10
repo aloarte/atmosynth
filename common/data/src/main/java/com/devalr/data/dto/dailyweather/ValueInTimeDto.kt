@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ValueInTimeDto(
     @SerialName("value") val value: String,
-    @SerialName("periodo") val time: String,
+    @SerialName("periodo") val time: String
 )

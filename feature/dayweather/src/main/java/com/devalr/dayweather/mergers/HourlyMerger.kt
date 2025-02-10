@@ -13,12 +13,16 @@ class HourlyMerger(
     private val hourlyMapper: Mapper<HourlyWeatherBo, HourlyWeatherVo>
 ) {
     fun merge(dailyPredictionBo: List<DailyPredictionBo>) {
+        val allHoursList = mutableListOf<HourlyDataVo>()
         // TODO: Fetch all data together from the 3 days and then get only the first 24h, calling the method below
         // TODO: This feature may belong to other component. Something like DayHourlyRetirever that calls this merger or something like that.
-        dailyPredictionBo.forEach { }
+        dailyPredictionBo.forEach {
+            allHoursList += merge(it.date, it.hourlyData, it.sunEvents)
+        }
     }
 
     fun merge(
+        date: String,
         hourlyWeatherData: List<HourlyWeatherBo>,
         events: List<HourlyEventData>
     ): List<HourlyDataVo> {

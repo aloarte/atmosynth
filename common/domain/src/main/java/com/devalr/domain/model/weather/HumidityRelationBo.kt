@@ -4,5 +4,5 @@ import com.devalr.domain.model.WeatherTime
 
 data class HumidityRelationBo(
     val humidity: Int,
-    val time: WeatherTime,
+    val time: WeatherTime
 )

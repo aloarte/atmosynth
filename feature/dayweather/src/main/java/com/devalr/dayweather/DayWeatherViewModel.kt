@@ -39,8 +39,8 @@ class DayWeatherViewModel(
     private fun loadData() {
         viewModelScope.launch(Dispatchers.IO) {
             val weatherData = weatherRepository.fetchDailyWeather("13034")
-            weatherData?.predictions?.first()?.let {
-                hourlyMerger.merge(it.hourlyData, it.sunEvents)
+            weatherData?.predictions?.let {
+                hourlyMerger.merge(it)
             }
 
             /*_state.update { currentState ->

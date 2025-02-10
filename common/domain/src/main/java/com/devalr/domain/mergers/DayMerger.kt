@@ -36,7 +36,8 @@ class DayMerger {
                     snowProbability = snowProbability.snowProbability,
                     temperature = temperatureRelation.temperature,
                     thermalSensation = thermalSensation.thermalSensation,
-                    time = temperatureRelation.time
+                    time = temperatureRelation.time,
+                    completeTime = temperatureRelation.completeTime
                 )
             } else {
                 null

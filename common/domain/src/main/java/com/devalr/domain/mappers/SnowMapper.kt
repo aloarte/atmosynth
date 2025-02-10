@@ -6,11 +6,14 @@ import com.devalr.domain.model.WeatherTime
 import com.devalr.domain.model.weather.SnowRelationBo
 
 class SnowMapper(
-    private val timeMapper: Mapper<String, WeatherTime>,
+    private val timeMapper: Mapper<String, WeatherTime>
 ) : Mapper<ValueInTimeDto, SnowRelationBo>() {
     override fun transform(data: ValueInTimeDto): SnowRelationBo =
         SnowRelationBo(
-            snowProbability = data.value.takeIf { it.isDigitsOnly() }?.toFloat() ?: 0f,
-            time = timeMapper.transform(data.time),
+            snowProbability =
+                data.value
+                    .takeIf { it.isDigitsOnly() }
+                    ?.toFloat() ?: 0f,
+            time = timeMapper.transform(data.time)
         )
 }
