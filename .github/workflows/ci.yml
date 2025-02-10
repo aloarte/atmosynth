@@ -14,7 +14,7 @@ jobs:
         with:
           access_token: ${{ secrets.GH_TOKEN }}
 
-  build:
+  build-debug:
     needs: [ avoid_redundancy ]
     runs-on: ubuntu-latest
     steps:
@@ -25,10 +25,24 @@ jobs:
       - name: Give execute permission to Gradle wrapper
         run: chmod +x gradlew
       - name: Build app
-        run: ./gradlew :app:build
+        run: ./gradlew :app:buildDebug
+
+  build-release:
+    needs: [ avoid_redundancy ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Give execute permission to Gradle wrapper
+        run: chmod +x gradlew
+      - name: Build app
+        run: ./gradlew :app:buildRelease
+
   test:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build-debug, build-release]
     steps:
       - name: checkout code
         uses: actions/checkout@v4
@@ -37,4 +51,5 @@ jobs:
       - name: Give execute permission to Gradle wrapper
         run: chmod +x gradlew
       - name: Run Unit Tests for Commons
-        run: ./gradlew test
+        run: ./gradlew testDebug
+
