@@ -41,6 +41,9 @@ dependencies {
 
     implementation(project(":common:domain"))
     implementation(project(":common:framework"))
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
     implementation(libs.koin.compose.nav)

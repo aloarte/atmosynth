@@ -59,7 +59,7 @@ private val mapperModules =
                 get(named("DateMapper")),
                 get(named("HumidityMapper")),
                 get(named("RainMapper")),
-                get(named("SkyMapper")),
+                get(named("SkyStateMapper")),
                 get(named("SnowMapper")),
                 get(named("TemperatureMapper")),
                 get(named("ThermalMapper")),
@@ -79,9 +79,9 @@ private val mapperModules =
             )
         }
 
-        factory<Mapper<SkyValueInTimeDto, SkyRelationBo>>(named("SkyMapper")) {
+        factory<Mapper<SkyValueInTimeDto, SkyRelationBo>>(named("SkyStateMapper")) {
             SkyStateMapper(
-                get(named("SkyEnumMapper")),
+                get(named("SkyMapper")),
                 get(named("TimeEnumMapper"))
             )
         }
@@ -113,7 +113,7 @@ private val mapperModules =
             TimeMapper()
         }
 
-        factory<Mapper<String, SkyState>>(named("SkyEnumMapper")) {
+        factory<Mapper<String, SkyState>>(named("SkyMapper")) {
             SkyMapper()
         }
     }

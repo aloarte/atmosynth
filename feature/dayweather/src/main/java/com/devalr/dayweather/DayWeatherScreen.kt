@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.devalr.dayweather.composables.HourlyWeatherItem
 import com.devalr.dayweather.model.HourlyEventVo
 import com.devalr.dayweather.model.HourlyWeatherVo
 import com.devalr.framework.CustomText
@@ -45,17 +46,6 @@ fun HourlyEventItem(event: HourlyEventVo) {
     }
 }
 
-@Composable
-fun HourlyWeatherItem(data: HourlyWeatherVo) {
-    Column(modifier = Modifier.width(80.dp), verticalArrangement = Arrangement.Center) {
-        Text(data.hour)
-        Text(data.temperature)
-        Text(data.thermalSensation)
-        Text(data.humidity)
-        Text(data.snowProbability)
-        Text(data.rainProbability)
-    }
-}
 
 @Preview(showSystemUi = true)
 @Composable
