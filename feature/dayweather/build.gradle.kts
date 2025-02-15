@@ -38,25 +38,30 @@ android {
 }
 
 dependencies {
-
+    //Inner dependencies
     implementation(project(":common:domain"))
     implementation(project(":common:framework"))
-
+    //UI components
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    implementation(libs.mockk)
+    //Dependency injection
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
     implementation(libs.koin.compose.nav)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+    //Compose
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+    //Android
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.constraintlayout.compose)
+    //Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

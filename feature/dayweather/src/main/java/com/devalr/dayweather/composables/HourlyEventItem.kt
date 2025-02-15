@@ -67,7 +67,7 @@ fun HourlyEventItem(event: HourlyEventVo) {
 }
 
 @Composable
-fun HourlyEventImage(modifier: Modifier = Modifier, event: HourlyEvent) {
+private fun HourlyEventImage(modifier: Modifier = Modifier, event: HourlyEvent) {
     Image(
         modifier = modifier.size(18.dp),
         contentDescription = null,
@@ -77,12 +77,24 @@ fun HourlyEventImage(modifier: Modifier = Modifier, event: HourlyEvent) {
 
 @Preview
 @Composable
-fun HourlyEventItemPreview() {
+private fun HourlyEventItemSunsetPreview() {
     HourlyEventItem(
         HourlyEventVo(
-            hour = "19:00",
+            hour = "18:05",
             completeTime = LocalDateTime.now(),
             event = HourlyEvent.Sunset
+        )
+    )
+}
+
+@Preview
+@Composable
+private fun HourlyEventItemSunrisePreview() {
+    HourlyEventItem(
+        HourlyEventVo(
+            hour = "08:17",
+            completeTime = LocalDateTime.now(),
+            event = HourlyEvent.Sunrise
         )
     )
 }

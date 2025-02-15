@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,6 +62,7 @@ fun HourlyWeatherItem(data: HourlyWeatherVo) {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
                         },
+                    color = Color.Blue,
                     text = data.precipitationProbability,
                     fontSize = 6.sp
                 )
@@ -79,7 +81,7 @@ fun HourlyWeatherItem(data: HourlyWeatherVo) {
 }
 
 @Composable
-fun WeatherImage(modifier: Modifier = Modifier, skyStateIcon: SkyStateIcon) {
+private fun WeatherImage(modifier: Modifier = Modifier, skyStateIcon: SkyStateIcon) {
     AsyncImage(
         modifier = modifier,
         model = "https://openweathermap.org/img/wn/${skyStateIcon.pngValue}@2x.png",
@@ -90,7 +92,7 @@ fun WeatherImage(modifier: Modifier = Modifier, skyStateIcon: SkyStateIcon) {
 
 @Preview
 @Composable
-fun HourlyWeatherItemPreview() {
+private fun HourlyWeatherItemWithPrecipitationPreview() {
     HourlyWeatherItem(
         HourlyWeatherVo(
             hour = "19:00",
@@ -98,6 +100,22 @@ fun HourlyWeatherItemPreview() {
             skyState = SkyStateIcon.DayClear,
             temperature = "12",
             precipitationProbability = "3%",
+            thermalSensation = "12",
+            completeTime = LocalDateTime.now()
+        )
+    )
+}
+
+@Preview
+@Composable
+private fun HourlyWeatherItemWithoutPrecipitationPreview() {
+    HourlyWeatherItem(
+        HourlyWeatherVo(
+            hour = "19:00",
+            humidity = "60",
+            skyState = SkyStateIcon.DayClear,
+            temperature = "12",
+            precipitationProbability = "",
             thermalSensation = "12",
             completeTime = LocalDateTime.now()
         )
