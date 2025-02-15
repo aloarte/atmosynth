@@ -7,8 +7,7 @@ data class HourlyWeatherVo(
     override val completeTime: LocalDateTime,
     val skyState: SkyStateIcon,
     val humidity: String,
-    val rainProbability: String,
-    val snowProbability: String,
+    val precipitationProbability: String,
     val temperature: String,
     val thermalSensation: String
 ) : HourlyDataVo()
