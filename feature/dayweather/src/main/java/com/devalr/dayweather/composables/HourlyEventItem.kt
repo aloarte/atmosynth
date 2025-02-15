@@ -1,5 +1,6 @@
 package com.devalr.dayweather.composables
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
@@ -13,14 +14,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import coil3.compose.AsyncImage
-import com.devalr.dayweather.R
-import com.devalr.dayweather.model.HourlyWeatherVo
-import com.devalr.dayweather.model.SkyStateIcon
+import com.devalr.dayweather.model.HourlyEventVo
+import com.devalr.dayweather.model.enums.HourlyEvent
 import java.time.LocalDateTime
 
 @Composable
-fun HourlyWeatherItem(data: HourlyWeatherVo) {
+fun HourlyEventItem(event: HourlyEventVo) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -30,77 +29,60 @@ fun HourlyWeatherItem(data: HourlyWeatherVo) {
     ) {
         ConstraintLayout(
             modifier = Modifier
-                .size(width = 40.dp, height = 100.dp)
+                .size(width = 60.dp, height = 100.dp)
                 .padding(5.dp)
         ) {
-            val (temperature, icon, precipitation, hour) = createRefs()
+            val (name, icon, hour) = createRefs()
 
             Text(
-                modifier = Modifier.constrainAs(temperature) {
+                modifier = Modifier.constrainAs(name) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
 
                 },
-                text = data.temperature,
-                fontSize = 10.sp
+                text = event.event.value,
+                fontSize = 8.sp
             )
-            WeatherImage(
+            HourlyEventImage(
                 modifier = Modifier.constrainAs(icon) {
-                    top.linkTo(temperature.bottom)
+                    top.linkTo(name.bottom, margin = 5.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 },
-                skyStateIcon = data.skyState
+                event = event.event
             )
-            if (data.precipitationProbability.isNotBlank()) {
-                Text(
-                    modifier = Modifier
-                        .constrainAs(precipitation) {
-                            top.linkTo(icon.bottom)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        },
-                    text = data.precipitationProbability,
-                    fontSize = 6.sp
-                )
-            }
+
             Text(
                 modifier = Modifier.constrainAs(hour) {
                     bottom.linkTo(parent.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 },
-                text = data.hour,
+                text = event.hour,
                 fontSize = 10.sp
             )
         }
     }
-
 }
 
 @Composable
-fun WeatherImage(modifier: Modifier = Modifier, skyStateIcon: SkyStateIcon) {
-    AsyncImage(
-        modifier = modifier,
-        model = "https://openweathermap.org/img/wn/${skyStateIcon.pngValue}@2x.png",
+fun HourlyEventImage(modifier: Modifier = Modifier, event: HourlyEvent) {
+    Image(
+        modifier = modifier.size(18.dp),
         contentDescription = null,
-        placeholder = painterResource(R.drawable.error_weather),
+        painter = painterResource(event.iconResource),
     )
 }
 
 @Preview
 @Composable
-fun HourlyWeatherItemPreview() {
-    HourlyWeatherItem(
-        HourlyWeatherVo(
+fun HourlyEventItemPreview() {
+    HourlyEventItem(
+        HourlyEventVo(
             hour = "19:00",
-            humidity = "60",
-            skyState = SkyStateIcon.DayClear,
-            temperature = "12",
-            precipitationProbability = "3%",
-            thermalSensation = "12",
-            completeTime = LocalDateTime.now()
+            completeTime = LocalDateTime.now(),
+            event = HourlyEvent.Sunset
         )
     )
 }

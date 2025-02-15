@@ -9,7 +9,9 @@ import com.devalr.domain.model.SunEvent
 class HourlyEventMapper : Mapper<HourlyEventData, HourlyEventVo>() {
     override fun transform(data: HourlyEventData): HourlyEventVo =
         HourlyEventVo(
-            hour = "${data.time.hour}:${data.time.minute}",
+            hour = "${data.time.hour.toString().padStart(2, '0')}:${
+                data.time.minute.toString().padStart(2, '0')
+            }",
             completeTime = data.time,
             event = when (data.event) {
                 SunEvent.Sunrise -> HourlyEvent.Sunrise

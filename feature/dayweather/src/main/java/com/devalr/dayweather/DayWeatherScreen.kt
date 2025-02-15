@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.devalr.dayweather.composables.HourlyEventItem
 import com.devalr.dayweather.composables.HourlyWeatherItem
 import com.devalr.dayweather.model.HourlyEventVo
 import com.devalr.dayweather.model.HourlyWeatherVo
@@ -38,13 +39,7 @@ fun DayWeatherScreen(viewModel: DayWeatherViewModel = koinInject()) {
     }
 }
 
-@Composable
-fun HourlyEventItem(event: HourlyEventVo) {
-    Column(modifier = Modifier.width(80.dp), verticalArrangement = Arrangement.Center) {
-        Text(event.hour)
-        Text(event.event.toString())
-    }
-}
+
 
 
 @Preview(showSystemUi = true)
