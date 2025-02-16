@@ -16,19 +16,14 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.devalr.dayweather.model.HourlyEventVo
 import com.devalr.dayweather.model.enums.HourlyEvent
+import com.devalr.framework.components.AtmosCard
 import com.devalr.framework.components.AtmosText
 import com.devalr.framework.enums.TextType
 import java.time.LocalDateTime
 
 @Composable
 fun HourlyEventItem(event: HourlyEventVo) {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        ),
-        modifier = Modifier
-            .padding(2.dp)
-    ) {
+    AtmosCard {
         ConstraintLayout(
             modifier = Modifier
                 .size(width = 60.dp, height = 100.dp)

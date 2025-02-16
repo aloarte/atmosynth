@@ -2,9 +2,6 @@ package com.devalr.dayweather.composables
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,19 +13,14 @@ import coil3.compose.AsyncImage
 import com.devalr.dayweather.R
 import com.devalr.dayweather.model.HourlyWeatherVo
 import com.devalr.dayweather.model.SkyStateIcon
+import com.devalr.framework.components.AtmosCard
 import com.devalr.framework.components.AtmosText
 import com.devalr.framework.enums.TextType
 import java.time.LocalDateTime
 
 @Composable
 fun HourlyWeatherItem(data: HourlyWeatherVo) {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        ),
-        modifier = Modifier
-            .padding(2.dp)
-    ) {
+    AtmosCard {
         ConstraintLayout(
             modifier = Modifier
                 .size(width = 40.dp, height = 100.dp)
