@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.devalr.dayweather.model.HourlyEventVo
 import com.devalr.dayweather.model.enums.HourlyEvent
+import com.devalr.framework.components.AtmosText
+import com.devalr.framework.enums.TextType
 import java.time.LocalDateTime
 
 @Composable
@@ -34,7 +36,7 @@ fun HourlyEventItem(event: HourlyEventVo) {
         ) {
             val (name, icon, hour) = createRefs()
 
-            Text(
+            AtmosText(
                 modifier = Modifier.constrainAs(name) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
@@ -42,8 +44,9 @@ fun HourlyEventItem(event: HourlyEventVo) {
 
                 },
                 text = event.event.value,
-                fontSize = 8.sp
+                type = TextType.LabelXs
             )
+           
             HourlyEventImage(
                 modifier = Modifier.constrainAs(icon) {
                     top.linkTo(name.bottom, margin = 5.dp)
@@ -53,14 +56,14 @@ fun HourlyEventItem(event: HourlyEventVo) {
                 event = event.event
             )
 
-            Text(
+            AtmosText(
                 modifier = Modifier.constrainAs(hour) {
                     bottom.linkTo(parent.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 },
                 text = event.hour,
-                fontSize = 10.sp
+                type = TextType.LabelS
             )
         }
     }

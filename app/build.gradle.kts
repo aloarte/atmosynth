@@ -46,6 +46,7 @@ android {
 dependencies {
     implementation(project(":feature:cityselector"))
     implementation(project(":feature:dayweather"))
+    implementation(project(":common:framework"))
     implementation(libs.koin.android)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

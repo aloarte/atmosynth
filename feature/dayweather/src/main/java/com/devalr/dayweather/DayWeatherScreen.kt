@@ -32,7 +32,7 @@ fun DayWeatherScreen(viewModel: DayWeatherViewModel = koinInject()) {
         if (state.loadingWeather) {
             LoadingScreen()
         } else {
-            if (state.weatherByHours.isEmpty()) {
+            if (state.weatherByHours.isEmpty() ) {
                 ErrorScreen(
                     errorMessage = "No se pudieron recuperar los datos sobre el tiempo en la ciudad seleccionada.",
                     buttonMessage = "Reintentar"
