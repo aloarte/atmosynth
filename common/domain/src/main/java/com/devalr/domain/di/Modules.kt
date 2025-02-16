@@ -1,10 +1,10 @@
 package com.devalr.domain.di
 
 import com.devalr.data.di.dataModules
-import com.devalr.data.dto.dailyweather.DailyWeatherDto
-import com.devalr.data.dto.dailyweather.DayDto
-import com.devalr.data.dto.dailyweather.SkyValueInTimeDto
-import com.devalr.data.dto.dailyweather.ValueInTimeDto
+import com.devalr.data.dto.dailyweather.hourly.HourlyWeatherDto
+import com.devalr.data.dto.dailyweather.hourly.HourlyDto
+import com.devalr.data.dto.dailyweather.hourly.HourlySkyValueInTimeDto
+import com.devalr.data.dto.dailyweather.hourly.HourlyValueInTimeDto
 import com.devalr.domain.mappers.DailyWeatherMapper
 import com.devalr.domain.mappers.DateMapper
 import com.devalr.domain.mappers.DayMapper
@@ -22,8 +22,8 @@ import com.devalr.domain.mappers.params.ValueInTimeParams
 import com.devalr.domain.mergers.DayMerger
 import com.devalr.domain.model.enums.SkyState
 import com.devalr.domain.model.enums.WeatherTime
-import com.devalr.domain.model.weather.DailyPredictionBo
-import com.devalr.domain.model.weather.DailyWeatherBo
+import com.devalr.domain.model.weather.HourlyPredictionBo
+import com.devalr.domain.model.weather.HourlyWeatherDataBo
 import com.devalr.domain.model.weather.HumidityRelationBo
 import com.devalr.domain.model.weather.RainRelationBo
 import com.devalr.domain.model.weather.SkyRelationBo
@@ -51,10 +51,10 @@ private val repositoriesModules =
 
 private val mapperModules =
     module {
-        factory<Mapper<DailyWeatherDto?, DailyWeatherBo?>>(named("DailyWeatherMapper")) {
+        factory<Mapper<HourlyWeatherDto?, HourlyWeatherDataBo?>>(named("DailyWeatherMapper")) {
             DailyWeatherMapper(get(named("DayMapper")))
         }
-        factory<Mapper<DayDto, DailyPredictionBo>>(named("DayMapper")) {
+        factory<Mapper<HourlyDto, HourlyPredictionBo>>(named("DayMapper")) {
             DayMapper(
                 get(named("DateMapper")),
                 get(named("HumidityMapper")),
@@ -67,26 +67,26 @@ private val mapperModules =
             )
         }
 
-        factory<Mapper<ValueInTimeDto, HumidityRelationBo>>(named("HumidityMapper")) {
+        factory<Mapper<HourlyValueInTimeDto, HumidityRelationBo>>(named("HumidityMapper")) {
             HumidityMapper(
                 get(named("TimeEnumMapper"))
             )
         }
 
-        factory<Mapper<ValueInTimeDto, RainRelationBo>>(named("RainMapper")) {
+        factory<Mapper<HourlyValueInTimeDto, RainRelationBo>>(named("RainMapper")) {
             RainMapper(
                 get(named("TimeEnumMapper"))
             )
         }
 
-        factory<Mapper<SkyValueInTimeDto, SkyRelationBo>>(named("SkyStateMapper")) {
+        factory<Mapper<HourlySkyValueInTimeDto, SkyRelationBo>>(named("SkyStateMapper")) {
             SkyStateMapper(
                 get(named("SkyMapper")),
                 get(named("TimeEnumMapper"))
             )
         }
 
-        factory<Mapper<ValueInTimeDto, SnowRelationBo>>(named("SnowMapper")) {
+        factory<Mapper<HourlyValueInTimeDto, SnowRelationBo>>(named("SnowMapper")) {
             SnowMapper(
                 get(named("TimeEnumMapper"))
             )
@@ -99,7 +99,7 @@ private val mapperModules =
             )
         }
 
-        factory<Mapper<ValueInTimeDto, ThermalRelationBo>>(named("ThermalMapper")) {
+        factory<Mapper<HourlyValueInTimeDto, ThermalRelationBo>>(named("ThermalMapper")) {
             ThermalMapper(
                 get(named("TimeEnumMapper"))
             )

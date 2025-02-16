@@ -1,14 +1,14 @@
 package com.devalr.domain.mappers
 
-import com.devalr.data.dto.dailyweather.DayDto
-import com.devalr.data.dto.dailyweather.SkyValueInTimeDto
-import com.devalr.data.dto.dailyweather.ValueInTimeDto
+import com.devalr.data.dto.dailyweather.hourly.HourlyDto
+import com.devalr.data.dto.dailyweather.hourly.HourlySkyValueInTimeDto
+import com.devalr.data.dto.dailyweather.hourly.HourlyValueInTimeDto
 import com.devalr.domain.HourlyEventData
 import com.devalr.domain.mappers.params.DateMapperParams
 import com.devalr.domain.mappers.params.ValueInTimeParams
 import com.devalr.domain.mergers.DayMerger
 import com.devalr.domain.model.enums.SunEvent
-import com.devalr.domain.model.weather.DailyPredictionBo
+import com.devalr.domain.model.weather.HourlyPredictionBo
 import com.devalr.domain.model.weather.HumidityRelationBo
 import com.devalr.domain.model.weather.RainRelationBo
 import com.devalr.domain.model.weather.SkyRelationBo
@@ -19,16 +19,16 @@ import java.time.LocalDateTime
 
 class DayMapper(
     private val dateMapper: Mapper<DateMapperParams, LocalDateTime>,
-    private val humidityMapper: Mapper<ValueInTimeDto, HumidityRelationBo>,
-    private val rainMapper: Mapper<ValueInTimeDto, RainRelationBo>,
-    private val skyMapper: Mapper<SkyValueInTimeDto, SkyRelationBo>,
-    private val snowMapper: Mapper<ValueInTimeDto, SnowRelationBo>,
+    private val humidityMapper: Mapper<HourlyValueInTimeDto, HumidityRelationBo>,
+    private val rainMapper: Mapper<HourlyValueInTimeDto, RainRelationBo>,
+    private val skyMapper: Mapper<HourlySkyValueInTimeDto, SkyRelationBo>,
+    private val snowMapper: Mapper<HourlyValueInTimeDto, SnowRelationBo>,
     private val temperatureMapper: Mapper<ValueInTimeParams, TemperatureRelationBo>,
-    private val thermalMapper: Mapper<ValueInTimeDto, ThermalRelationBo>,
+    private val thermalMapper: Mapper<HourlyValueInTimeDto, ThermalRelationBo>,
     private val dayMerger: DayMerger
-) : Mapper<DayDto, DailyPredictionBo>() {
-    override fun transform(data: DayDto): DailyPredictionBo =
-        DailyPredictionBo(
+) : Mapper<HourlyDto, HourlyPredictionBo>() {
+    override fun transform(data: HourlyDto): HourlyPredictionBo =
+        HourlyPredictionBo(
             date = data.date,
             hourlyData = dayMerger.merge(
                 humidityList = data.relativeHumidity.map { humidityMapper.transform(it) },

@@ -1,14 +1,14 @@
 package com.devalr.domain.mappers
 
 import androidx.core.text.isDigitsOnly
-import com.devalr.data.dto.dailyweather.ValueInTimeDto
+import com.devalr.data.dto.dailyweather.hourly.HourlyValueInTimeDto
 import com.devalr.domain.model.enums.WeatherTime
 import com.devalr.domain.model.weather.RainRelationBo
 
 class RainMapper(
     private val timeMapper: Mapper<String, WeatherTime>
-) : Mapper<ValueInTimeDto, RainRelationBo>() {
-    override fun transform(data: ValueInTimeDto): RainRelationBo =
+) : Mapper<HourlyValueInTimeDto, RainRelationBo>() {
+    override fun transform(data: HourlyValueInTimeDto): RainRelationBo =
         RainRelationBo(
             rainProbability = data.value
                 .takeIf { it.isDigitsOnly() }

@@ -1,15 +1,15 @@
 package com.devalr.domain.mappers
 
-import com.devalr.data.dto.dailyweather.DailyWeatherDto
-import com.devalr.data.dto.dailyweather.DayDto
-import com.devalr.domain.model.weather.DailyPredictionBo
-import com.devalr.domain.model.weather.DailyWeatherBo
+import com.devalr.data.dto.dailyweather.hourly.HourlyWeatherDto
+import com.devalr.data.dto.dailyweather.hourly.HourlyDto
+import com.devalr.domain.model.weather.HourlyPredictionBo
+import com.devalr.domain.model.weather.HourlyWeatherDataBo
 
 class DailyWeatherMapper(
-    private val dayMapper: Mapper<DayDto, DailyPredictionBo>,
-) : Mapper<DailyWeatherDto?, DailyWeatherBo?>() {
-    override fun transform(data: DailyWeatherDto?): DailyWeatherBo? =
+    private val dayMapper: Mapper<HourlyDto, HourlyPredictionBo>,
+) : Mapper<HourlyWeatherDto?, HourlyWeatherDataBo?>() {
+    override fun transform(data: HourlyWeatherDto?): HourlyWeatherDataBo? =
         data?.let {
-            DailyWeatherBo(predictions = data.prediction.day.map { dayMapper.transform(it) })
+            HourlyWeatherDataBo(predictions = data.prediction.day.map { dayMapper.transform(it) })
         }
 }

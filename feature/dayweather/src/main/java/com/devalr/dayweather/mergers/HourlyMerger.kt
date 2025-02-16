@@ -5,7 +5,7 @@ import com.devalr.dayweather.model.HourlyEventVo
 import com.devalr.dayweather.model.HourlyWeatherVo
 import com.devalr.domain.HourlyEventData
 import com.devalr.domain.mappers.Mapper
-import com.devalr.domain.model.weather.DailyPredictionBo
+import com.devalr.domain.model.weather.HourlyPredictionBo
 import com.devalr.domain.model.weather.HourlyWeatherBo
 import java.time.LocalDateTime
 
@@ -14,7 +14,7 @@ class HourlyMerger(
     private val hourlyMapper: Mapper<HourlyWeatherBo, HourlyWeatherVo>
 ) {
     fun merge(
-        dailyPredictionBo: List<DailyPredictionBo>,
+        hourlyPredictionBo: List<HourlyPredictionBo>,
         initBracket: Long,
         endBracket: Long
     ): List<HourlyDataVo> {
@@ -22,7 +22,7 @@ class HourlyMerger(
             return emptyList()
         }
         val allHoursList = mutableListOf<HourlyDataVo>()
-        dailyPredictionBo.forEach {
+        hourlyPredictionBo.forEach {
             allHoursList += merge(it.hourlyData, it.sunEvents)
         }
         val now = LocalDateTime.now()
