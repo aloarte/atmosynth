@@ -1,12 +1,12 @@
 package com.devalr.domain.mergers
 
-import com.devalr.domain.model.weather.HourlyWeatherBo
-import com.devalr.domain.model.weather.HumidityRelationBo
-import com.devalr.domain.model.weather.RainRelationBo
-import com.devalr.domain.model.weather.SkyRelationBo
-import com.devalr.domain.model.weather.SnowRelationBo
-import com.devalr.domain.model.weather.TemperatureRelationBo
-import com.devalr.domain.model.weather.ThermalRelationBo
+import com.devalr.domain.model.weather.hourly.HourlyWeatherBo
+import com.devalr.domain.model.weather.common.HumidityRelationBo
+import com.devalr.domain.model.weather.common.RainRelationBo
+import com.devalr.domain.model.weather.common.SkyRelationBo
+import com.devalr.domain.model.weather.common.SnowRelationBo
+import com.devalr.domain.model.weather.common.TemperatureRelationBo
+import com.devalr.domain.model.weather.common.ThermalRelationBo
 
 class DayMerger {
     fun merge(

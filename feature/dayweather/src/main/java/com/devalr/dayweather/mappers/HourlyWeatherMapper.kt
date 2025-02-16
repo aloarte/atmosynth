@@ -5,7 +5,7 @@ import com.devalr.dayweather.model.HourlyWeatherVo
 import com.devalr.dayweather.model.enums.SkyStateIcon
 import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.enums.SkyState
-import com.devalr.domain.model.weather.HourlyWeatherBo
+import com.devalr.domain.model.weather.hourly.HourlyWeatherBo
 
 class HourlyWeatherMapper(private val skyMapper: Mapper<SkyState, SkyStateIcon>) :
     Mapper<HourlyWeatherBo, HourlyWeatherVo>() {

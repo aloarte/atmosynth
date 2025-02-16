@@ -12,7 +12,7 @@ import com.devalr.domain.HourlyEventData
 import com.devalr.domain.di.domainModules
 import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.enums.SkyState
-import com.devalr.domain.model.weather.HourlyWeatherBo
+import com.devalr.domain.model.weather.hourly.HourlyWeatherBo
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

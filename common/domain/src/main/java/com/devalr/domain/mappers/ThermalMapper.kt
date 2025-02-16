@@ -3,7 +3,7 @@ package com.devalr.domain.mappers
 import androidx.core.text.isDigitsOnly
 import com.devalr.data.dto.dailyweather.hourly.HourlyValueInTimeDto
 import com.devalr.domain.model.enums.WeatherTime
-import com.devalr.domain.model.weather.ThermalRelationBo
+import com.devalr.domain.model.weather.common.ThermalRelationBo
 
 class ThermalMapper(
     private val timeMapper: Mapper<String, WeatherTime>

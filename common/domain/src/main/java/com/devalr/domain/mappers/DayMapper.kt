@@ -8,13 +8,13 @@ import com.devalr.domain.mappers.params.DateMapperParams
 import com.devalr.domain.mappers.params.ValueInTimeParams
 import com.devalr.domain.mergers.DayMerger
 import com.devalr.domain.model.enums.SunEvent
-import com.devalr.domain.model.weather.HourlyPredictionBo
-import com.devalr.domain.model.weather.HumidityRelationBo
-import com.devalr.domain.model.weather.RainRelationBo
-import com.devalr.domain.model.weather.SkyRelationBo
-import com.devalr.domain.model.weather.SnowRelationBo
-import com.devalr.domain.model.weather.TemperatureRelationBo
-import com.devalr.domain.model.weather.ThermalRelationBo
+import com.devalr.domain.model.weather.hourly.HourlyPredictionBo
+import com.devalr.domain.model.weather.common.HumidityRelationBo
+import com.devalr.domain.model.weather.common.RainRelationBo
+import com.devalr.domain.model.weather.common.SkyRelationBo
+import com.devalr.domain.model.weather.common.SnowRelationBo
+import com.devalr.domain.model.weather.common.TemperatureRelationBo
+import com.devalr.domain.model.weather.common.ThermalRelationBo
 import java.time.LocalDateTime
 
 class DayMapper(

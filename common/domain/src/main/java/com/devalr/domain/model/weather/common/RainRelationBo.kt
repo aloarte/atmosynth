@@ -1,4 +1,4 @@
-package com.devalr.domain.model.weather
+package com.devalr.domain.model.weather.common
 
 import com.devalr.domain.model.enums.WeatherTime
 

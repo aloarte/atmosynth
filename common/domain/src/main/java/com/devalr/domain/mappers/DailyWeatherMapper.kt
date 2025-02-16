@@ -2,8 +2,8 @@ package com.devalr.domain.mappers
 
 import com.devalr.data.dto.dailyweather.hourly.HourlyWeatherDto
 import com.devalr.data.dto.dailyweather.hourly.HourlyDto
-import com.devalr.domain.model.weather.HourlyPredictionBo
-import com.devalr.domain.model.weather.HourlyWeatherDataBo
+import com.devalr.domain.model.weather.hourly.HourlyPredictionBo
+import com.devalr.domain.model.weather.hourly.HourlyWeatherDataBo
 
 class DailyWeatherMapper(
     private val dayMapper: Mapper<HourlyDto, HourlyPredictionBo>,

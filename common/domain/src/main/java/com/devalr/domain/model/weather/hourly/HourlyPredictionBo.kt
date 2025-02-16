@@ -1,4 +1,4 @@
-package com.devalr.domain.model.weather
+package com.devalr.domain.model.weather.hourly
 
 import com.devalr.domain.HourlyEventData
 

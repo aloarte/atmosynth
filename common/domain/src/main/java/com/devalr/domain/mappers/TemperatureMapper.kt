@@ -4,7 +4,7 @@ import androidx.core.text.isDigitsOnly
 import com.devalr.domain.mappers.params.DateMapperParams
 import com.devalr.domain.mappers.params.ValueInTimeParams
 import com.devalr.domain.model.enums.WeatherTime
-import com.devalr.domain.model.weather.TemperatureRelationBo
+import com.devalr.domain.model.weather.common.TemperatureRelationBo
 import java.time.LocalDateTime
 
 class TemperatureMapper(

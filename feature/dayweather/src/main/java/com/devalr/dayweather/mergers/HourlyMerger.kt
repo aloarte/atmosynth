@@ -5,8 +5,8 @@ import com.devalr.dayweather.model.HourlyEventVo
 import com.devalr.dayweather.model.HourlyWeatherVo
 import com.devalr.domain.HourlyEventData
 import com.devalr.domain.mappers.Mapper
-import com.devalr.domain.model.weather.HourlyPredictionBo
-import com.devalr.domain.model.weather.HourlyWeatherBo
+import com.devalr.domain.model.weather.hourly.HourlyPredictionBo
+import com.devalr.domain.model.weather.hourly.HourlyWeatherBo
 import java.time.LocalDateTime
 
 class HourlyMerger(
