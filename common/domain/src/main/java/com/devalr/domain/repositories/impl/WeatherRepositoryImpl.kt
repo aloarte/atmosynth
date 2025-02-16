@@ -11,7 +11,6 @@ import com.devalr.domain.repositories.WeatherRepository
 class WeatherRepositoryImpl(
     private val datasource: WeatherDatasource,
     private val hourlyWeatherMapper: Mapper<HourlyWeatherDto?, HourlyWeatherDataBo?>,
-    private val dailyWeatherMapper: Mapper<DailyWeatherDto?, DailyWeatherDataBo?>
 
     ) : WeatherRepository {
     override suspend fun fetchDailyWeather(cityCode: String): HourlyWeatherDataBo? {
