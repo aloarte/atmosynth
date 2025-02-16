@@ -1,5 +1,6 @@
-package com.devalr.domain.mappers
+package com.devalr.domain.mappers.hourly
 
+import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.enums.WeatherTime
 
 class TimeMapper : Mapper<String, WeatherTime>() {

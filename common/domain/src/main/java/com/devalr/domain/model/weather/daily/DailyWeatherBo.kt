@@ -5,7 +5,8 @@ import java.time.LocalDateTime
 data class DailyWeatherBo(
     val rainProbabilities: List<PrecipitationProbability>,
     val snowProbabilities: List<PrecipitationProbability>,
-    val skyStates : List<DailySkyState>,
+    val skyStates: List<DailySkyState>,
+    val windState: List<DailyWindState>,
     val temperatures: MaxMinValueBo,
     val thermalSensation: MaxMinValueBo,
     val humidity: MaxMinValueBo,

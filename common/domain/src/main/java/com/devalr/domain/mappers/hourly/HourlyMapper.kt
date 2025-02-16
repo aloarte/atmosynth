@@ -1,9 +1,10 @@
-package com.devalr.domain.mappers
+package com.devalr.domain.mappers.hourly
 
 import com.devalr.data.dto.dailyweather.hourly.HourlyDto
 import com.devalr.data.dto.dailyweather.hourly.HourlySkyValueInTimeDto
 import com.devalr.data.dto.dailyweather.hourly.HourlyValueInTimeDto
 import com.devalr.domain.HourlyEventData
+import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.mappers.params.DateMapperParams
 import com.devalr.domain.mappers.params.ValueInTimeParams
 import com.devalr.domain.mergers.DayMerger
@@ -17,7 +18,7 @@ import com.devalr.domain.model.weather.common.TemperatureRelationBo
 import com.devalr.domain.model.weather.common.ThermalRelationBo
 import java.time.LocalDateTime
 
-class DayMapper(
+class HourlyMapper(
     private val dateMapper: Mapper<DateMapperParams, LocalDateTime>,
     private val humidityMapper: Mapper<HourlyValueInTimeDto, HumidityRelationBo>,
     private val rainMapper: Mapper<HourlyValueInTimeDto, RainRelationBo>,

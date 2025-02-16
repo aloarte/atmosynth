@@ -27,20 +27,20 @@ private val mapperModules =
     module {
         factory {
             HourlyMerger(
-                get(named("HourlyEventMapper")),
-                get(named("HourlyWeatherMapper"))
+                get(named("VoHourlyEventMapper")),
+                get(named("VoHourlyWeatherMapper"))
             )
         }
 
-        factory<Mapper<HourlyEventData, HourlyEventVo>>(named("HourlyEventMapper")) {
+        factory<Mapper<HourlyEventData, HourlyEventVo>>(named("VoHourlyEventMapper")) {
             HourlyEventMapper()
         }
 
-        factory<Mapper<HourlyWeatherBo, HourlyWeatherVo>>(named("HourlyWeatherMapper")) {
-            HourlyWeatherMapper(get(named("SkyEnumMapper")))
+        factory<Mapper<HourlyWeatherBo, HourlyWeatherVo>>(named("VoHourlyWeatherMapper")) {
+            HourlyWeatherMapper(get(named("VoSkyEnumMapper")))
         }
 
-        factory<Mapper<SkyState, SkyStateIcon>>(named("SkyEnumMapper")) {
+        factory<Mapper<SkyState, SkyStateIcon>>(named("VoSkyEnumMapper")) {
             SkyEnumMapper()
         }
 

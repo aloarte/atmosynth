@@ -1,6 +1,7 @@
-package com.devalr.domain.mappers
+package com.devalr.domain.mappers.hourly
 
 import android.util.Log
+import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.enums.SkyState
 
 class SkyMapper : Mapper<String, SkyState>() {

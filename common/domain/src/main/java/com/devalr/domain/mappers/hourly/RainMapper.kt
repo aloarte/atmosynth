@@ -1,16 +1,17 @@
-package com.devalr.domain.mappers
+package com.devalr.domain.mappers.hourly
 
 import androidx.core.text.isDigitsOnly
 import com.devalr.data.dto.dailyweather.hourly.HourlyValueInTimeDto
+import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.enums.WeatherTime
-import com.devalr.domain.model.weather.common.SnowRelationBo
+import com.devalr.domain.model.weather.common.RainRelationBo
 
-class SnowMapper(
+class RainMapper(
     private val timeMapper: Mapper<String, WeatherTime>
-) : Mapper<HourlyValueInTimeDto, SnowRelationBo>() {
-    override fun transform(data: HourlyValueInTimeDto): SnowRelationBo =
-        SnowRelationBo(
-            snowProbability = data.value
+) : Mapper<HourlyValueInTimeDto, RainRelationBo>() {
+    override fun transform(data: HourlyValueInTimeDto): RainRelationBo =
+        RainRelationBo(
+            rainProbability = data.value
                 .takeIf { it.isDigitsOnly() }
                 ?.toFloat() ?: 0f,
             time = timeMapper.transform(data.time)

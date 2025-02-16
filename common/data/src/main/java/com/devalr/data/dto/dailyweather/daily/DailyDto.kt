@@ -9,7 +9,7 @@ data class DailyDto(
     @SerialName("cotaNieveProv") val snowProbability: List<DailyValueInTimeStrDto>,
     @SerialName("estadoCielo") val skyState: List<DailySkyValueInTimeDto>,
     @SerialName("viento") val wind: List<DailyWindInTimeDto>,
-    @SerialName("rachaMax") val windValue: List<DailyWindValueInTimeDto>,
+    @SerialName("rachaMax") val windValue: List<DailyValueInTimeStrDto>,
     @SerialName("temperatura") val temperature: DailyMaxMinValuesDto,
     @SerialName("sensTermica") val thermalSensation: DailyMaxMinValuesDto,
     @SerialName("humedadRelativa") val relativeHumidity: DailyMaxMinValuesDto,

@@ -1,6 +1,7 @@
-package com.devalr.domain.mappers
+package com.devalr.domain.mappers.hourly
 
 import com.devalr.data.dto.dailyweather.hourly.HourlySkyValueInTimeDto
+import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.enums.SkyState
 import com.devalr.domain.model.enums.WeatherTime
 import com.devalr.domain.model.weather.common.SkyRelationBo

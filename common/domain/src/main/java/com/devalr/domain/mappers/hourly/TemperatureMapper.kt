@@ -1,6 +1,7 @@
-package com.devalr.domain.mappers
+package com.devalr.domain.mappers.hourly
 
 import androidx.core.text.isDigitsOnly
+import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.mappers.params.DateMapperParams
 import com.devalr.domain.mappers.params.ValueInTimeParams
 import com.devalr.domain.model.enums.WeatherTime

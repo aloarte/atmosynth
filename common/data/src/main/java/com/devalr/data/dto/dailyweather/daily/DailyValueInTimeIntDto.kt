@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DailyValueInTimeIntDto(
-    @SerialName("value") val value: Int,
+    @SerialName("value") val value: Float,
     @SerialName("periodo") val time: String?=null
 )
