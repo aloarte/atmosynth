@@ -1,8 +1,8 @@
 package com.devalr.domain.mappers
 
 import com.devalr.data.dto.dailyweather.SkyValueInTimeDto
-import com.devalr.domain.model.SkyState
-import com.devalr.domain.model.WeatherTime
+import com.devalr.domain.model.enums.SkyState
+import com.devalr.domain.model.enums.WeatherTime
 import com.devalr.domain.model.weather.SkyRelationBo
 
 class SkyStateMapper(

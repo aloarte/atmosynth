@@ -7,11 +7,11 @@ import com.devalr.dayweather.mappers.SkyEnumMapper
 import com.devalr.dayweather.mergers.HourlyMerger
 import com.devalr.dayweather.model.HourlyEventVo
 import com.devalr.dayweather.model.HourlyWeatherVo
-import com.devalr.dayweather.model.SkyStateIcon
+import com.devalr.dayweather.model.enums.SkyStateIcon
 import com.devalr.domain.HourlyEventData
 import com.devalr.domain.di.domainModules
 import com.devalr.domain.mappers.Mapper
-import com.devalr.domain.model.SkyState
+import com.devalr.domain.model.enums.SkyState
 import com.devalr.domain.model.weather.HourlyWeatherBo
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

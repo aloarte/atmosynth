@@ -20,6 +20,7 @@ fun AtmosText(modifier: Modifier = Modifier, text: String, textColor: Color = Co
 }
 
 private fun getTextSize(type: TextType) = when (type) {
+    TextType.UltraFeatured -> 40.sp
     TextType.Title -> 14.sp
     TextType.Description -> 12.sp
     TextType.LabelXs -> 8.sp
@@ -29,6 +30,7 @@ private fun getTextSize(type: TextType) = when (type) {
 }
 
 private fun getTextWeight(type: TextType) = when (type) {
+    TextType.UltraFeatured ->  FontWeight.ExtraBold
     TextType.Title -> FontWeight.Bold
     TextType.Description -> FontWeight.Normal
     TextType.LabelXs -> FontWeight.Thin

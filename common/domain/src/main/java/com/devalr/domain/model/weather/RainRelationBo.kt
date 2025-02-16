@@ -1,6 +1,6 @@
 package com.devalr.domain.model.weather
 
-import com.devalr.domain.model.WeatherTime
+import com.devalr.domain.model.enums.WeatherTime
 
 data class RainRelationBo(
     val rainProbability: Float,

@@ -1,4 +1,4 @@
-package com.devalr.domain.model
+package com.devalr.domain.model.enums
 
 enum class WeatherTime(
     val text: String,

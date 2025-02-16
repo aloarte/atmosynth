@@ -1,5 +1,6 @@
 package com.devalr.framework.components
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,10 +17,10 @@ import com.devalr.framework.enums.TextType
 import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
-fun AtmosCard(width: Dp? = null, content: @Composable () -> Unit) {
+fun AtmosCard(width: Dp? = null, content: @Composable (PaddingValues) -> Unit) {
     val modifier = Modifier
         .padding(5.dp)
-        .height(100.dp)
+        .height(150.dp)
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -28,7 +29,7 @@ fun AtmosCard(width: Dp? = null, content: @Composable () -> Unit) {
             modifier.width(it)
         } ?: modifier.fillMaxWidth()
     ) {
-        content()
+        content(PaddingValues(5.dp))
     }
 }
 

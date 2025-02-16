@@ -1,7 +1,7 @@
 package com.devalr.domain.model.weather
 
-import com.devalr.domain.model.SkyState
-import com.devalr.domain.model.WeatherTime
+import com.devalr.domain.model.enums.SkyState
+import com.devalr.domain.model.enums.WeatherTime
 
 data class SkyRelationBo(
     val skyState: SkyState,

@@ -1,6 +1,6 @@
 package com.devalr.domain.mappers
 
-import com.devalr.domain.model.WeatherTime
+import com.devalr.domain.model.enums.WeatherTime
 
 class TimeMapper : Mapper<String, WeatherTime>() {
     override fun transform(data: String): WeatherTime =

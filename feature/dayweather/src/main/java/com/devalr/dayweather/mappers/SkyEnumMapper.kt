@@ -1,8 +1,8 @@
 package com.devalr.dayweather.mappers
 
-import com.devalr.dayweather.model.SkyStateIcon
+import com.devalr.dayweather.model.enums.SkyStateIcon
 import com.devalr.domain.mappers.Mapper
-import com.devalr.domain.model.SkyState
+import com.devalr.domain.model.enums.SkyState
 
 class SkyEnumMapper : Mapper<SkyState, SkyStateIcon>() {
     override fun transform(data: SkyState): SkyStateIcon = when (data) {

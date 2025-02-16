@@ -1,5 +1,6 @@
 package com.devalr.dayweather.model
 
+import com.devalr.dayweather.model.enums.SkyStateIcon
 import java.time.LocalDateTime
 
 data class HourlyWeatherVo(

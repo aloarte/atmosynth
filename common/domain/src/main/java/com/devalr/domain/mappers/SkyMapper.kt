@@ -1,7 +1,7 @@
 package com.devalr.domain.mappers
 
 import android.util.Log
-import com.devalr.domain.model.SkyState
+import com.devalr.domain.model.enums.SkyState
 
 class SkyMapper : Mapper<String, SkyState>() {
     override fun transform(data: String): SkyState =

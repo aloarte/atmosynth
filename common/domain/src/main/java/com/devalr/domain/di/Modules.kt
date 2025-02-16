@@ -20,8 +20,8 @@ import com.devalr.domain.mappers.TimeMapper
 import com.devalr.domain.mappers.params.DateMapperParams
 import com.devalr.domain.mappers.params.ValueInTimeParams
 import com.devalr.domain.mergers.DayMerger
-import com.devalr.domain.model.SkyState
-import com.devalr.domain.model.WeatherTime
+import com.devalr.domain.model.enums.SkyState
+import com.devalr.domain.model.enums.WeatherTime
 import com.devalr.domain.model.weather.DailyPredictionBo
 import com.devalr.domain.model.weather.DailyWeatherBo
 import com.devalr.domain.model.weather.HumidityRelationBo

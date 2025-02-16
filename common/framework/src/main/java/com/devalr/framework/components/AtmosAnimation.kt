@@ -29,9 +29,11 @@ private fun getAnimation(type: AnimationsType): Int = when (type) {
     AnimationsType.ActionError -> R.raw.lottie_action_error
     AnimationsType.ActionWarning -> R.raw.lottie_action_warning
     AnimationsType.WeatherCold -> R.raw.lottie_weather_cold
-    AnimationsType.WeatherClouds -> R.raw.lottie_weather_clouds
-    AnimationsType.WeatherClear -> R.raw.lottie_weather_clear
+    AnimationsType.WeatherClouds -> R.raw.lottie_weather_cloudy
+    AnimationsType.WeatherClearDay -> R.raw.lottie_weather_day_clear
+    AnimationsType.WeatherClearNight -> R.raw.lottie_weather_night_clear
     AnimationsType.WeatherWind -> R.raw.lottie_weather_wind
+    AnimationsType.WeatherRain -> R.raw.lottie_weather_rain
     AnimationsType.LoadingAi -> R.raw.lottie_ai_loading
     AnimationsType.LoadingGeneral -> R.raw.loading_general
 }

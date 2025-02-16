@@ -7,7 +7,7 @@ import com.devalr.domain.HourlyEventData
 import com.devalr.domain.mappers.params.DateMapperParams
 import com.devalr.domain.mappers.params.ValueInTimeParams
 import com.devalr.domain.mergers.DayMerger
-import com.devalr.domain.model.SunEvent
+import com.devalr.domain.model.enums.SunEvent
 import com.devalr.domain.model.weather.DailyPredictionBo
 import com.devalr.domain.model.weather.HumidityRelationBo
 import com.devalr.domain.model.weather.RainRelationBo

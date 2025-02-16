@@ -5,8 +5,10 @@ enum class AnimationsType {
     ActionWarning,
     WeatherCold,
     WeatherClouds,
-    WeatherClear,
+    WeatherClearDay,
+    WeatherClearNight,
     WeatherWind,
+    WeatherRain,
     LoadingAi,
     LoadingGeneral
 }

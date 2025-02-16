@@ -1,4 +1,4 @@
-package com.devalr.dayweather.model
+package com.devalr.dayweather.model.enums
 
 enum class SkyStateIcon(val pngValue: String) {
     NightClear("01n"),
