@@ -24,7 +24,7 @@ fun DayWeatherScreen(viewModel: DayWeatherViewModel = koinInject()) {
 
                 }
             } else {
-                DayWeatherContent(state.weatherByHours)
+                DayWeatherContent(state.nowWeather, state.weatherByHours)
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.devalr.dayweather.model
+package com.devalr.dayweather.model.hourly
 
 import java.time.LocalDateTime
 

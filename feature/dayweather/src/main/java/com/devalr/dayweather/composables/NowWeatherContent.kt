@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.devalr.dayweather.model.now.NowWeatherDataVo
 import com.devalr.domain.model.enums.NowStatusType
 import com.devalr.domain.model.now.NowStatusVo
 import com.devalr.framework.components.AtmosAnimation
@@ -22,7 +23,7 @@ import com.devalr.framework.enums.TextType
 import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
-fun NowWeatherContent(nowStatus: NowStatusVo) {
+fun NowWeatherContent(nowStatus: NowWeatherDataVo) {
     AtmosCard(width = 400.dp) { paddingValues ->
         Column(
             modifier = Modifier
@@ -31,21 +32,21 @@ fun NowWeatherContent(nowStatus: NowStatusVo) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AtmosText(text = nowStatus.city, type = TextType.Title)
+            AtmosText(text = "Ciudad Real", type = TextType.Title)
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                AtmosAnimation(size = 50.dp, type = getAnimation(nowStatus.nowStatus))
+                //AtmosAnimation(size = 50.dp, type = getAnimation(nowStatus.nowStatus))
                 AtmosSeparator(size = 5.dp, type = SeparatorType.Horizontal)
-                AtmosText(text = nowStatus.temperature, type = TextType.UltraFeatured)
+                AtmosText(text = nowStatus.temperature.current, type = TextType.UltraFeatured)
             }
             AtmosText(
-                text = "Sensación térmica de ${nowStatus.thermalSensation}",
+                text = "Sensación térmica de ${nowStatus.thermalSensation.current}",
                 type = TextType.LabelL
             )
             AtmosText(
-                text = "Máxima ${nowStatus.thermalSensation}  Mínima ${nowStatus.thermalSensation}",
+                text = "Máxima ${nowStatus.temperature.max}  Mínima ${nowStatus.temperature.min}",
                 type = TextType.LabelS
             )
 
@@ -61,7 +62,7 @@ private fun getAnimation(status: NowStatusType) = when (status) {
     NowStatusType.Rain -> AnimationsType.WeatherRain
     NowStatusType.Windy -> AnimationsType.WeatherWind
 }
-
+/*
 @Preview(showBackground = true)
 @Composable
 private fun NowWeatherContentPreviewCold() {
@@ -150,7 +151,7 @@ private fun NowWeatherContentPreviewCloudy() {
             )
         )
     }
-}
+}*/
 
 
 

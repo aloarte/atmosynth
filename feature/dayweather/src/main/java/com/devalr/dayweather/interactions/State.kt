@@ -1,12 +1,12 @@
 package com.devalr.dayweather.interactions
 
-import com.devalr.dayweather.model.HourlyDataVo
-import com.devalr.dayweather.model.MainWeatherDataVo
+import com.devalr.dayweather.model.hourly.HourlyDataVo
+import com.devalr.dayweather.model.now.NowWeatherDataVo
 
 data class State(
     val loadingWeather: Boolean = false,
     val errorReceived: Boolean = false,
     val promptResult: String = "",
-    val mainWeatherData: MainWeatherDataVo? = null,
     val weatherByHours: List<HourlyDataVo> = emptyList(),
+    val nowWeather: NowWeatherDataVo? = null
 )

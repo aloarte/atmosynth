@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.devalr.dayweather.composables.hourlycomponents.HourlyEventItem
 import com.devalr.dayweather.composables.hourlycomponents.HourlyWeatherItem
-import com.devalr.dayweather.model.HourlyDataVo
-import com.devalr.dayweather.model.HourlyEventVo
-import com.devalr.dayweather.model.HourlyWeatherVo
+import com.devalr.dayweather.model.hourly.HourlyDataVo
+import com.devalr.dayweather.model.hourly.HourlyEventVo
+import com.devalr.dayweather.model.hourly.HourlyWeatherVo
 import com.devalr.framework.components.AtmosCard
 import com.devalr.framework.components.AtmosSeparator
 import com.devalr.framework.components.AtmosText

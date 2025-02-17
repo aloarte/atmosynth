@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil3.compose.AsyncImage
 import com.devalr.dayweather.R
-import com.devalr.dayweather.model.HourlyWeatherVo
+import com.devalr.dayweather.model.hourly.HourlyWeatherVo
 import com.devalr.dayweather.model.enums.SkyStateIcon
 import com.devalr.framework.components.AtmosCard
 import com.devalr.framework.components.AtmosText

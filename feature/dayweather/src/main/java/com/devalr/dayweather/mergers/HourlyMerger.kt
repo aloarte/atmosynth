@@ -1,8 +1,8 @@
 package com.devalr.dayweather.mergers
 
-import com.devalr.dayweather.model.HourlyDataVo
-import com.devalr.dayweather.model.HourlyEventVo
-import com.devalr.dayweather.model.HourlyWeatherVo
+import com.devalr.dayweather.model.hourly.HourlyDataVo
+import com.devalr.dayweather.model.hourly.HourlyEventVo
+import com.devalr.dayweather.model.hourly.HourlyWeatherVo
 import com.devalr.domain.HourlyEventData
 import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.weather.hourly.HourlyPredictionBo

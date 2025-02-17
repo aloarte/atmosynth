@@ -9,7 +9,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.devalr.dayweather.model.HourlyEventVo
+import com.devalr.dayweather.model.hourly.HourlyEventVo
 import com.devalr.dayweather.model.enums.HourlyEvent
 import com.devalr.framework.components.AtmosCard
 import com.devalr.framework.components.AtmosText

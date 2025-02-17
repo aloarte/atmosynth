@@ -1,6 +1,6 @@
 package com.devalr.dayweather.mappers
 
-import com.devalr.dayweather.model.HourlyEventVo
+import com.devalr.dayweather.model.hourly.HourlyEventVo
 import com.devalr.dayweather.model.enums.HourlyEvent
 import com.devalr.domain.HourlyEventData
 import com.devalr.domain.mappers.Mapper

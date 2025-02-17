@@ -1,4 +1,4 @@
-package com.devalr.dayweather.model
+package com.devalr.dayweather.model.hourly
 
 import com.devalr.dayweather.model.enums.SkyStateIcon
 import java.time.LocalDateTime

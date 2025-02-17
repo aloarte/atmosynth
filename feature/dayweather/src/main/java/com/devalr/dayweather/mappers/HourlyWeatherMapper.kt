@@ -1,7 +1,7 @@
 package com.devalr.dayweather.mappers
 
 import android.annotation.SuppressLint
-import com.devalr.dayweather.model.HourlyWeatherVo
+import com.devalr.dayweather.model.hourly.HourlyWeatherVo
 import com.devalr.dayweather.model.enums.SkyStateIcon
 import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.enums.SkyState
