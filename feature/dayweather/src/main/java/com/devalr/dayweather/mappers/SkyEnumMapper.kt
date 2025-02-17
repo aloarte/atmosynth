@@ -6,40 +6,39 @@ import com.devalr.domain.model.enums.SkyState
 
 class SkyEnumMapper : Mapper<SkyState, SkyStateIcon>() {
     override fun transform(data: SkyState): SkyStateIcon = when (data) {
-        SkyState.UNKNOWN -> SkyStateIcon.DayClear
-        SkyState.NIGHT_CLEAR -> SkyStateIcon.NightClear
-        SkyState.NIGHT_LOW_CLOUDS -> SkyStateIcon.NightFewClouds
-        SkyState.NIGHT_VERY_CLOUDY -> SkyStateIcon.NightScatteredClouds
-        SkyState.NIGHT_CLOUDY -> SkyStateIcon.NightBrokenClouds
-        SkyState.NIGHT_HIGH_CLOUDS -> SkyStateIcon.NightFewClouds
-        SkyState.NIGHT_CLOUDY_SOFT_RAIN -> SkyStateIcon.NightShowerRain
-        SkyState.NIGHT_CLOUDY_STORM_SOFT_RAIN -> SkyStateIcon.NightThunderstorm
-        SkyState.NIGHT_MISTS -> SkyStateIcon.NightMist
-        SkyState.NIGHT_CLOUDY_LOW_SNOW -> SkyStateIcon.NightSnow
-        SkyState.NIGHT_CLOUDY_SNOW -> SkyStateIcon.NightSnow
-        SkyState.NIGHT_CLOUDY_STORM -> SkyStateIcon.NightThunderstorm
-        SkyState.NIGHT_LOW_CLOUDY_LOW_RAIN -> SkyStateIcon.NightShowerRain
-        SkyState.NIGHT_VERY_CLOUDY_LOW_RAIN -> SkyStateIcon.NightShowerRain
-        SkyState.NIGHT_VERY_CLOUDY_RAIN -> SkyStateIcon.NightRain
-        SkyState.NIGHT_VERY_CLOUDY_SNOW -> SkyStateIcon.NightSnow
-        SkyState.NIGHT_VERY_CLOUDY_STORM -> SkyStateIcon.NightThunderstorm
-        SkyState.DAY_CLEAR -> SkyStateIcon.DayClear
-        SkyState.DAY_LOW_CLOUDS -> SkyStateIcon.DayFewClouds
-        SkyState.DAY_VERY_CLOUDY -> SkyStateIcon.DayScatteredClouds
-        SkyState.DAY_CLOUDY -> SkyStateIcon.DayBrokenClouds
-        SkyState.DAY_HIGH_CLOUDS -> SkyStateIcon.DayFewClouds
-        SkyState.DAY_CLOUDY_SOFT_RAIN -> SkyStateIcon.DayShowerRain
-        SkyState.DAY_CLOUDY_STORM_SOFT_RAIN -> SkyStateIcon.DayThunderstorm
-        SkyState.DAY_MISTS -> SkyStateIcon.DayMist
-        SkyState.DAY_CLOUDY_LOW_SNOW -> SkyStateIcon.DaySnow
-        SkyState.DAY_CLOUDY_SNOW -> SkyStateIcon.DaySnow
-        SkyState.DAY_CLOUDY_STORM -> SkyStateIcon.DayThunderstorm
-        SkyState.DAY_LOW_CLOUDY_LOW_RAIN -> SkyStateIcon.DayShowerRain
-        SkyState.DAY_VERY_CLOUDY_LOW_RAIN -> SkyStateIcon.DayShowerRain
-        SkyState.DAY_VERY_CLOUDY_RAIN -> SkyStateIcon.DayRain
-        SkyState.DAY_VERY_CLOUDY_SNOW -> SkyStateIcon.DaySnow
-        SkyState.DAY_VERY_CLOUDY_STORM -> SkyStateIcon.DayThunderstorm
-        SkyState.HAZE -> SkyStateIcon.DayClear
-
+        SkyState.Unknown -> SkyStateIcon.DayClear
+        SkyState.NightClear -> SkyStateIcon.NightClear
+        SkyState.NightLowClouds -> SkyStateIcon.NightFewClouds
+        SkyState.NightVeryCloudy -> SkyStateIcon.NightScatteredClouds
+        SkyState.NightCloudy -> SkyStateIcon.NightBrokenClouds
+        SkyState.NightHighClouds -> SkyStateIcon.NightFewClouds
+        SkyState.NightCloudySoftRain -> SkyStateIcon.NightShowerRain
+        SkyState.NightCloudyStormSoftRain -> SkyStateIcon.NightThunderstorm
+        SkyState.NightMists -> SkyStateIcon.NightMist
+        SkyState.NightCloudyLowSnow -> SkyStateIcon.NightSnow
+        SkyState.NightCloudySnow -> SkyStateIcon.NightSnow
+        SkyState.NightCloudyStorm -> SkyStateIcon.NightThunderstorm
+        SkyState.NightLowCloudyLowRain -> SkyStateIcon.NightShowerRain
+        SkyState.NightVeryCloudyLowRain -> SkyStateIcon.NightShowerRain
+        SkyState.NightVeryCloudyRain -> SkyStateIcon.NightRain
+        SkyState.NightVeryCloudySnow -> SkyStateIcon.NightSnow
+        SkyState.NightVeryCloudyStorm -> SkyStateIcon.NightThunderstorm
+        SkyState.DayClear -> SkyStateIcon.DayClear
+        SkyState.DayLowClouds -> SkyStateIcon.DayFewClouds
+        SkyState.DayVeryCloudy -> SkyStateIcon.DayScatteredClouds
+        SkyState.DayCloudy -> SkyStateIcon.DayBrokenClouds
+        SkyState.DayHighClouds -> SkyStateIcon.DayFewClouds
+        SkyState.DayCloudySoftRain -> SkyStateIcon.DayShowerRain
+        SkyState.DayCloudyStormSoftRain -> SkyStateIcon.DayThunderstorm
+        SkyState.DayMists -> SkyStateIcon.DayMist
+        SkyState.DayCloudyLowSnow -> SkyStateIcon.DaySnow
+        SkyState.DayCloudySnow -> SkyStateIcon.DaySnow
+        SkyState.DayCloudyStorm -> SkyStateIcon.DayThunderstorm
+        SkyState.DayLowCloudyLowRain -> SkyStateIcon.DayShowerRain
+        SkyState.DayVeryCloudyLowRain -> SkyStateIcon.DayShowerRain
+        SkyState.DayVeryCloudyRain -> SkyStateIcon.DayRain
+        SkyState.DayVeryCloudySnow -> SkyStateIcon.DaySnow
+        SkyState.DayVeryCloudyStorm -> SkyStateIcon.DayThunderstorm
+        SkyState.Haze -> SkyStateIcon.DayClear
     }
 }
