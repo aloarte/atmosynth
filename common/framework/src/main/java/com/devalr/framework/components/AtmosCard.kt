@@ -17,17 +17,27 @@ import com.devalr.framework.enums.TextType
 import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
-fun AtmosCard(width: Dp? = null, content: @Composable (PaddingValues) -> Unit) {
-    val modifier = Modifier
-        .padding(5.dp)
-        .height(150.dp)
+fun AtmosCard(width: Dp? = null, height: Dp? = null, content: @Composable (PaddingValues) -> Unit) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
         ),
-        modifier = width?.let {
-            modifier.width(it)
-        } ?: modifier.fillMaxWidth()
+        modifier = Modifier
+            .padding(5.dp)
+            .then(
+                Modifier.run {
+                    width?.let {
+                        width(it)
+                    } ?: fillMaxWidth()
+                }
+            )
+            .then(
+                Modifier.run {
+                    height?.let {
+                        height(it)
+                    } ?: height(150.dp)
+                }
+            )
     ) {
         content(PaddingValues(5.dp))
     }
@@ -48,6 +58,26 @@ fun AtmosCardPreviewFillMaxWidth() {
 fun AtmosCardPreviewCustomWidth() {
     AtmosynthTheme {
         AtmosCard(width = 300.dp) {
+            AtmosText(text = "Card content", type = TextType.Title)
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AtmosCardPreviewCustomHeight() {
+    AtmosynthTheme {
+        AtmosCard(height = 300.dp) {
+            AtmosText(text = "Card content", type = TextType.Title)
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AtmosCardPreviewCustomHeightWidth() {
+    AtmosynthTheme {
+        AtmosCard(width = 200.dp, height = 80.dp) {
             AtmosText(text = "Card content", type = TextType.Title)
         }
     }

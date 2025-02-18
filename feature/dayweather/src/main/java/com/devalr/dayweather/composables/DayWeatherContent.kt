@@ -13,13 +13,17 @@ import com.devalr.dayweather.model.now.NowWeatherDataVo
 @Composable
 fun DayWeatherContent(
     dailyWeather: NowWeatherDataVo?,
-    hourlyWeather: List<HourlyDataVo>
+    hourlyWeather: List<HourlyDataVo>,
+    promptResult:String?
 ) {
     FlowRow(modifier = Modifier.padding(8.dp)) {
         dailyWeather?.let {
             NowWeatherContent(nowStatus = dailyWeather)
         }
         HourlyWeatherContent(hourlyWeather)
+        promptResult?.let{
+            DailySummaryContent(promptResult)
+        }
     }
 
 }

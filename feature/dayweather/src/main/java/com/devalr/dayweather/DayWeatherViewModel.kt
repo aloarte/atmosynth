@@ -1,5 +1,6 @@
 package com.devalr.dayweather
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devalr.dayweather.extensions.toCelsius
@@ -76,6 +77,10 @@ class DayWeatherViewModel(
                         weatherResult.data.hourlyData.predictions.first().hourlyData.findClosestDate()
                     _state.update { currentState ->
                         currentState.copy(
+                            promptResult = geminiRepository.generateDaySummary(
+                                weatherResult.data.dailyData.predictions.first().toString()
+                                    .processForAI()
+                            ),
                             weatherByHours = hourlyMerger.merge(
                                 weatherResult.data.hourlyData.predictions,
                                 2,
@@ -94,6 +99,13 @@ class DayWeatherViewModel(
         }
     }
 }
+
+fun String.processForAI() = this
+    .replace("PrecipitationProbability", "")
+    .replace("DailySkyState", "")
+    .replace("DailyWindState", "")
+    .replace("ValuesDayTimeBo", "")
+    .replace("MaxMinValueBo", "")
 
 
 fun List<HourlyWeatherBo>.findClosestDate() = with(LocalDateTime.now(ZoneId.of("Europe/Madrid"))) {

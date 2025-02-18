@@ -6,6 +6,6 @@ import com.devalr.domain.repositories.GeminiRepository
 class GeminiRepositoryImpl(
     private val datasource: GeminiDatasource,
 ) : GeminiRepository {
-    override suspend fun generateDaySummary(dataForPrompt: String): List<String> =
+    override suspend fun generateDaySummary(dataForPrompt: String): String =
         datasource.generateDaySummary(dataForPrompt = dataForPrompt)
 }
