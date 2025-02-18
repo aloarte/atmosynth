@@ -1,11 +1,11 @@
 package com.devalr.dayweather
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devalr.dayweather.extensions.toCelsius
 import com.devalr.dayweather.interactions.Event
 import com.devalr.dayweather.interactions.Event.ChangeCity
+import com.devalr.dayweather.interactions.Event.LaunchAiPrompt
 import com.devalr.dayweather.interactions.Event.LoadScreen
 import com.devalr.dayweather.interactions.Event.OnUploadErrorState
 import com.devalr.dayweather.interactions.Event.OnUploadLoadingState
@@ -37,7 +37,9 @@ class DayWeatherViewModel(
 ) : ViewModel() {
     private val _state = MutableStateFlow(State())
     val state = _state
-        .onStart { handleEvent(LoadScreen) }
+        .onStart {
+            handleEvent(LoadScreen)
+        }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), State())
 
     fun handleEvent(event: Event) {
@@ -46,7 +48,7 @@ class DayWeatherViewModel(
             is OnUploadLoadingState -> updateLoadingState(event.loading)
             ChangeCity -> TODO()
             LoadScreen -> loadData()
-
+            is LaunchAiPrompt -> launchAiPrompt(event.promptData)
         }
     }
 
@@ -62,43 +64,58 @@ class DayWeatherViewModel(
         }
     }
 
-    private fun loadData() {
-        viewModelScope.launch(Dispatchers.IO) {
-            handleEvent(OnUploadLoadingState(true))
+    private fun launchAiPrompt(promptData: String) = viewModelScope.launch(Dispatchers.IO) {
+        _state.update { currentState ->
+            currentState.copy(loadingAiPrompt = true)
+        }
+        val promptResult = geminiRepository.generateDaySummary(promptData)
+        _state.update { currentState ->
+            currentState.copy(
+                promptResult = promptResult,
+                loadingAiPrompt = false
+            )
+        }
+    }
 
-            when (val weatherResult =
-                weatherUseCase.execute(viewModelScope, WeatherUseCase.Params("13034"))) {
-                is Result.Error -> {
-                    handleEvent(OnUploadLoadingState(false))
-                }
 
-                is Result.Success -> {
-                    val hourlyNow =
-                        weatherResult.data.hourlyData.predictions.first().hourlyData.findClosestDate()
-                    _state.update { currentState ->
-                        currentState.copy(
-                            promptResult = geminiRepository.generateDaySummary(
-                                weatherResult.data.dailyData.predictions.first().toString()
-                                    .processForAI()
-                            ),
-                            weatherByHours = hourlyMerger.merge(
-                                weatherResult.data.hourlyData.predictions,
-                                2,
-                                24
-                            ),
-                            dailyWeather = nowWeatherMapper.transform(weatherResult.data.dailyData.predictions.first())
-                                .mutateValues(
-                                    hourlyNow?.temperature?.toCelsius(),
-                                    hourlyNow?.thermalSensation?.toCelsius()
-                                )
-                        )
-                    }
-                    handleEvent(OnUploadLoadingState(false))
+    private fun loadData() = viewModelScope.launch(Dispatchers.IO) {
+        handleEvent(OnUploadLoadingState(true))
+
+        when (val weatherResult =
+            weatherUseCase.execute(viewModelScope, WeatherUseCase.Params("13034"))) {
+            is Result.Error -> {
+                handleEvent(OnUploadLoadingState(false))
+            }
+
+            is Result.Success -> {
+                handleEvent(
+                    LaunchAiPrompt(
+                        weatherResult.data.dailyData.predictions.first().toString()
+                            .processForAI()
+                    )
+                )
+                val hourlyNow =
+                    weatherResult.data.hourlyData.predictions.first().hourlyData.findClosestDate()
+                _state.update { currentState ->
+                    currentState.copy(
+                        weatherByHours = hourlyMerger.merge(
+                            weatherResult.data.hourlyData.predictions,
+                            2,
+                            24
+                        ),
+                        dailyWeather = nowWeatherMapper.transform(weatherResult.data.dailyData.predictions.first())
+                            .mutateValues(
+                                hourlyNow?.temperature?.toCelsius(),
+                                hourlyNow?.thermalSensation?.toCelsius()
+                            )
+                    )
                 }
+                handleEvent(OnUploadLoadingState(false))
             }
         }
     }
 }
+
 
 fun String.processForAI() = this
     .replace("PrecipitationProbability", "")

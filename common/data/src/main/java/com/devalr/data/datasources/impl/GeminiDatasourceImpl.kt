@@ -1,6 +1,5 @@
 package com.devalr.data.datasources.impl
 
-import android.util.Log
 import com.devalr.data.datasources.GeminiDatasource
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.ServerException
@@ -22,7 +21,6 @@ class GeminiDatasourceImpl(
                         text(prompt + dataForPrompt)
                     },
                 )
-
             response.text ?: ""
         }
 
@@ -31,7 +29,6 @@ class GeminiDatasourceImpl(
             try {
                 execute()
             } catch (exception: ServerException) {
-                Log.d("ALRALR", "exception ${exception.message}")
                 // TODO: Return an error here
                 ""
             }

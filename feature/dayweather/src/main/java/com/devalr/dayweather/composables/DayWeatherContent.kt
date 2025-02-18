@@ -14,7 +14,8 @@ import com.devalr.dayweather.model.now.NowWeatherDataVo
 fun DayWeatherContent(
     dailyWeather: NowWeatherDataVo?,
     hourlyWeather: List<HourlyDataVo>,
-    promptResult:String?
+    promptResult:String?,
+    loadingAiPrompt:Boolean
 ) {
     FlowRow(modifier = Modifier.padding(8.dp)) {
         dailyWeather?.let {
@@ -22,7 +23,7 @@ fun DayWeatherContent(
         }
         HourlyWeatherContent(hourlyWeather)
         promptResult?.let{
-            DailySummaryContent(promptResult)
+            DailySummaryContent(promptResult,loadingAiPrompt)
         }
     }
 

@@ -1,6 +1,6 @@
 package com.devalr.dayweather.composables
 
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,25 +14,23 @@ import com.devalr.dayweather.model.hourly.HourlyDataVo
 import com.devalr.dayweather.model.hourly.HourlyEventVo
 import com.devalr.dayweather.model.hourly.HourlyWeatherVo
 import com.devalr.framework.components.AtmosCard
-import com.devalr.framework.components.AtmosSeparator
 import com.devalr.framework.components.AtmosText
-import com.devalr.framework.enums.SeparatorType
 import com.devalr.framework.enums.TextType
 
 @Composable
 fun HourlyWeatherContent(weatherByHours: List<HourlyDataVo>) {
     AtmosCard { paddingValues ->
-        Row(modifier = Modifier.padding(paddingValues)) {
-            AtmosSeparator(size = 10.dp, type = SeparatorType.Horizontal)
+        Column(modifier = Modifier.padding(15.dp)) {
             AtmosText(text = "Tiempo por horas", type = TextType.Title)
-        }
-        LazyRow(modifier = Modifier.fillMaxSize()) {
-            items(weatherByHours) {
-                when (it) {
-                    is HourlyWeatherVo -> HourlyWeatherItem(it)
-                    is HourlyEventVo -> HourlyEventItem(it)
+            LazyRow(modifier = Modifier.fillMaxSize()) {
+                items(weatherByHours) {
+                    when (it) {
+                        is HourlyWeatherVo -> HourlyWeatherItem(it)
+                        is HourlyEventVo -> HourlyEventItem(it)
+                    }
                 }
             }
         }
+
     }
 }
