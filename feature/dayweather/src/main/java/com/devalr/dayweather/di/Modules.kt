@@ -1,6 +1,7 @@
 package com.devalr.dayweather.di
 
 import com.devalr.dayweather.DayWeatherViewModel
+import com.devalr.dayweather.mappers.AnimationSkyEnumMapper
 import com.devalr.dayweather.mappers.HourlyEventMapper
 import com.devalr.dayweather.mappers.HourlyWeatherMapper
 import com.devalr.dayweather.mappers.NowWeatherMapper
@@ -16,13 +17,19 @@ import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.enums.SkyState
 import com.devalr.domain.model.weather.daily.DailyWeatherBo
 import com.devalr.domain.model.weather.hourly.HourlyWeatherBo
+import com.devalr.framework.enums.AnimationsType
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 private val viewModelModules =
     module {
         factory {
-            DayWeatherViewModel(get(), get(), get(), get(named("NowWeatherMapper")))
+            DayWeatherViewModel(
+                get(),
+                get(),
+                get(),
+                get(named("NowWeatherMapper"))
+            )
         }
     }
 
@@ -44,12 +51,16 @@ private val mapperModules =
         }
 
         factory<Mapper<DailyWeatherBo, NowWeatherDataVo>>(named("NowWeatherMapper")) {
-            NowWeatherMapper(get(named("VoSkyEnumMapper")))
+            NowWeatherMapper(get(named("AnimationSkyEnumMapper")))
         }
 
         factory<Mapper<SkyState, SkyStateIcon>>(named("VoSkyEnumMapper")) {
             SkyEnumMapper()
         }
+        factory<Mapper<AnimationSkyEnumMapper.Params, AnimationsType>>(named("AnimationSkyEnumMapper")) {
+            AnimationSkyEnumMapper()
+        }
+
 
     }
 

@@ -2,6 +2,7 @@ package com.devalr.dayweather
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devalr.dayweather.extensions.toCelsius
 import com.devalr.dayweather.interactions.Event
 import com.devalr.dayweather.interactions.Event.ChangeCity
 import com.devalr.dayweather.interactions.Event.LoadScreen
@@ -12,8 +13,10 @@ import com.devalr.dayweather.mergers.HourlyMerger
 import com.devalr.dayweather.model.now.NowWeatherDataVo
 import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.weather.daily.DailyWeatherBo
+import com.devalr.domain.model.weather.hourly.HourlyWeatherBo
 import com.devalr.domain.repositories.GeminiRepository
-import com.devalr.domain.repositories.WeatherRepository
+import com.devalr.domain.usecases.Result
+import com.devalr.domain.usecases.WeatherUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -21,10 +24,12 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class DayWeatherViewModel(
     private val geminiRepository: GeminiRepository,
-    private val weatherRepository: WeatherRepository,
+    private val weatherUseCase: WeatherUseCase,
     private val hourlyMerger: HourlyMerger,
     private val nowWeatherMapper: Mapper<DailyWeatherBo, NowWeatherDataVo>
 
@@ -59,23 +64,43 @@ class DayWeatherViewModel(
     private fun loadData() {
         viewModelScope.launch(Dispatchers.IO) {
             handleEvent(OnUploadLoadingState(true))
-            val hourlyWeatherData = weatherRepository.fetchHourlyWeather("13034")
-            val dailyWeatherData = weatherRepository.fetchDailyWeather("13034")
-            hourlyWeatherData?.predictions?.let {
-                _state.update { currentState ->
-                    currentState.copy(
-                        weatherByHours = hourlyMerger.merge(it, 2, 24),
-                    )
+
+            when (val weatherResult =
+                weatherUseCase.execute(viewModelScope, WeatherUseCase.Params("13034"))) {
+                is Result.Error -> {
+                    handleEvent(OnUploadLoadingState(false))
+                }
+
+                is Result.Success -> {
+                    val hourlyNow =
+                        weatherResult.data.hourlyData.predictions.first().hourlyData.findClosestDate()
+                    _state.update { currentState ->
+                        currentState.copy(
+                            weatherByHours = hourlyMerger.merge(
+                                weatherResult.data.hourlyData.predictions,
+                                2,
+                                24
+                            ),
+                            dailyWeather = nowWeatherMapper.transform(weatherResult.data.dailyData.predictions.first())
+                                .mutateValues(
+                                    hourlyNow?.temperature?.toCelsius(),
+                                    hourlyNow?.thermalSensation?.toCelsius()
+                                )
+                        )
+                    }
+                    handleEvent(OnUploadLoadingState(false))
                 }
             }
-            dailyWeatherData?.predictions?.firstOrNull()?.let {
-                _state.update { currentState ->
-                    currentState.copy(
-                        nowWeather = nowWeatherMapper.transform(it),
-                    )
-                }
-            }
-            handleEvent(OnUploadLoadingState(false))
         }
     }
 }
+
+
+fun List<HourlyWeatherBo>.findClosestDate() = with(LocalDateTime.now(ZoneId.of("Europe/Madrid"))) {
+    this@findClosestDate.minByOrNull {
+        kotlin.math.abs(it.completeTime.minute - minute).toLong() +
+                kotlin.math.abs(it.completeTime.hour - hour).toLong() * 60
+    }
+}
+
+

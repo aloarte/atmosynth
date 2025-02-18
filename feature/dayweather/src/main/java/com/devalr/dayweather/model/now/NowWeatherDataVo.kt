@@ -1,10 +1,19 @@
 package com.devalr.dayweather.model.now
 
-import com.devalr.dayweather.model.enums.SkyStateIcon
+import com.devalr.framework.enums.AnimationsType
 
 data class NowWeatherDataVo(
     val temperature: WeatherMaxMin,
     val thermalSensation: WeatherMaxMin,
     val humidity: WeatherMaxMin,
-    val skyState: SkyStateIcon
-)
+    val skyAnimation: AnimationsType
+) {
+
+    fun mutateValues(newTemperature: String?, newThermalSensation: String?) =
+        if (newTemperature != null && newThermalSensation != null) {
+            this.copy(
+                temperature = temperature.copy(current = newTemperature),
+                thermalSensation = thermalSensation.copy(current = newThermalSensation)
+            )
+        } else this
+}

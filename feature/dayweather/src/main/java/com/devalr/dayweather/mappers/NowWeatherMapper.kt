@@ -2,17 +2,17 @@ package com.devalr.dayweather.mappers
 
 import com.devalr.dayweather.extensions.toCelsius
 import com.devalr.dayweather.extensions.toHumidityPercentage
-import com.devalr.dayweather.model.enums.SkyStateIcon
 import com.devalr.dayweather.model.now.NowWeatherDataVo
 import com.devalr.dayweather.model.now.WeatherMaxMin
 import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.enums.DayTime
 import com.devalr.domain.model.enums.SkyState
 import com.devalr.domain.model.weather.daily.DailyWeatherBo
+import com.devalr.framework.enums.AnimationsType
 import java.time.LocalTime
 
 class NowWeatherMapper(
-    private val skyMapper: Mapper<SkyState, SkyStateIcon>
+    private val animationSkyMapper: Mapper<AnimationSkyEnumMapper.Params, AnimationsType>
 ) : Mapper<DailyWeatherBo, NowWeatherDataVo>() {
     override fun transform(data: DailyWeatherBo): NowWeatherDataVo =
         NowWeatherDataVo(
@@ -37,14 +37,13 @@ class NowWeatherMapper(
                 max = data.humidity.max.toHumidityPercentage(),
                 min = data.humidity.min.toHumidityPercentage()
             ),
-            skyState = data.skyStates
-                .find { it.time == getNowDayTime() }
-                ?.state
-                ?.let {
-                    skyMapper.transform(
-                        it
-                    )
-                } ?: SkyStateIcon.DayClear
+            skyAnimation = animationSkyMapper.transform(
+                AnimationSkyEnumMapper.Params(
+                    skyState = data.skyStates
+                        .find { it.time == getNowDayTime() }
+                        ?.state ?: SkyState.Unknown,
+                    temperature = 2,
+                    windValue = 3))
         )
 
 

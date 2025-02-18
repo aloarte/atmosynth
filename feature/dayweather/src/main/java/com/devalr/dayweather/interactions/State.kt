@@ -8,5 +8,5 @@ data class State(
     val errorReceived: Boolean = false,
     val promptResult: String = "",
     val weatherByHours: List<HourlyDataVo> = emptyList(),
-    val nowWeather: NowWeatherDataVo? = null
+    val dailyWeather: NowWeatherDataVo? = null
 )

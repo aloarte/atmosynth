@@ -18,7 +18,7 @@ class HourlyMerger(
         initBracket: Long,
         endBracket: Long
     ): List<HourlyDataVo> {
-        if (initBracket > endBracket || initBracket < 1) {
+        if (initBracket > endBracket || initBracket < 0) {
             return emptyList()
         }
         val allHoursList = mutableListOf<HourlyDataVo>()

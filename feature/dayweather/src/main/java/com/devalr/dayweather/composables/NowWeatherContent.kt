@@ -11,8 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devalr.dayweather.model.now.NowWeatherDataVo
-import com.devalr.domain.model.enums.NowStatusType
-import com.devalr.domain.model.now.NowStatusVo
+import com.devalr.dayweather.model.now.WeatherMaxMin
 import com.devalr.framework.components.AtmosAnimation
 import com.devalr.framework.components.AtmosCard
 import com.devalr.framework.components.AtmosSeparator
@@ -37,9 +36,12 @@ fun NowWeatherContent(nowStatus: NowWeatherDataVo) {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                //AtmosAnimation(size = 50.dp, type = getAnimation(nowStatus.nowStatus))
+                AtmosAnimation(size = 50.dp, type = nowStatus.skyAnimation)
                 AtmosSeparator(size = 5.dp, type = SeparatorType.Horizontal)
-                AtmosText(text = nowStatus.temperature.current, type = TextType.UltraFeatured)
+                AtmosText(
+                    text = nowStatus.temperature.current,
+                    type = TextType.UltraFeatured
+                )
             }
             AtmosText(
                 text = "Sensación térmica de ${nowStatus.thermalSensation.current}",
@@ -54,104 +56,22 @@ fun NowWeatherContent(nowStatus: NowWeatherDataVo) {
     }
 }
 
-private fun getAnimation(status: NowStatusType) = when (status) {
-    NowStatusType.ClearDay -> AnimationsType.WeatherClearDay
-    NowStatusType.ClearNight -> AnimationsType.WeatherClearNight
-    NowStatusType.Cloudy -> AnimationsType.WeatherClouds
-    NowStatusType.Cold -> AnimationsType.WeatherCold
-    NowStatusType.Rain -> AnimationsType.WeatherRain
-    NowStatusType.Windy -> AnimationsType.WeatherWind
-}
-/*
+
 @Preview(showBackground = true)
 @Composable
 private fun NowWeatherContentPreviewCold() {
     AtmosynthTheme {
         NowWeatherContent(
-            nowStatus = NowStatusVo(
-                city = "London",
-                temperature = "0º",
-                thermalSensation = "-1º",
-                nowStatus = NowStatusType.Cold
+            nowStatus = NowWeatherDataVo(
+                temperature = WeatherMaxMin("18º", "2º", "23º"),
+                thermalSensation = WeatherMaxMin("18º", "2º", "23º"),
+                humidity = WeatherMaxMin("40%", "40%", "40%"),
+                skyAnimation = AnimationsType.WeatherCold
             )
         )
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun NowWeatherContentPreviewClearDay() {
-    AtmosynthTheme {
-        NowWeatherContent(
-            nowStatus = NowStatusVo(
-                city = "London",
-                temperature = "20º",
-                thermalSensation = "20º",
-                nowStatus = NowStatusType.ClearDay
-            )
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun NowWeatherContentPreviewClearNight() {
-    AtmosynthTheme {
-        NowWeatherContent(
-            nowStatus = NowStatusVo(
-                city = "London",
-                temperature = "18º",
-                thermalSensation = "16º",
-                nowStatus = NowStatusType.ClearNight
-            )
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun NowWeatherContentPreviewRain() {
-    AtmosynthTheme {
-        NowWeatherContent(
-            nowStatus = NowStatusVo(
-                city = "London",
-                temperature = "18º",
-                thermalSensation = "16º",
-                nowStatus = NowStatusType.Rain
-            )
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun NowWeatherContentPreviewWindy() {
-    AtmosynthTheme {
-        NowWeatherContent(
-            nowStatus = NowStatusVo(
-                city = "London",
-                temperature = "10º",
-                thermalSensation = "8º",
-                nowStatus = NowStatusType.Windy
-            )
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun NowWeatherContentPreviewCloudy() {
-    AtmosynthTheme {
-        NowWeatherContent(
-            nowStatus = NowStatusVo(
-                city = "London",
-                temperature = "10º",
-                thermalSensation = "8º",
-                nowStatus = NowStatusType.Cloudy
-            )
-        )
-    }
-}*/
 
 
 

@@ -10,6 +10,7 @@ class SkyMapper : Mapper<String, SkyState>() {
             "11n" -> SkyState.NightClear
             "12n" -> SkyState.NightLowClouds
             "14n" -> SkyState.NightVeryCloudy
+            "13n" -> SkyState.NightVeryCloudy
             "15n" -> SkyState.NightVeryCloudy
             "16n" -> SkyState.NightCloudy
             "17n" -> SkyState.NightHighClouds
@@ -41,6 +42,7 @@ class SkyMapper : Mapper<String, SkyState>() {
             "82n" -> SkyState.NightMists
             "11" -> SkyState.DayClear
             "12" -> SkyState.DayLowClouds
+            "13" -> SkyState.DayVeryCloudy
             "14" -> SkyState.DayVeryCloudy
             "15" -> SkyState.DayVeryCloudy
             "16" -> SkyState.DayCloudy
@@ -72,10 +74,6 @@ class SkyMapper : Mapper<String, SkyState>() {
             "81" -> SkyState.DayMists
             "82" -> SkyState.DayMists
             "83" -> SkyState.Haze
-
-            else -> {
-                Log.d("ALRALR", "UNK $data")
-                SkyState.Unknown
-            }
+            else -> SkyState.Unknown
         }
 }

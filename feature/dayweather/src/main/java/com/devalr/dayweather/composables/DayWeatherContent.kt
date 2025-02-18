@@ -9,16 +9,17 @@ import androidx.compose.ui.unit.dp
 import com.devalr.dayweather.model.hourly.HourlyDataVo
 import com.devalr.dayweather.model.now.NowWeatherDataVo
 
-
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun DayWeatherContent(nowWeather: NowWeatherDataVo?, weatherByHours: List<HourlyDataVo>) {
+fun DayWeatherContent(
+    dailyWeather: NowWeatherDataVo?,
+    hourlyWeather: List<HourlyDataVo>
+) {
     FlowRow(modifier = Modifier.padding(8.dp)) {
-        nowWeather?.let {
-            NowWeatherContent(nowStatus = it)
-
+        dailyWeather?.let {
+            NowWeatherContent(nowStatus = dailyWeather)
         }
-        HourlyWeatherContent(weatherByHours)
+        HourlyWeatherContent(hourlyWeather)
     }
 
 }

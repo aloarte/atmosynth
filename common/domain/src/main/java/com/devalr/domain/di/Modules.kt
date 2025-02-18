@@ -62,6 +62,7 @@ import com.devalr.domain.repositories.GeminiRepository
 import com.devalr.domain.repositories.WeatherRepository
 import com.devalr.domain.repositories.impl.GeminiRepositoryImpl
 import com.devalr.domain.repositories.impl.WeatherRepositoryImpl
+import com.devalr.domain.usecases.WeatherUseCase
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import java.time.LocalDateTime
@@ -80,6 +81,12 @@ private val repositoriesModules =
             )
         }
     }
+
+private val usecasesModules = module {
+    factory {
+        WeatherUseCase(get())
+    }
+}
 
 private val mapperModules =
     module {
@@ -228,5 +235,5 @@ private val mergerModules =
 
 val domainModules =
     module {
-        includes(mergerModules, mapperModules, repositoriesModules, dataModules)
+        includes(mergerModules, mapperModules, usecasesModules, repositoriesModules, dataModules)
     }
