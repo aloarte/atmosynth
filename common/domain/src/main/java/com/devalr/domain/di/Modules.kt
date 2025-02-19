@@ -70,7 +70,7 @@ import java.time.LocalDateTime
 private val repositoriesModules =
     module {
         factory<GeminiRepository> {
-            GeminiRepositoryImpl(get())
+            GeminiRepositoryImpl(get(),get())
         }
 
         factory<WeatherRepository> {

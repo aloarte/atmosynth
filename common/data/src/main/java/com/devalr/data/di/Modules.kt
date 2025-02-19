@@ -1,6 +1,10 @@
 package com.devalr.data.di
 
+import android.app.Application
+import androidx.room.Room
 import com.devalr.data.Secrets
+import com.devalr.data.databases.PromptResultDao
+import com.devalr.data.databases.PromptResultDatabase
 import com.devalr.data.datasources.GeminiDatasource
 import com.devalr.data.datasources.WeatherDatasource
 import com.devalr.data.datasources.impl.GeminiDatasourceImpl
@@ -16,6 +20,7 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.android.ext.koin.androidApplication
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -28,6 +33,25 @@ private val dataSourcesModule =
             WeatherDatasourceImpl(get(), get())
         }
     }
+
+private val databaseModule = module {
+    single { provideDataBase(androidApplication()) }
+    single { provideDao(get()) }
+}
+
+private fun provideDataBase(application: Application): PromptResultDatabase {
+    return Room.databaseBuilder(
+        application,
+        PromptResultDatabase::class.java,
+        "PromptResultDatabase"
+    )
+        .fallbackToDestructiveMigration()
+        .build()
+}
+
+private fun provideDao(dataBase: PromptResultDatabase): PromptResultDao {
+    return dataBase.promptResultDao()
+}
 
 private val dataFrameworkModule =
     module {
@@ -66,5 +90,5 @@ private val dataFrameworkModule =
 
 val dataModules =
     module {
-        includes(dataSourcesModule, dataFrameworkModule)
+        includes(databaseModule, dataSourcesModule, dataFrameworkModule)
     }

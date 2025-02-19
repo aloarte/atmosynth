@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.room)
+    id("kotlin-kapt")
 }
 
 android {
@@ -30,6 +32,9 @@ android {
             )
         }
     }
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -46,6 +51,10 @@ dependencies {
     implementation(libs.koin.android)
     // Ktor
     implementation(libs.bundles.ktor)
+    // Room components
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
     implementation(libs.androidx.core.ktx)
 
