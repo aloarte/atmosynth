@@ -14,13 +14,13 @@ import java.time.LocalTime
 class NowWeatherMapper(
     private val animationSkyMapper: Mapper<AnimationSkyEnumMapper.Params, AnimationsType>
 ) : Mapper<DailyWeatherBo, NowWeatherDataVo>() {
-    override fun transform(data: DailyWeatherBo): NowWeatherDataVo =
-        NowWeatherDataVo(
+    override fun transform(data: DailyWeatherBo): NowWeatherDataVo {
+        val currentTemperature = data.temperatures.valuesPerDayTime
+            .find { it.time == getNowDayTime() }
+            ?.value
+        return NowWeatherDataVo(
             temperature = WeatherMaxMin(
-                current = data.temperatures.valuesPerDayTime
-                    .find { it.time == getNowDayTime() }
-                    ?.value?.toCelsius()
-                    ?: "0º",
+                current = currentTemperature?.toCelsius() ?: "0º",
                 max = data.temperatures.max.toCelsius(),
                 min = data.temperatures.min.toCelsius()
             ),
@@ -33,7 +33,8 @@ class NowWeatherMapper(
                 min = data.thermalSensation.min.toCelsius()
             ),
             humidity = WeatherMaxMin(
-                current = "0%",
+                current = data.humidity.valuesPerDayTime
+                    .find { it.time == getNowDayTime() }?.value.toString(),
                 max = data.humidity.max.toHumidityPercentage(),
                 min = data.humidity.min.toHumidityPercentage()
             ),
@@ -42,9 +43,11 @@ class NowWeatherMapper(
                     skyState = data.skyStates
                         .find { it.time == getNowDayTime() }
                         ?.state ?: SkyState.Unknown,
-                    temperature = 2,
-                    windValue = 3))
+                    temperature = currentTemperature ?: 0,
+                    windValue = 3)
+            )
         )
+    }
 
 
     private fun getNowDayTime(): DayTime {

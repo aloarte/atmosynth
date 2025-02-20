@@ -9,7 +9,12 @@ import androidx.compose.ui.unit.sp
 import com.devalr.framework.enums.TextType
 
 @Composable
-fun AtmosText(modifier: Modifier = Modifier, text: String, textColor: Color = Color.Unspecified, type: TextType) {
+fun AtmosText(
+    modifier: Modifier = Modifier,
+    text: String,
+    textColor: Color = Color.Unspecified,
+    type: TextType
+) {
     Text(
         modifier = modifier,
         text = text,
@@ -21,6 +26,7 @@ fun AtmosText(modifier: Modifier = Modifier, text: String, textColor: Color = Co
 
 private fun getTextSize(type: TextType) = when (type) {
     TextType.UltraFeatured -> 40.sp
+    TextType.Featured -> 20.sp
     TextType.Title -> 14.sp
     TextType.Description -> 12.sp
     TextType.LabelXs -> 8.sp
@@ -30,7 +36,8 @@ private fun getTextSize(type: TextType) = when (type) {
 }
 
 private fun getTextWeight(type: TextType) = when (type) {
-    TextType.UltraFeatured ->  FontWeight.ExtraBold
+    TextType.UltraFeatured -> FontWeight.ExtraBold
+    TextType.Featured -> FontWeight.Bold
     TextType.Title -> FontWeight.Bold
     TextType.Description -> FontWeight.Normal
     TextType.LabelXs -> FontWeight.Thin

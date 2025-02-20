@@ -17,7 +17,7 @@ import com.devalr.framework.enums.TextType
 import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
-fun AtmosCard(width: Dp? = null, height: Dp? = null, content: @Composable (PaddingValues) -> Unit) {
+fun AtmosCard(width: Dp? = null, height: Dp? = null, halfScreen:Boolean = false, content: @Composable (PaddingValues) -> Unit) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -26,9 +26,13 @@ fun AtmosCard(width: Dp? = null, height: Dp? = null, content: @Composable (Paddi
             .padding(5.dp)
             .then(
                 Modifier.run {
-                    width?.let {
-                        width(it)
-                    } ?: fillMaxWidth()
+                    if (halfScreen) {
+                        fillMaxWidth(0.5f)
+                    } else {
+                        width?.let {
+                            width(it)
+                        } ?: fillMaxWidth()
+                    }
                 }
             )
             .then(
