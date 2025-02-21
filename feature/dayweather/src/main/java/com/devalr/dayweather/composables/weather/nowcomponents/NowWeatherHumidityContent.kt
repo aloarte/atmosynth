@@ -1,4 +1,4 @@
-package com.devalr.dayweather.composables.nowcomponents
+package com.devalr.dayweather.composables.weather.nowcomponents
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode

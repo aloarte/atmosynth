@@ -1,4 +1,4 @@
-package com.devalr.dayweather.composables.nowcomponents
+package com.devalr.dayweather.composables.weather.nowcomponents
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +21,7 @@ import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
 fun DailySummaryContent(loadingAiPrompt: Boolean, promptResult: String?, onRetry: () -> Unit) {
-    AtmosCard(height = 250.dp) { paddingValues ->
+    AtmosCard(height = 280.dp) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

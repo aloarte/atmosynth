@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.devalr.dayweather.DayWeatherScreen
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.devalr.dayweather.navigation.WeatherScreenNavigation
 import com.devalr.framework.theme.AtmosynthTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +23,18 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    DayWeatherScreen()
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = NavScreen.DayWeather.route
+                    ) {
+                        composable(NavScreen.DayWeather.route) {
+                            WeatherScreenNavigation()
+                        }
+                        composable(NavScreen.CitySelection.route) {
+                            TODO("Implement city selection screen")
+                        }
+                    }
                 }
             }
         }

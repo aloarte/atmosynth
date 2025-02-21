@@ -82,7 +82,7 @@ private val dataFrameworkModule =
                 install(HttpTimeout) {
                     requestTimeoutMillis = 20_000
                     connectTimeoutMillis = 10_000
-                    socketTimeoutMillis = 5_000
+                    socketTimeoutMillis = 30_000
                 }
             }
         }

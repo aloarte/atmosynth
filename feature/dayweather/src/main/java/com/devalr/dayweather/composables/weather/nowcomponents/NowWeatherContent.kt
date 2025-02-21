@@ -1,4 +1,4 @@
-package com.devalr.dayweather.composables.nowcomponents
+package com.devalr.dayweather.composables.weather.nowcomponents
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

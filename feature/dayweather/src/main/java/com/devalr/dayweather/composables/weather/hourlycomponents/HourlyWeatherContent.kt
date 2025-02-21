@@ -1,4 +1,4 @@
-package com.devalr.dayweather.composables.hourlycomponents
+package com.devalr.dayweather.composables.weather.hourlycomponents
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

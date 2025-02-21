@@ -1,4 +1,4 @@
-package com.devalr.dayweather.composables
+package com.devalr.dayweather.composables.weather
 
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -8,10 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.devalr.dayweather.composables.hourlycomponents.HourlyWeatherContent
-import com.devalr.dayweather.composables.nowcomponents.DailySummaryContent
-import com.devalr.dayweather.composables.nowcomponents.NowWeatherContent
-import com.devalr.dayweather.composables.nowcomponents.NowWeatherHumidityContent
+import com.devalr.dayweather.composables.weather.hourlycomponents.HourlyWeatherContent
+import com.devalr.dayweather.composables.weather.nowcomponents.DailySummaryContent
+import com.devalr.dayweather.composables.weather.nowcomponents.NowWeatherContent
+import com.devalr.dayweather.composables.weather.nowcomponents.NowWeatherHumidityContent
 import com.devalr.dayweather.interactions.State
 import com.devalr.dayweather.model.enums.HourlyEvent
 import com.devalr.dayweather.model.hourly.HourlyEventVo
