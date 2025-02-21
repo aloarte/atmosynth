@@ -17,13 +17,16 @@ class GeminiRepositoryImpl(
             databasePrompt.promptResult
         } else {
             val promptResult = datasource.generateDaySummary(dataForPrompt = dataForPrompt)
-            database.removeAllDailyPrompts()
-            database.insertDailyPromptResult(
-                PromptResultEntity(
-                    date = getDate(),
-                    promptResult = promptResult
+            if (promptResult.isBlank().not()) {
+                database.removeAllDailyPrompts()
+                database.insertDailyPromptResult(
+                    PromptResultEntity(
+                        date = getDate(),
+                        promptResult = promptResult
+                    )
                 )
-            )
+            }
+
             promptResult
         }
     }

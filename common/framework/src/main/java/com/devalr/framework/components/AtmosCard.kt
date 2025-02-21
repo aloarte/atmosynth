@@ -1,5 +1,6 @@
 package com.devalr.framework.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,7 +18,13 @@ import com.devalr.framework.enums.TextType
 import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
-fun AtmosCard(width: Dp? = null, height: Dp? = null, halfScreen:Boolean = false, content: @Composable (PaddingValues) -> Unit) {
+fun AtmosCard(
+    width: Dp? = null,
+    height: Dp? = null,
+    halfScreen: Boolean = false,
+    onCardClicked: () -> Unit = {},
+    content: @Composable (PaddingValues) -> Unit
+) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -42,6 +49,9 @@ fun AtmosCard(width: Dp? = null, height: Dp? = null, halfScreen:Boolean = false,
                     } ?: height(150.dp)
                 }
             )
+            .clickable {
+                onCardClicked.invoke()
+            }
     ) {
         content(PaddingValues(5.dp))
     }

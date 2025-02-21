@@ -16,6 +16,7 @@ import com.devalr.framework.components.AtmosAnimation
 import com.devalr.framework.components.AtmosText
 import com.devalr.framework.enums.AnimationsType
 import com.devalr.framework.enums.TextType
+import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
 fun LoadingScreen() {
@@ -39,5 +40,7 @@ fun LoadingScreen() {
 @Preview(showBackground = true)
 @Composable
 private fun LoadingScreenPreview() {
-    LoadingScreen()
+    AtmosynthTheme {
+        LoadingScreen()
+    }
 }

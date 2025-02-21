@@ -1,12 +1,13 @@
 package com.devalr.dayweather
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devalr.dayweather.extensions.toCelsius
 import com.devalr.dayweather.interactions.Event
 import com.devalr.dayweather.interactions.Event.ChangeCity
-import com.devalr.dayweather.interactions.Event.LaunchAiPrompt
 import com.devalr.dayweather.interactions.Event.LoadScreen
+import com.devalr.dayweather.interactions.Event.OnRetryDailySummaryPrompt
 import com.devalr.dayweather.interactions.Event.OnUploadErrorState
 import com.devalr.dayweather.interactions.Event.OnUploadLoadingState
 import com.devalr.dayweather.interactions.State
@@ -35,20 +36,23 @@ class DayWeatherViewModel(
     private val nowWeatherMapper: Mapper<DailyWeatherBo, NowWeatherDataVo>
 
 ) : ViewModel() {
+
+    private lateinit var weatherPromptData: String
+
     private val _state = MutableStateFlow(State())
     val state = _state
         .onStart {
-            handleEvent(LoadScreen)
+            launchEvent(LoadScreen)
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), State())
 
-    fun handleEvent(event: Event) {
+    fun launchEvent(event: Event) {
         when (event) {
             is OnUploadErrorState -> updateErrorState(event.error)
             is OnUploadLoadingState -> updateLoadingState(event.loading)
+            OnRetryDailySummaryPrompt -> launchAiPrompt(weatherPromptData)
             ChangeCity -> TODO()
             LoadScreen -> loadData()
-            is LaunchAiPrompt -> launchAiPrompt(event.promptData)
         }
     }
 
@@ -79,21 +83,18 @@ class DayWeatherViewModel(
 
 
     private fun loadData() = viewModelScope.launch(Dispatchers.IO) {
-        handleEvent(OnUploadLoadingState(true))
+        launchEvent(OnUploadLoadingState(true))
 
         when (val weatherResult =
             weatherUseCase.execute(viewModelScope, WeatherUseCase.Params("13034"))) {
             is Result.Error -> {
-                handleEvent(OnUploadLoadingState(false))
+                launchEvent(OnUploadLoadingState(false))
             }
 
             is Result.Success -> {
-                handleEvent(
-                    LaunchAiPrompt(
-                        weatherResult.data.dailyData.predictions.first().toString()
-                            .processForAI()
-                    )
-                )
+                weatherPromptData = weatherResult.data.dailyData.predictions.first().toString()
+                    .processForAI()
+                launchAiPrompt(weatherPromptData)
                 val hourlyNow =
                     weatherResult.data.hourlyData.predictions.first().hourlyData.findClosestDate()
                 _state.update { currentState ->
@@ -110,7 +111,7 @@ class DayWeatherViewModel(
                             )
                     )
                 }
-                handleEvent(OnUploadLoadingState(false))
+                launchEvent(OnUploadLoadingState(false))
             }
         }
     }

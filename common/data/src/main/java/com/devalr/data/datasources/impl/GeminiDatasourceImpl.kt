@@ -21,7 +21,11 @@ class GeminiDatasourceImpl(
                         text(prompt + dataForPrompt)
                     },
                 )
-            response.text ?: ""
+            if(Math.random()>0.5){
+                response.text ?: ""
+            }else{
+                ""
+            }
         }
 
     private suspend inline fun runSafely(crossinline execute: suspend () -> String) =

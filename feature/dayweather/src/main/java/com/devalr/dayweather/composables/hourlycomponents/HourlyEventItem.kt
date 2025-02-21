@@ -14,6 +14,7 @@ import com.devalr.dayweather.model.enums.HourlyEvent
 import com.devalr.framework.components.AtmosCard
 import com.devalr.framework.components.AtmosText
 import com.devalr.framework.enums.TextType
+import com.devalr.framework.theme.AtmosynthTheme
 import java.time.LocalDateTime
 
 @Composable
@@ -71,23 +72,27 @@ private fun HourlyEventImage(modifier: Modifier = Modifier, event: HourlyEvent) 
 @Preview
 @Composable
 private fun HourlyEventItemSunsetPreview() {
-    HourlyEventItem(
-        HourlyEventVo(
-            hour = "18:05",
-            completeTime = LocalDateTime.now(),
-            event = HourlyEvent.Sunset
+    AtmosynthTheme {
+        HourlyEventItem(
+            HourlyEventVo(
+                hour = "18:05",
+                completeTime = LocalDateTime.now(),
+                event = HourlyEvent.Sunset
+            )
         )
-    )
+    }
 }
 
 @Preview
 @Composable
 private fun HourlyEventItemSunrisePreview() {
-    HourlyEventItem(
-        HourlyEventVo(
-            hour = "08:17",
-            completeTime = LocalDateTime.now(),
-            event = HourlyEvent.Sunrise
+    AtmosynthTheme {
+        HourlyEventItem(
+            HourlyEventVo(
+                hour = "08:17",
+                completeTime = LocalDateTime.now(),
+                event = HourlyEvent.Sunrise
+            )
         )
-    )
+    }
 }

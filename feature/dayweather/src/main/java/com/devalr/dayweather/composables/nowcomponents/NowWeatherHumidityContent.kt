@@ -23,10 +23,37 @@ import androidx.compose.ui.unit.dp
 import com.devalr.framework.components.AtmosCard
 import com.devalr.framework.components.AtmosText
 import com.devalr.framework.enums.TextType
+import com.devalr.framework.theme.AtmosynthTheme
 import kotlin.math.sin
 
 @Composable
-fun NowWeatherHumidityContent(percentage: Float) {
+fun NowWeatherHumidityContent(
+    humidityPercentage: Float,
+    onHumidityPressed: (Float) -> Unit
+) {
+    AtmosCard(halfScreen = true, onCardClicked = { onHumidityPressed.invoke(humidityPercentage) }) {
+        Box(Modifier.fillMaxSize()) {
+            HumidityCanvas(humidityPercentage = humidityPercentage)
+            AtmosText(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .align(getHumidityLabelPosition(humidityPercentage)),
+                text = "Humedad",
+                type = TextType.Title
+            )
+            AtmosText(
+                modifier = Modifier
+                    .padding(20.dp)
+                    .align(getHumidityValuePosition(humidityPercentage)),
+                text = "${humidityPercentage.toInt()}%",
+                type = TextType.Featured
+            )
+        }
+    }
+}
+
+@Composable
+private fun HumidityCanvas(humidityPercentage: Float) {
     val infiniteTransition = rememberInfiniteTransition(label = "infinite")
     val waveOffset: Float by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -39,123 +66,117 @@ fun NowWeatherHumidityContent(percentage: Float) {
             repeatMode = RepeatMode.Restart
         )
     )
+    Canvas(modifier = Modifier.fillMaxSize()) {
+        val width = size.width
+        val height = size.height
 
-    AtmosCard(halfScreen = true) {
-        Box(Modifier.fillMaxSize()) {
+        val waterHeight = (height * humidityPercentage) / 100
 
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                val width = size.width
-                val height = size.height
-
-                val waterHeight = (height * percentage) / 100
-
-                val path = Path().apply {
-                    moveTo(0f, height - waterHeight)
-                    for (x in 0..width.toInt()) {
-                        val y =
-                            (height - waterHeight) + sin((x + waveOffset) * 0.05f) * 10f
-                        lineTo(x.toFloat(), y)
-                    }
-                    lineTo(width, height)
-                    lineTo(0f, height)
-                    close()
-                }
-
-                drawPath(path, Color.Gray)
+        val path = Path().apply {
+            moveTo(0f, height - waterHeight)
+            for (x in 0..width.toInt()) {
+                val y =
+                    (height - waterHeight) + sin((x + waveOffset) * 0.05f) * 10f
+                lineTo(x.toFloat(), y)
             }
-
-            AtmosText(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .align(
-                        if (percentage > 78f) {
-                            Alignment.BottomStart
-                        } else {
-                            Alignment.TopStart
-                        }
-                    ),
-                text = "Humedad",
-                type = TextType.Title
-            )
-
-            AtmosText(
-                modifier = Modifier
-                    .padding(20.dp)
-                    .align(
-                        if (percentage > 35f && percentage < 65f) {
-                            Alignment.BottomCenter
-                        } else {
-                            Alignment.Center
-                        }
-                    ),
-                text = "${percentage.toInt()}%",
-                type = TextType.Featured
-            )
+            lineTo(width, height)
+            lineTo(0f, height)
+            close()
         }
-    }
 
+        drawPath(path, Color.Gray)
+    }
 }
+
+private fun getHumidityLabelPosition(humidityPercentage: Float) = if (humidityPercentage > 78f) {
+    Alignment.BottomStart
+} else {
+    Alignment.TopStart
+}
+
+private fun getHumidityValuePosition(humidityPercentage: Float) =
+    if (humidityPercentage > 35f && humidityPercentage < 65f) {
+        Alignment.BottomCenter
+    } else {
+        Alignment.Center
+    }
 
 @Preview(showBackground = true)
 @Composable
 fun NowWeatherHumidityContentPreviewMin() {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        NowWeatherHumidityContent(percentage = 0f)
+    AtmosynthTheme {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            NowWeatherHumidityContent(humidityPercentage = 0f, onHumidityPressed = {})
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun NowWeatherHumidityContentPreviewH63() {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        NowWeatherHumidityContent(percentage = 63f)
+    AtmosynthTheme {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            NowWeatherHumidityContent(humidityPercentage = 63f, onHumidityPressed = {})
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun NowWeatherHumidityContentPreview65() {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        NowWeatherHumidityContent(percentage = 65f)
+    AtmosynthTheme {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            NowWeatherHumidityContent(humidityPercentage = 65f, onHumidityPressed = {})
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun NowWeatherHumidityContentPreview36() {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        NowWeatherHumidityContent(percentage = 36f)
+    AtmosynthTheme {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            NowWeatherHumidityContent(humidityPercentage = 36f, onHumidityPressed = {})
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun NowWeatherHumidityContentPreview35() {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        NowWeatherHumidityContent(percentage = 35f)
+    AtmosynthTheme {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            NowWeatherHumidityContent(humidityPercentage = 35f, onHumidityPressed = {})
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun NowWeatherHumidityContentPreview80() {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        NowWeatherHumidityContent(percentage = 78f)
+    AtmosynthTheme {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            NowWeatherHumidityContent(humidityPercentage = 78f, onHumidityPressed = {})
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun NowWeatherHumidityContentPreview81() {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        NowWeatherHumidityContent(percentage = 79f)
+    AtmosynthTheme {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            NowWeatherHumidityContent(humidityPercentage = 79f, onHumidityPressed = {})
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun NowWeatherHumidityContentPreviewMax() {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        NowWeatherHumidityContent(percentage = 100f)
+    AtmosynthTheme {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            NowWeatherHumidityContent(humidityPercentage = 100f, onHumidityPressed = {})
+        }
     }
 }

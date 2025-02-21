@@ -16,6 +16,7 @@ import com.devalr.dayweather.model.enums.SkyStateIcon
 import com.devalr.framework.components.AtmosCard
 import com.devalr.framework.components.AtmosText
 import com.devalr.framework.enums.TextType
+import com.devalr.framework.theme.AtmosynthTheme
 import java.time.LocalDateTime
 
 @Composable
@@ -87,31 +88,35 @@ private fun WeatherImage(modifier: Modifier = Modifier, skyStateIcon: SkyStateIc
 @Preview
 @Composable
 private fun HourlyWeatherItemWithPrecipitationPreview() {
-    HourlyWeatherItem(
-        HourlyWeatherVo(
-            hour = "19:00",
-            humidity = "60",
-            skyState = SkyStateIcon.DayClear,
-            temperature = "12",
-            precipitationProbability = "3%",
-            thermalSensation = "12",
-            completeTime = LocalDateTime.now()
+    AtmosynthTheme {
+        HourlyWeatherItem(
+            HourlyWeatherVo(
+                hour = "19:00",
+                humidity = "60",
+                skyState = SkyStateIcon.DayClear,
+                temperature = "12",
+                precipitationProbability = "3%",
+                thermalSensation = "12",
+                completeTime = LocalDateTime.now()
+            )
         )
-    )
+    }
 }
 
 @Preview
 @Composable
 private fun HourlyWeatherItemWithoutPrecipitationPreview() {
-    HourlyWeatherItem(
-        HourlyWeatherVo(
-            hour = "19:00",
-            humidity = "60",
-            skyState = SkyStateIcon.DayClear,
-            temperature = "12",
-            precipitationProbability = "",
-            thermalSensation = "12",
-            completeTime = LocalDateTime.now()
+    AtmosynthTheme {
+        HourlyWeatherItem(
+            HourlyWeatherVo(
+                hour = "19:00",
+                humidity = "60",
+                skyState = SkyStateIcon.DayClear,
+                temperature = "12",
+                precipitationProbability = "",
+                thermalSensation = "12",
+                completeTime = LocalDateTime.now()
+            )
         )
-    )
+    }
 }

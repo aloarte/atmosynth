@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.devalr.dayweather.composables.DayWeatherContent
+import com.devalr.dayweather.interactions.Event.OnRetryDailySummaryPrompt
 import com.devalr.framework.screens.ErrorScreen
 import com.devalr.framework.screens.LoadingScreen
 import org.koin.compose.koinInject
@@ -24,7 +25,15 @@ fun DayWeatherScreen(viewModel: DayWeatherViewModel = koinInject()) {
 
                 }
             } else {
-                DayWeatherContent(state.dailyWeather, state.weatherByHours, state.promptResult, state.loadingAiPrompt)
+                DayWeatherContent(
+                    state = state,
+                    onDailySummaryPromptRetry = {
+                        viewModel.launchEvent(OnRetryDailySummaryPrompt)
+                    },
+                    onHumidityPressed = {
+
+                    }
+                )
             }
         }
     }
