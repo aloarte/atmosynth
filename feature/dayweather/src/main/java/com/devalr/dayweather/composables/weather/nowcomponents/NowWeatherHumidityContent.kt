@@ -91,9 +91,9 @@ private fun HumidityCanvas(humidityPercentage: Float) {
 }
 
 private fun getHumidityLabelPosition(humidityPercentage: Float) = if (humidityPercentage > 78f) {
-    Alignment.BottomStart
+    Alignment.BottomCenter
 } else {
-    Alignment.TopStart
+    Alignment.TopCenter
 }
 
 private fun getHumidityValuePosition(humidityPercentage: Float) =

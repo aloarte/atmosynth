@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,7 +26,7 @@ import java.time.LocalDateTime
 @Composable
 fun HourlyWeatherContent(weatherByHours: List<HourlyDataVo>) {
     AtmosCard { paddingValues ->
-        Column(modifier = Modifier.padding(15.dp)) {
+        Column(modifier = Modifier.padding(15.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             AtmosText(
                 text = stringResource(R.string.now_weather_hourly_content_title),
                 type = TextType.Title
