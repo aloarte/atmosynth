@@ -54,7 +54,7 @@ fun DailySummaryContent(loadingAiPrompt: Boolean, promptResult: String?, onRetry
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun DailySummaryContentPreviewLoadedSuccess() {
     AtmosynthTheme {
@@ -66,7 +66,7 @@ private fun DailySummaryContentPreviewLoadedSuccess() {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun DailySummaryContentPreviewLoadedFailedNull() {
     AtmosynthTheme {
@@ -78,19 +78,19 @@ private fun DailySummaryContentPreviewLoadedFailedNull() {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun DailySummaryContentPreviewLoadedBlank() {
     AtmosynthTheme {
         DailySummaryContent(
-            promptResult = null,
+            promptResult = "",
             loadingAiPrompt = false,
             onRetry = {}
         )
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun DailySummaryContentPreviewLoading() {
     AtmosynthTheme {

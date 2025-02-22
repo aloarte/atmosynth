@@ -36,6 +36,7 @@ private fun getAnimation(type: AnimationsType): Int = when (type) {
     AnimationsType.WeatherRain -> R.raw.lottie_weather_rain
     AnimationsType.LoadingAi -> R.raw.lottie_ai_loading
     AnimationsType.LoadingGeneral -> R.raw.loading_general
+    AnimationsType.Humidity -> R.raw.lottie_humidity
 }
 
 @Preview

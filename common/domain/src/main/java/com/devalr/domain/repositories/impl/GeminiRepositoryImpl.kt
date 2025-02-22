@@ -31,6 +31,9 @@ class GeminiRepositoryImpl(
         }
     }
 
+    override suspend fun generateHumiditySummary(humidityData: String): String =
+        datasource.generateHumiditySummary(dataForPrompt = humidityData)
+
     private fun getDate(): String {
         val date = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")

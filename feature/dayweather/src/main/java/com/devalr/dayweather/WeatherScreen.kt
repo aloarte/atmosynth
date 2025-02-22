@@ -4,15 +4,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.devalr.dayweather.composables.detailhumidity.DetailHumidityBottomSheet
 import com.devalr.dayweather.composables.weather.DayWeatherContent
+import com.devalr.dayweather.interactions.Event.OnChangeHumidityDetailVisibility
 import com.devalr.dayweather.interactions.Event.OnRetryDailySummaryPrompt
+import com.devalr.dayweather.interactions.Event.OnStartHumidityDetail
 import com.devalr.framework.screens.ErrorScreen
 import com.devalr.framework.screens.LoadingScreen
 import org.koin.compose.koinInject
 
 @Composable
 fun WeatherScreen(
-    viewModel: DayWeatherViewModel = koinInject(), onHumidityPressed: (Float) -> Unit
+    viewModel: DayWeatherViewModel = koinInject()
 ) {
     val state by viewModel.state.collectAsState()
     Column {
@@ -27,13 +30,26 @@ fun WeatherScreen(
 
                 }
             } else {
+                if (state.displayHumidityDetail) {
+                    state.dailyWeather?.humidity?.let {
+                        DetailHumidityBottomSheet(
+                            humidity = it,
+                            humidityPrompt = state.promptHumidity,
+                            onDismiss = {
+                                viewModel.launchEvent(
+                                    OnChangeHumidityDetailVisibility(isVisible = false)
+                                )
+                            })
+                    }
+                }
                 DayWeatherContent(
                     state = state,
                     onDailySummaryPromptRetry = {
                         viewModel.launchEvent(OnRetryDailySummaryPrompt)
-                    },
-                    onHumidityPressed = onHumidityPressed
-                )
+                    }
+                ) {
+                    viewModel.launchEvent(OnStartHumidityDetail(state.dailyWeather?.humidity))
+                }
             }
         }
     }

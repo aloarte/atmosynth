@@ -13,6 +13,7 @@ import com.devalr.dayweather.composables.weather.nowcomponents.DailySummaryConte
 import com.devalr.dayweather.composables.weather.nowcomponents.NowWeatherContent
 import com.devalr.dayweather.composables.weather.nowcomponents.NowWeatherHumidityContent
 import com.devalr.dayweather.interactions.State
+import com.devalr.dayweather.model.PromptStateVo
 import com.devalr.dayweather.model.enums.HourlyEvent
 import com.devalr.dayweather.model.hourly.HourlyEventVo
 import com.devalr.dayweather.model.now.NowWeatherDataVo
@@ -40,8 +41,8 @@ fun DayWeatherContent(
                 }
                 HourlyWeatherContent(weatherByHours = state.weatherByHours)
                 DailySummaryContent(
-                    loadingAiPrompt = state.loadingAiPrompt,
-                    promptResult = state.promptResult,
+                    loadingAiPrompt = state.promptSummary.loadingAiPrompt,
+                    promptResult = state.promptSummary.promptResult,
                     onRetry = onDailySummaryPromptRetry
                 )
             }
@@ -73,7 +74,10 @@ private fun DayWeatherContentPreview() {
                         completeTime = LocalDateTime.now()
                     )
                 ),
-                promptResult = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                promptSummary = PromptStateVo(
+                    promptResult = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    loadingAiPrompt = false
+                ),
             ),
             onDailySummaryPromptRetry = {},
             onHumidityPressed = {})

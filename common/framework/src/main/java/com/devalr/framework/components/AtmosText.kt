@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.devalr.framework.enums.TextType
 
@@ -13,12 +14,14 @@ fun AtmosText(
     modifier: Modifier = Modifier,
     text: String,
     textColor: Color = Color.Unspecified,
+    textAlign: TextAlign? = null,
     type: TextType
 ) {
     Text(
         modifier = modifier,
         text = text,
         color = textColor,
+        textAlign = textAlign,
         fontWeight = getTextWeight(type),
         fontSize = getTextSize(type)
     )
