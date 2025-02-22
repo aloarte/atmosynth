@@ -2,6 +2,7 @@ package com.devalr.dayweather.composables.weather
 
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -14,12 +15,15 @@ import com.devalr.dayweather.composables.weather.hourlycomponents.HourlyWeatherC
 import com.devalr.dayweather.composables.weather.nowcomponents.DailySummaryContent
 import com.devalr.dayweather.composables.weather.nowcomponents.NowWeatherContent
 import com.devalr.dayweather.composables.weather.nowcomponents.NowWeatherHumidityContent
+import com.devalr.dayweather.composables.weather.nowcomponents.NowWeatherWindContent
 import com.devalr.dayweather.interactions.State
 import com.devalr.dayweather.model.PromptStateVo
 import com.devalr.dayweather.model.enums.HourlyEvent
+import com.devalr.dayweather.model.enums.WindDirectionText
 import com.devalr.dayweather.model.hourly.HourlyEventVo
 import com.devalr.dayweather.model.now.NowWeatherDataVo
 import com.devalr.dayweather.model.now.WeatherMaxMin
+import com.devalr.dayweather.model.now.WindState
 import com.devalr.framework.enums.AnimationsType
 import com.devalr.framework.theme.AtmosynthTheme
 import java.time.LocalDateTime
@@ -29,7 +33,8 @@ import java.time.LocalDateTime
 fun DayWeatherContent(
     state: State,
     onDailySummaryPromptRetry: () -> Unit,
-    onHumidityPressed: (Float) -> Unit
+    onHumidityPressed: () -> Unit,
+    onWindPressed: () -> Unit
 ) {
     LazyColumn {
         item {
@@ -44,10 +49,13 @@ fun DayWeatherContent(
                 )
                 HourlyWeatherContent(weatherByHours = state.weatherByHours)
                 state.dailyWeather?.let {
-                    NowWeatherHumidityContent(
-                        humidityPercentage = it.humidity.current.toFloat(),
-                        onHumidityPressed = onHumidityPressed
-                    )
+                    Row {
+                        NowWeatherHumidityContent(
+                            humidityPercentage = it.humidity.current.toFloat(),
+                            onHumidityPressed = onHumidityPressed
+                        )
+                        NowWeatherWindContent(windState = it.wind, onWindPressed = onWindPressed)
+                    }
                 }
             }
         }
@@ -64,7 +72,8 @@ private fun DayWeatherContentPreview() {
                     humidity = WeatherMaxMin("50", "22", "2"),
                     temperature = WeatherMaxMin("20", "22", "2"),
                     thermalSensation = WeatherMaxMin("20", "22", "2"),
-                    skyAnimation = AnimationsType.WeatherRain
+                    skyAnimation = AnimationsType.WeatherRain,
+                    wind = WindState(WindDirectionText.W, 3)
                 ),
                 weatherByHours = listOf(
                     HourlyEventVo(
@@ -84,7 +93,8 @@ private fun DayWeatherContentPreview() {
                 ),
             ),
             onDailySummaryPromptRetry = {},
-            onHumidityPressed = {})
+            onHumidityPressed = {},
+            onWindPressed = {})
     }
 
 }

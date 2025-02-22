@@ -6,8 +6,9 @@ import com.devalr.dayweather.model.now.NowWeatherDataVo
 
 data class State(
     val loadingStates: BooleanLoadingStates = BooleanLoadingStates(),
-    val promptSummary: PromptStateVo = PromptStateVo(),
+    val promptWind: PromptStateVo = PromptStateVo(),
     val promptHumidity: PromptStateVo = PromptStateVo(),
+    val promptSummary: PromptStateVo = PromptStateVo(),
     val weatherByHours: List<HourlyDataVo> = emptyList(),
     val dailyWeather: NowWeatherDataVo? = null
 )

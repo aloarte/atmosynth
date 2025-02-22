@@ -31,9 +31,9 @@ import kotlin.math.sin
 @Composable
 fun NowWeatherHumidityContent(
     humidityPercentage: Float,
-    onHumidityPressed: (Float) -> Unit
+    onHumidityPressed: () -> Unit
 ) {
-    AtmosCard(halfScreen = true, onCardClicked = { onHumidityPressed.invoke(humidityPercentage) }) {
+    AtmosCard(halfScreen = true, onCardClicked = { onHumidityPressed.invoke() }) {
         Box(Modifier.fillMaxSize()) {
             HumidityCanvas(humidityPercentage = humidityPercentage)
             AtmosText(

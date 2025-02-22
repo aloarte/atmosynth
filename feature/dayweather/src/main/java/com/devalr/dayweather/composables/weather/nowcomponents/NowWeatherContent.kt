@@ -12,8 +12,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devalr.dayweather.R
+import com.devalr.dayweather.model.enums.WindDirectionText
 import com.devalr.dayweather.model.now.NowWeatherDataVo
 import com.devalr.dayweather.model.now.WeatherMaxMin
+import com.devalr.dayweather.model.now.WindState
 import com.devalr.framework.components.AtmosAnimation
 import com.devalr.framework.components.AtmosCard
 import com.devalr.framework.components.AtmosSeparator
@@ -75,7 +77,8 @@ private fun NowWeatherContentPreviewCold() {
                 temperature = WeatherMaxMin("18º", "2º", "23º"),
                 thermalSensation = WeatherMaxMin("18º", "2º", "23º"),
                 humidity = WeatherMaxMin("40%", "40%", "40%"),
-                skyAnimation = AnimationsType.WeatherCold
+                skyAnimation = AnimationsType.WeatherCold,
+                wind = WindState(WindDirectionText.W, 3)
             )
         )
     }

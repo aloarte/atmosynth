@@ -1,4 +1,4 @@
-package com.devalr.dayweather.composables.detailhumidity
+package com.devalr.dayweather.composables.details
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devalr.dayweather.R
 import com.devalr.dayweather.model.PromptStateVo
+import com.devalr.dayweather.model.enums.WindDirectionText
 import com.devalr.dayweather.model.now.WeatherMaxMin
+import com.devalr.dayweather.model.now.WindState
+import com.devalr.domain.model.enums.WindDirection
 import com.devalr.framework.components.AtmosAnimation
 import com.devalr.framework.components.AtmosButton
 import com.devalr.framework.components.AtmosSeparator
@@ -26,27 +29,27 @@ import com.devalr.framework.modals.AtmosBottomSheet
 import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
-fun DetailHumidityBottomSheet(
-    humidity: WeatherMaxMin,
-    humidityPrompt: PromptStateVo,
+fun DetailWindBottomSheet(
+    wind: WindState,
+    windPrompt: PromptStateVo,
     onDismiss: () -> Unit,
 ) {
     AtmosBottomSheet(
-        title = stringResource(R.string.humidity_detail_title),
+        title = stringResource(R.string.wind_detail_title),
         onDismiss = onDismiss
     ) {
-        DetailHumidityContent(
-            humidity = humidity,
-            humidityPrompt = humidityPrompt,
+        DetailWindContent(
+            wind = wind,
+            windPrompt = windPrompt,
             onDismiss = onDismiss
         )
     }
 }
 
 @Composable
-private fun DetailHumidityContent(
-    humidity: WeatherMaxMin,
-    humidityPrompt: PromptStateVo,
+private fun DetailWindContent(
+    wind: WindState,
+    windPrompt: PromptStateVo,
     onDismiss: () -> Unit
 ) {
     Column(
@@ -57,21 +60,21 @@ private fun DetailHumidityContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        if (humidityPrompt.loadingAiPrompt) {
+        if (windPrompt.loadingAiPrompt) {
             AtmosAnimation(type = AnimationsType.LoadingAi, size = 120.dp)
         } else {
-            if (humidityPrompt.promptResult.isNullOrBlank()) {
+            if (windPrompt.promptResult.isNullOrBlank()) {
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     AtmosText(
-                        text = stringResource(R.string.humidity_detail_error_description),
+                        text = stringResource(R.string.wind_detail_error_description),
                         type = TextType.Description
                     )
                     AtmosSeparator(size = 30.dp, type = SeparatorType.Vertical)
                     AtmosButton(
-                        text = stringResource(R.string.humidity_detail_error_action),
+                        text = stringResource(R.string.wind_detail_error_action),
                         onClick = onDismiss
                     )
                 }
@@ -79,12 +82,12 @@ private fun DetailHumidityContent(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     AtmosAnimation(type = AnimationsType.Humidity, size = 60.dp)
                     AtmosText(
-                        text = "${humidity.current}%",
+                        text = "${wind.speed} km/h",
                         type = TextType.UltraFeatured
                     )
                 }
                 AtmosSeparator(size = 40.dp, type = SeparatorType.Vertical)
-                AtmosText(text = humidityPrompt.promptResult, type = TextType.Description)
+                AtmosText(text = windPrompt.promptResult, type = TextType.Description)
             }
         }
     }
@@ -92,26 +95,32 @@ private fun DetailHumidityContent(
 
 @Preview(showBackground = true)
 @Composable
-private fun DetailHumidityContentPreviewLoadedSuccess() {
+private fun DetailWindContentPreviewLoadedSuccessN() {
     AtmosynthTheme {
-        DetailHumidityContent(
-            humidity = WeatherMaxMin("50", "60", "20"),
-            humidityPrompt = PromptStateVo(
-                promptResult = stringResource(R.string.lorep_ipsum),
-                loadingAiPrompt = false,
-            ),
-            onDismiss = {}
-        )
+        Column {
+            WindDirectionText.entries.forEach {
+                DetailWindContent(
+                    wind = WindState(it, 20),
+                    windPrompt = PromptStateVo(
+                        promptResult = stringResource(R.string.lorep_ipsum),
+                        loadingAiPrompt = false,
+                    ),
+                    onDismiss = {}
+                )
+            }
+        }
+
     }
+
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun DetailHumidityContentPreviewLoadedFailedNull() {
+private fun DetailWindContentPreviewLoadedFailedNull() {
     AtmosynthTheme {
-        DetailHumidityContent(
-            humidity = WeatherMaxMin("50", "60", "20"),
-            humidityPrompt = PromptStateVo(
+        DetailWindContent(
+            wind = WindState(WindDirectionText.N, 20),
+            windPrompt = PromptStateVo(
                 promptResult = null,
                 loadingAiPrompt = false,
             ),
@@ -122,11 +131,11 @@ private fun DetailHumidityContentPreviewLoadedFailedNull() {
 
 @Preview(showBackground = true)
 @Composable
-private fun DetailHumidityContentPreviewLoadedBlank() {
+private fun DetailWindContentPreviewLoadedBlank() {
     AtmosynthTheme {
-        DetailHumidityContent(
-            humidity = WeatherMaxMin("50", "60", "20"),
-            humidityPrompt = PromptStateVo(
+        DetailWindContent(
+            wind = WindState(WindDirectionText.N, 20),
+            windPrompt = PromptStateVo(
                 promptResult = "",
                 loadingAiPrompt = false,
             ),
@@ -137,11 +146,11 @@ private fun DetailHumidityContentPreviewLoadedBlank() {
 
 @Preview(showBackground = true)
 @Composable
-private fun DetailHumidityContentPreviewLoading() {
+private fun DetailWindContentPreviewLoading() {
     AtmosynthTheme {
-        DetailHumidityContent(
-            humidity = WeatherMaxMin("50", "60", "20"),
-            humidityPrompt = PromptStateVo(
+        DetailWindContent(
+            wind = WindState(WindDirectionText.NE, 20),
+            windPrompt = PromptStateVo(
                 promptResult = stringResource(R.string.lorep_ipsum),
                 loadingAiPrompt = true,
             ),
@@ -149,4 +158,3 @@ private fun DetailHumidityContentPreviewLoading() {
         )
     }
 }
-

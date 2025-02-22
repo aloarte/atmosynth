@@ -4,18 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devalr.dayweather.extensions.toCelsius
 import com.devalr.dayweather.interactions.Event
-import com.devalr.dayweather.interactions.Event.ChangeCity
-import com.devalr.dayweather.interactions.Event.LoadScreen
-import com.devalr.dayweather.interactions.Event.OnRetryDailySummaryPrompt
-import com.devalr.dayweather.interactions.Event.OnStartHumidityDetail
-import com.devalr.dayweather.interactions.Event.OnUploadErrorState
-import com.devalr.dayweather.interactions.Event.OnUploadHumidityDetailVisibility
-import com.devalr.dayweather.interactions.Event.OnUploadLoadingState
+import com.devalr.dayweather.interactions.Event.*
 import com.devalr.dayweather.interactions.State
 import com.devalr.dayweather.mergers.HourlyMerger
 import com.devalr.dayweather.model.PromptStateVo
 import com.devalr.dayweather.model.now.NowWeatherDataVo
 import com.devalr.dayweather.model.now.WeatherMaxMin
+import com.devalr.dayweather.model.now.WindState
 import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.weather.daily.DailyWeatherBo
 import com.devalr.domain.repositories.GeminiRepository
@@ -52,17 +47,25 @@ class DayWeatherViewModel(
 
     fun launchEvent(event: Event) {
         when (event) {
-            is OnUploadErrorState -> updateErrorState(event.error)
-            is OnUploadLoadingState -> updateLoadingState(event.loading)
+            LoadScreen -> loadData()
             OnRetryDailySummaryPrompt -> launchAiQueryWeatherSummary(weatherPromptData)
             ChangeCity -> TODO()
-            LoadScreen -> loadData()
+            is OnUploadErrorState -> updateErrorState(event.error)
+            is OnUploadLoadingState -> updateLoadingState(event.loading)
             is OnUploadHumidityDetailVisibility -> changeHumidityDetailVisibility(event.isVisible)
+            is OnUploadWindDetailVisibility -> changeWindDetailVisibility(event.isVisible)
             is OnStartHumidityDetail -> launchAiQueryHumiditySummary(event.humidityData)
+            is OnStartWindDetail -> launchAiQueryWindSummary(event.wind)
         }
     }
 
     private fun changeHumidityDetailVisibility(visible: Boolean) {
+        _state.update { currentState ->
+            currentState.copy(loadingStates = currentState.loadingStates.copy(displayHumidityDetail = visible))
+        }
+    }
+
+    private fun changeWindDetailVisibility(visible: Boolean) {
         _state.update { currentState ->
             currentState.copy(loadingStates = currentState.loadingStates.copy(displayHumidityDetail = visible))
         }
@@ -77,6 +80,25 @@ class DayWeatherViewModel(
     private fun updateLoadingState(loading: Boolean) {
         _state.update { currentState ->
             currentState.copy(loadingStates = currentState.loadingStates.copy(loadingWeather = loading))
+        }
+    }
+
+
+    private fun launchAiQueryWindSummary(wind: WindState?) = viewModelScope.launch(Dispatchers.IO) {
+        launchEvent(OnUploadHumidityDetailVisibility(true))
+        _state.update { currentState ->
+            currentState.copy(promptWind = PromptStateVo(loadingAiPrompt = true))
+        }
+        val promptResult = geminiRepository.generateWindSummary(
+            wind.toString()
+        )
+        _state.update { currentState ->
+            currentState.copy(
+                promptWind = PromptStateVo(
+                    promptResult = promptResult,
+                    loadingAiPrompt = false
+                )
+            )
         }
     }
 

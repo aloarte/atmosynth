@@ -4,16 +4,20 @@ import com.devalr.dayweather.extensions.toCelsius
 import com.devalr.dayweather.extensions.toHumidityPercentage
 import com.devalr.dayweather.model.now.NowWeatherDataVo
 import com.devalr.dayweather.model.now.WeatherMaxMin
+import com.devalr.dayweather.model.now.WindState
 import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.enums.DayTime
 import com.devalr.domain.model.enums.SkyState
 import com.devalr.domain.model.weather.daily.DailyWeatherBo
+import com.devalr.domain.model.weather.daily.DailyWindState
 import com.devalr.framework.enums.AnimationsType
 import java.time.LocalTime
 
 class NowWeatherMapper(
-    private val animationSkyMapper: Mapper<AnimationSkyEnumMapper.Params, AnimationsType>
-) : Mapper<DailyWeatherBo, NowWeatherDataVo>() {
+    private val animationSkyMapper: Mapper<AnimationSkyEnumMapper.Params, AnimationsType>,
+    private val windDirectionMapper: Mapper<DailyWindState?, WindState>,
+
+    ) : Mapper<DailyWeatherBo, NowWeatherDataVo>() {
     override fun transform(data: DailyWeatherBo): NowWeatherDataVo {
         val currentTemperature = data.temperatures.valuesPerDayTime
             .find { it.time == getNowDayTime() }
@@ -37,6 +41,9 @@ class NowWeatherMapper(
                     .find { it.time == getNowDayTime() }?.value.toString(),
                 max = data.humidity.max.toHumidityPercentage(),
                 min = data.humidity.min.toHumidityPercentage()
+            ),
+            wind = windDirectionMapper.transform(data.windState
+                .find { it.time == getNowDayTime() }
             ),
             skyAnimation = animationSkyMapper.transform(
                 AnimationSkyEnumMapper.Params(

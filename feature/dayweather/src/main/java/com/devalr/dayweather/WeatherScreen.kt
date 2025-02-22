@@ -4,11 +4,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.devalr.dayweather.composables.detailhumidity.DetailHumidityBottomSheet
+import com.devalr.dayweather.composables.details.DetailHumidityBottomSheet
 import com.devalr.dayweather.composables.weather.DayWeatherContent
-import com.devalr.dayweather.interactions.Event.OnUploadHumidityDetailVisibility
 import com.devalr.dayweather.interactions.Event.OnRetryDailySummaryPrompt
 import com.devalr.dayweather.interactions.Event.OnStartHumidityDetail
+import com.devalr.dayweather.interactions.Event.OnStartWindDetail
+import com.devalr.dayweather.interactions.Event.OnUploadHumidityDetailVisibility
 import com.devalr.framework.screens.ErrorScreen
 import com.devalr.framework.screens.LoadingScreen
 import org.koin.compose.koinInject
@@ -46,10 +47,15 @@ fun WeatherScreen(
                     state = state,
                     onDailySummaryPromptRetry = {
                         viewModel.launchEvent(OnRetryDailySummaryPrompt)
+                    },
+                    onHumidityPressed = {
+                        viewModel.launchEvent(OnStartHumidityDetail(state.dailyWeather?.humidity))
+
+                    },
+                    onWindPressed = {
+                        viewModel.launchEvent(OnStartWindDetail(state.dailyWeather?.wind))
                     }
-                ) {
-                    viewModel.launchEvent(OnStartHumidityDetail(state.dailyWeather?.humidity))
-                }
+                )
             }
         }
     }
