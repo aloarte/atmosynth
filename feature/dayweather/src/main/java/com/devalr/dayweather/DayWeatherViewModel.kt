@@ -1,16 +1,15 @@
 package com.devalr.dayweather
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devalr.dayweather.extensions.toCelsius
 import com.devalr.dayweather.interactions.Event
 import com.devalr.dayweather.interactions.Event.ChangeCity
 import com.devalr.dayweather.interactions.Event.LoadScreen
-import com.devalr.dayweather.interactions.Event.OnChangeHumidityDetailVisibility
 import com.devalr.dayweather.interactions.Event.OnRetryDailySummaryPrompt
 import com.devalr.dayweather.interactions.Event.OnStartHumidityDetail
 import com.devalr.dayweather.interactions.Event.OnUploadErrorState
+import com.devalr.dayweather.interactions.Event.OnUploadHumidityDetailVisibility
 import com.devalr.dayweather.interactions.Event.OnUploadLoadingState
 import com.devalr.dayweather.interactions.State
 import com.devalr.dayweather.mergers.HourlyMerger
@@ -19,7 +18,6 @@ import com.devalr.dayweather.model.now.NowWeatherDataVo
 import com.devalr.dayweather.model.now.WeatherMaxMin
 import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.weather.daily.DailyWeatherBo
-import com.devalr.domain.model.weather.hourly.HourlyWeatherBo
 import com.devalr.domain.repositories.GeminiRepository
 import com.devalr.domain.usecases.Result
 import com.devalr.domain.usecases.WeatherUseCase
@@ -30,15 +28,12 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.time.ZoneId
 
 class DayWeatherViewModel(
     private val geminiRepository: GeminiRepository,
     private val weatherUseCase: WeatherUseCase,
     private val hourlyMerger: HourlyMerger,
     private val nowWeatherMapper: Mapper<DailyWeatherBo, NowWeatherDataVo>
-
 ) : ViewModel() {
 
     private var isDataLoaded = false
@@ -62,14 +57,32 @@ class DayWeatherViewModel(
             OnRetryDailySummaryPrompt -> launchAiQueryWeatherSummary(weatherPromptData)
             ChangeCity -> TODO()
             LoadScreen -> loadData()
-            is OnChangeHumidityDetailVisibility -> changeHumidityDetailVisibility(event.isVisible)
+            is OnUploadHumidityDetailVisibility -> changeHumidityDetailVisibility(event.isVisible)
             is OnStartHumidityDetail -> launchAiQueryHumiditySummary(event.humidityData)
+        }
+    }
+
+    private fun changeHumidityDetailVisibility(visible: Boolean) {
+        _state.update { currentState ->
+            currentState.copy(loadingStates = currentState.loadingStates.copy(displayHumidityDetail = visible))
+        }
+    }
+
+    private fun updateErrorState(error: Boolean) {
+        _state.update { currentState ->
+            currentState.copy(loadingStates = currentState.loadingStates.copy(errorReceived = error))
+        }
+    }
+
+    private fun updateLoadingState(loading: Boolean) {
+        _state.update { currentState ->
+            currentState.copy(loadingStates = currentState.loadingStates.copy(loadingWeather = loading))
         }
     }
 
     private fun launchAiQueryHumiditySummary(humidityData: WeatherMaxMin?) =
         viewModelScope.launch(Dispatchers.IO) {
-            launchEvent(OnChangeHumidityDetailVisibility(true))
+            launchEvent(OnUploadHumidityDetailVisibility(true))
             _state.update { currentState ->
                 currentState.copy(promptHumidity = PromptStateVo(loadingAiPrompt = true))
             }
@@ -86,24 +99,6 @@ class DayWeatherViewModel(
             }
         }
 
-    private fun changeHumidityDetailVisibility(visible: Boolean) {
-        _state.update { currentState ->
-            currentState.copy(displayHumidityDetail = visible)
-        }
-    }
-
-    private fun updateErrorState(error: Boolean) {
-        _state.update { currentState ->
-            currentState.copy(errorReceived = error)
-        }
-    }
-
-    private fun updateLoadingState(loading: Boolean) {
-        _state.update { currentState ->
-            currentState.copy(loadingWeather = loading)
-        }
-    }
-
     private fun launchAiQueryWeatherSummary(promptData: String) =
         viewModelScope.launch(Dispatchers.IO) {
             _state.update { currentState ->
@@ -119,7 +114,6 @@ class DayWeatherViewModel(
                 )
             }
         }
-
 
     private fun loadData() = viewModelScope.launch(Dispatchers.IO) {
         launchEvent(OnUploadLoadingState(true))
@@ -156,20 +150,5 @@ class DayWeatherViewModel(
     }
 }
 
-
-fun String.processForAI() = this
-    .replace("PrecipitationProbability", "")
-    .replace("DailySkyState", "")
-    .replace("DailyWindState", "")
-    .replace("ValuesDayTimeBo", "")
-    .replace("MaxMinValueBo", "")
-
-
-fun List<HourlyWeatherBo>.findClosestDate() = with(LocalDateTime.now(ZoneId.of("Europe/Madrid"))) {
-    this@findClosestDate.minByOrNull {
-        kotlin.math.abs(it.completeTime.minute - minute).toLong() +
-                kotlin.math.abs(it.completeTime.hour - hour).toLong() * 60
-    }
-}
 
 

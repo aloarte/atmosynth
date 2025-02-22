@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.devalr.dayweather.R
 import com.devalr.dayweather.composables.weather.hourlycomponents.HourlyWeatherContent
 import com.devalr.dayweather.composables.weather.nowcomponents.DailySummaryContent
 import com.devalr.dayweather.composables.weather.nowcomponents.NowWeatherContent
@@ -33,18 +35,20 @@ fun DayWeatherContent(
         item {
             FlowRow(modifier = Modifier.padding(8.dp)) {
                 state.dailyWeather?.let {
-                    NowWeatherHumidityContent(
-                        humidityPercentage = it.humidity.current.toFloat(),
-                        onHumidityPressed = onHumidityPressed
-                    )
                     NowWeatherContent(nowStatus = it)
                 }
-                HourlyWeatherContent(weatherByHours = state.weatherByHours)
                 DailySummaryContent(
                     loadingAiPrompt = state.promptSummary.loadingAiPrompt,
                     promptResult = state.promptSummary.promptResult,
                     onRetry = onDailySummaryPromptRetry
                 )
+                HourlyWeatherContent(weatherByHours = state.weatherByHours)
+                state.dailyWeather?.let {
+                    NowWeatherHumidityContent(
+                        humidityPercentage = it.humidity.current.toFloat(),
+                        onHumidityPressed = onHumidityPressed
+                    )
+                }
             }
         }
     }
@@ -75,7 +79,7 @@ private fun DayWeatherContentPreview() {
                     )
                 ),
                 promptSummary = PromptStateVo(
-                    promptResult = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    promptResult = stringResource(R.string.lorep_ipsum),
                     loadingAiPrompt = false
                 ),
             ),

@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.devalr.framework.R
 import com.devalr.framework.components.AtmosAnimation
 import com.devalr.framework.components.AtmosText
 import com.devalr.framework.enums.AnimationsType
@@ -30,10 +32,9 @@ fun LoadingScreen() {
         AtmosAnimation(type = AnimationsType.LoadingGeneral, size = 120.dp)
         VerticalDivider(modifier = Modifier.height(50.dp), color = Color.Transparent)
         AtmosText(
-            text = "Estamos cargando los datos. Por favor, espera unos segundos.",
+            text = stringResource(R.string.loading_screen_title),
             type = TextType.Description
         )
-
     }
 }
 

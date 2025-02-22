@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.devalr.dayweather.R
 import com.devalr.dayweather.model.now.NowWeatherDataVo
 import com.devalr.dayweather.model.now.WeatherMaxMin
 import com.devalr.framework.components.AtmosAnimation
@@ -44,11 +46,18 @@ fun NowWeatherContent(nowStatus: NowWeatherDataVo) {
                 )
             }
             AtmosText(
-                text = "Sensación térmica de ${nowStatus.thermalSensation.current}",
+                text = stringResource(
+                    R.string.now_weather_current_temperature,
+                    nowStatus.thermalSensation.current
+                ),
                 type = TextType.LabelL
             )
             AtmosText(
-                text = "Máxima ${nowStatus.temperature.max}  Mínima ${nowStatus.temperature.min}",
+                text = stringResource(
+                    R.string.now_weather_maxmin_temperature,
+                    nowStatus.thermalSensation.max,
+                    nowStatus.thermalSensation.min
+                ),
                 type = TextType.LabelS
             )
 

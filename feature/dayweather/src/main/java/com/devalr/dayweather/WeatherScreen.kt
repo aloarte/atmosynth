@@ -6,7 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.devalr.dayweather.composables.detailhumidity.DetailHumidityBottomSheet
 import com.devalr.dayweather.composables.weather.DayWeatherContent
-import com.devalr.dayweather.interactions.Event.OnChangeHumidityDetailVisibility
+import com.devalr.dayweather.interactions.Event.OnUploadHumidityDetailVisibility
 import com.devalr.dayweather.interactions.Event.OnRetryDailySummaryPrompt
 import com.devalr.dayweather.interactions.Event.OnStartHumidityDetail
 import com.devalr.framework.screens.ErrorScreen
@@ -19,7 +19,7 @@ fun WeatherScreen(
 ) {
     val state by viewModel.state.collectAsState()
     Column {
-        if (state.loadingWeather) {
+        if (state.loadingStates.loadingWeather) {
             LoadingScreen()
         } else {
             if (state.weatherByHours.isEmpty()) {
@@ -30,14 +30,14 @@ fun WeatherScreen(
 
                 }
             } else {
-                if (state.displayHumidityDetail) {
+                if (state.loadingStates.displayHumidityDetail) {
                     state.dailyWeather?.humidity?.let {
                         DetailHumidityBottomSheet(
                             humidity = it,
                             humidityPrompt = state.promptHumidity,
                             onDismiss = {
                                 viewModel.launchEvent(
-                                    OnChangeHumidityDetailVisibility(isVisible = false)
+                                    OnUploadHumidityDetailVisibility(isVisible = false)
                                 )
                             })
                     }

@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.devalr.framework.R
 import com.devalr.framework.components.AtmosAnimation
 import com.devalr.framework.components.AtmosButton
 import com.devalr.framework.components.AtmosSeparator
@@ -30,7 +32,7 @@ fun ErrorScreen(errorMessage: String, buttonMessage: String, onClick: () -> Unit
         AtmosAnimation(type = AnimationsType.ActionError, size = 120.dp)
         AtmosSeparator(size = 5.dp, type = SeparatorType.Vertical)
         AtmosText(
-            text = "Se produjo un error",
+            text = stringResource(R.string.error_screen_title),
             type = TextType.Title
         )
         AtmosText(
