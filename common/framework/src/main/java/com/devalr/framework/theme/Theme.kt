@@ -1,66 +1,46 @@
 package com.devalr.framework.theme
 
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-
-private val DarkColorScheme =
-    darkColorScheme(
-        primary = Orange,
-        secondary = Gray,
-        tertiary = Gray,
-        background = Color(0xFFFFFBFE),
-        surface = Color(0xFFFFFBFE),
-        onPrimary = Color.White,
-        onSecondary = Color.White,
-        onTertiary = Color.White,
-        onBackground = Color(0xFF1C1B1F),
-        onSurface = Color(0xFF1C1B1F),
-
-        )
 
 private val LightColorScheme =
     lightColorScheme(
-        primary = Orange,
-        secondary = Gray,
-        tertiary = Gray,
-        background = Color(0xFFFFFBFE),
-        surface = Color(0xFFFFFBFE),
-        onPrimary = Color.White,
-        onSecondary = Color.White,
-        onTertiary = Color.White,
-        onBackground = Color(0xFF1C1B1F),
-        onSurface = Color(0xFF1C1B1F),
+        primary = Orange400,
+        secondary = Gray800,
+        tertiary = Orange300,
+        background = Gray50,
+        surface = Gray200,
+        onPrimary = Gray50,
+        onSecondary = Gray50,
+        onTertiary = Gray50,
+        onBackground = Gray900,
+        onSurface = Gray900
+    )
 
+private val DarkColorScheme =
+    darkColorScheme(
+        primary = Orange900,
+        secondary = Gray800,
+        tertiary = Orange900,
+        background = Gray500,
+        surface = Gray600,
+        onPrimary = Gray200,
+        onSecondary = Gray200,
+        onTertiary = Gray200,
+        onBackground = Gray200,
+        onSurface = Gray200
     )
 
 @Composable
 fun AtmosynthTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
-    val colorScheme =
-        when {
-            dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-                val context = LocalContext.current
-                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-            }
-
-            darkTheme -> DarkColorScheme
-            else -> LightColorScheme
-        }
-
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme,
         typography = Typography,
         content = content,
     )

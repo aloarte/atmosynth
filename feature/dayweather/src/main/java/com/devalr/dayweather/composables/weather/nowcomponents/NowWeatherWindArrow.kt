@@ -35,13 +35,15 @@ fun NowWeatherWindArrow(
     val animatedOffsetY by axisAnimator(offsetY.value, infiniteTransition)
 
     Box(modifier = modifier) {
-        Image(
-            modifier = Modifier
-                .size(55.dp)
-                .align(Alignment.Center),
-            painter = painterResource(id = R.drawable.icon_circle),
-            contentDescription = windDirection.name
-        )
+        if(windDirection != WindDirectionText.None) {
+            Image(
+                modifier = Modifier
+                    .size(55.dp)
+                    .align(Alignment.Center),
+                painter = painterResource(id = R.drawable.icon_circle),
+                contentDescription = windDirection.name
+            )
+        }
         Image(
             modifier = Modifier
                 .offset(x = animatedOffsetX.dp, y = animatedOffsetY.dp)
@@ -79,7 +81,7 @@ private fun axisAnimator(axisValue: Float, infiniteTransition: InfiniteTransitio
         )
     )
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun NowWeatherWindArrowPreview() {
     AtmosynthTheme {

@@ -1,5 +1,6 @@
 package com.devalr.framework.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,7 +14,7 @@ import com.devalr.framework.enums.TextType
 fun AtmosText(
     modifier: Modifier = Modifier,
     text: String,
-    textColor: Color = Color.Unspecified,
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     type: TextType
 ) {
@@ -43,8 +44,8 @@ private fun getTextWeight(type: TextType) = when (type) {
     TextType.Featured -> FontWeight.Bold
     TextType.Title -> FontWeight.Bold
     TextType.Description -> FontWeight.Normal
-    TextType.LabelXs -> FontWeight.Thin
-    TextType.LabelS -> FontWeight.Thin
-    TextType.LabelM -> FontWeight.Thin
-    TextType.LabelL -> FontWeight.Thin
+    TextType.LabelXs -> FontWeight.Light
+    TextType.LabelS -> FontWeight.Light
+    TextType.LabelM -> FontWeight.Light
+    TextType.LabelL -> FontWeight.Light
 }

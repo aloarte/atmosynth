@@ -30,7 +30,7 @@ fun AtmosButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit
 }
 
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun AtmosButtonPreviews() {
     AtmosynthTheme {

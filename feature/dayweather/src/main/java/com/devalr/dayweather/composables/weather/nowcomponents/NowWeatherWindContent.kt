@@ -31,15 +31,12 @@ fun NowWeatherWindContent(
                 .fillMaxSize()
                 .padding(10.dp)
         ) {
-            if (windState.direction != WindDirectionText.None) {
-                NowWeatherWindArrow(
-                    modifier = Modifier
-                        .size(55.dp)
-                        .align(Alignment.Center),
-                    windDirection = WindDirectionText.W
-                )
-            }
-
+            NowWeatherWindArrow(
+                modifier = Modifier
+                    .size(55.dp)
+                    .align(Alignment.Center),
+                windDirection = windState.direction
+            )
             AtmosText(
                 modifier = Modifier.align(Alignment.TopCenter),
                 text = stringResource(R.string.now_weather_wind_label),
@@ -47,7 +44,8 @@ fun NowWeatherWindContent(
             )
             AtmosText(
                 modifier = Modifier.align(Alignment.BottomCenter),
-                text = "${windState.speed} km/h del ${windState.direction.name}",
+                text = if (windState.direction != WindDirectionText.None) "${windState.speed} km/h del ${windState.direction.name}"
+                else "${windState.speed} km/h",
                 type = TextType.Title
             )
         }

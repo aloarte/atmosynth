@@ -27,7 +27,7 @@ fun AtmosCard(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            containerColor = MaterialTheme.colorScheme.surface,
         ),
         modifier = Modifier
             .padding(5.dp)

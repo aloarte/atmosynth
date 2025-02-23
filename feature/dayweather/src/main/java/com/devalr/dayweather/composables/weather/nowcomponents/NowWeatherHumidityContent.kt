@@ -12,11 +12,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,6 +56,7 @@ fun NowWeatherHumidityContent(
 
 @Composable
 private fun HumidityCanvas(humidityPercentage: Float) {
+    val humidityWavesColor = MaterialTheme.colorScheme.tertiary
     val infiniteTransition = rememberInfiniteTransition(label = "infinite")
     val waveOffset: Float by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -86,7 +87,7 @@ private fun HumidityCanvas(humidityPercentage: Float) {
             close()
         }
 
-        drawPath(path, Color.Gray)
+        drawPath(path, humidityWavesColor)
     }
 }
 

@@ -1,5 +1,6 @@
 package com.devalr.framework.modals
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,6 +11,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -32,7 +35,12 @@ fun AtmosBottomSheet(
     content: @Composable (PaddingValues) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    ModalBottomSheet(modifier = Modifier, sheetState = sheetState, onDismissRequest = onDismiss) {
+    ModalBottomSheet(
+        containerColor = MaterialTheme.colorScheme.background,
+        modifier = Modifier,
+        sheetState = sheetState,
+        onDismissRequest = onDismiss
+    ) {
         AtmosBottomSheetTitle(title = title, onDismiss = onDismiss)
         content(PaddingValues(5.dp))
     }
@@ -45,6 +53,7 @@ fun AtmosBottomSheetTitle(
 ) {
     Box(
         modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
@@ -53,6 +62,7 @@ fun AtmosBottomSheetTitle(
             onClick = onDismiss
         ) {
             Icon(
+                tint = MaterialTheme.colorScheme.onSurface,
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "",
             )
