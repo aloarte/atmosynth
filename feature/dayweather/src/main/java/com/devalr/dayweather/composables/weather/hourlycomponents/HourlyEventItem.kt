@@ -19,7 +19,7 @@ import java.time.LocalDateTime
 
 @Composable
 fun HourlyEventItem(event: HourlyEventVo) {
-    AtmosCard {
+    AtmosCard(isClickable = false) {
         ConstraintLayout(
             modifier = Modifier
                 .size(width = 60.dp, height = 100.dp)

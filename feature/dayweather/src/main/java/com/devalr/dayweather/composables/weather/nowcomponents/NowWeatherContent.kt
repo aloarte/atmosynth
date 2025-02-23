@@ -27,7 +27,7 @@ import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
 fun NowWeatherContent(nowStatus: NowWeatherDataVo) {
-    AtmosCard(width = 400.dp) { paddingValues ->
+    AtmosCard(width = 400.dp, isClickable = false) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -62,11 +62,9 @@ fun NowWeatherContent(nowStatus: NowWeatherDataVo) {
                 ),
                 type = TextType.LabelS
             )
-
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

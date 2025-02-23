@@ -23,7 +23,7 @@ import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
 fun DailySummaryContent(loadingAiPrompt: Boolean, promptResult: String?, onRetry: () -> Unit) {
-    AtmosCard(height = 280.dp) { paddingValues ->
+    AtmosCard(height = 280.dp, isClickable = false) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

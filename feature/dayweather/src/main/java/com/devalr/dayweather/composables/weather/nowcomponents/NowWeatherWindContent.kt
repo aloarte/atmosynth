@@ -44,8 +44,11 @@ fun NowWeatherWindContent(
             )
             AtmosText(
                 modifier = Modifier.align(Alignment.BottomCenter),
-                text = if (windState.direction != WindDirectionText.None) "${windState.speed} km/h del ${windState.direction.name}"
-                else "${windState.speed} km/h",
+                text = if (windState.direction != WindDirectionText.None) {
+                    "${windState.speed} km/h del ${windState.direction.text}"
+                } else {
+                    "${windState.speed} km/h"
+                },
                 type = TextType.Title
             )
         }

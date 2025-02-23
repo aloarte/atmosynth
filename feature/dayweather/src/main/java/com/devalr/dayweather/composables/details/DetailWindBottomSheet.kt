@@ -27,7 +27,6 @@ import com.devalr.framework.enums.TextType
 import com.devalr.framework.modals.AtmosBottomSheet
 import com.devalr.framework.theme.AtmosynthTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailWindBottomSheet(
     wind: WindState,
@@ -105,9 +104,7 @@ private fun DetailWindContentPreviewLoadedSuccessN() {
                 )
             }
         }
-
     }
-
 }
 
 @Preview(showBackground = true)

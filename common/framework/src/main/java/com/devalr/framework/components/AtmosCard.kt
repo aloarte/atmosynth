@@ -21,6 +21,7 @@ import com.devalr.framework.theme.AtmosynthTheme
 fun AtmosCard(
     width: Dp? = null,
     height: Dp? = null,
+    isClickable:Boolean = true,
     halfScreen: Boolean = false,
     onCardClicked: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
@@ -49,7 +50,7 @@ fun AtmosCard(
                     } ?: height(150.dp)
                 }
             )
-            .clickable {
+            .clickable(isClickable){
                 onCardClicked.invoke()
             }
     ) {

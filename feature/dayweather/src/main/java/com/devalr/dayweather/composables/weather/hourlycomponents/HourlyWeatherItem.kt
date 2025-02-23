@@ -21,7 +21,7 @@ import java.time.LocalDateTime
 
 @Composable
 fun HourlyWeatherItem(data: HourlyWeatherVo) {
-    AtmosCard {  paddingValues ->
+    AtmosCard(isClickable = false) {  paddingValues ->
         ConstraintLayout(
             modifier = Modifier
                 .size(width = 40.dp, height = 100.dp)
