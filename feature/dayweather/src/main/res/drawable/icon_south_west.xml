@@ -5,42 +5,6 @@
     android:viewportHeight="75">
   <group>
     <clip-path
-        android:pathData="M67.793,81.027L-6.027,67.793L7.207,-6.027L81.027,7.207ZM67.793,81.027"/>
-    <group>
-      <clip-path
-          android:pathData="M67.793,81.027L-6.027,67.793L7.207,-6.027L81.027,7.207ZM67.793,81.027"/>
-      <group>
-        <clip-path
-            android:pathData="M67.793,81.027L-6.027,67.793L7.207,-6.027L81.027,7.207ZM67.793,81.027"/>
-        <path
-            android:pathData="M44.121,0.59C64.473,4.242 78.063,23.766 74.414,44.121C70.766,64.473 51.238,78.063 30.883,74.414C10.531,70.766 -3.059,51.238 0.59,30.887C4.238,10.531 23.766,-3.059 44.121,0.59"
-            android:fillColor="#25282b"
-            android:fillType="nonZero"/>
-      </group>
-    </group>
-  </group>
-  <group>
-    <clip-path
-        android:pathData="M2,2L73,2L73,73L2,73ZM2,2"/>
-    <group>
-      <clip-path
-          android:pathData="M67.793,81.027L-6.027,67.793L7.207,-6.027L81.027,7.207ZM67.793,81.027"/>
-      <group>
-        <clip-path
-            android:pathData="M67.793,81.027L-6.027,67.793L7.207,-6.027L81.027,7.207ZM67.793,81.027"/>
-        <group>
-          <clip-path
-              android:pathData="M67.793,81.027L-6.027,67.793L7.207,-6.027L81.027,7.207ZM67.793,81.027"/>
-          <path
-              android:pathData="M43.703,2.914C62.773,6.336 75.508,24.633 72.09,43.703C68.672,62.773 50.371,75.508 31.301,72.09C12.23,68.672 -0.504,50.371 2.914,31.301C6.332,12.23 24.633,-0.504 43.703,2.914"
-              android:fillColor="#e8eeed"
-              android:fillType="nonZero"/>
-        </group>
-      </group>
-    </group>
-  </group>
-  <group>
-    <clip-path
         android:pathData="M17,9L66,9L66,59L17,59ZM17,9"/>
     <group>
       <clip-path
@@ -53,7 +17,7 @@
               android:pathData="M67.793,81.027L-6.027,67.793L7.207,-6.027L81.027,7.207ZM67.793,81.027"/>
           <path
               android:pathData="M33.855,9.215L40.723,33.055L65.125,37.5L17.758,58.449L33.855,9.215"
-              android:fillColor="#25282b"
+              android:fillColor="#df754f"
               android:fillType="nonZero"/>
         </group>
       </group>

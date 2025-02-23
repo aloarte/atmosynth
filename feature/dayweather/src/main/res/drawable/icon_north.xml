@@ -5,42 +5,6 @@
     android:viewportHeight="75">
   <group>
     <clip-path
-        android:pathData="M-13.617,23.367L51.633,-13.617L88.617,51.633L23.367,88.617ZM-13.617,23.367"/>
-    <group>
-      <clip-path
-          android:pathData="M-13.617,23.367L51.633,-13.617L88.617,51.633L23.367,88.617ZM-13.617,23.367"/>
-      <group>
-        <clip-path
-            android:pathData="M-13.617,23.367L51.633,-13.617L88.617,51.633L23.367,88.617ZM-13.617,23.367"/>
-        <path
-            android:pathData="M55.988,70.121C38,80.32 15.07,73.98 4.875,55.992C-5.324,38.004 1.016,15.07 19.004,4.875C36.992,-5.32 59.926,1.02 70.121,19.008C80.316,36.996 73.977,59.926 55.988,70.121"
-            android:fillColor="#25282b"
-            android:fillType="nonZero"/>
-      </group>
-    </group>
-  </group>
-  <group>
-    <clip-path
-        android:pathData="M2,2L73,2L73,73L2,73ZM2,2"/>
-    <group>
-      <clip-path
-          android:pathData="M-13.617,23.367L51.633,-13.617L88.617,51.633L23.367,88.617ZM-13.617,23.367"/>
-      <group>
-        <clip-path
-            android:pathData="M-13.617,23.367L51.633,-13.617L88.617,51.633L23.367,88.617ZM-13.617,23.367"/>
-        <group>
-          <clip-path
-              android:pathData="M-13.617,23.367L51.633,-13.617L88.617,51.633L23.367,88.617ZM-13.617,23.367"/>
-          <path
-              android:pathData="M54.824,68.07C37.969,77.621 16.48,71.684 6.926,54.828C-2.629,37.969 3.313,16.484 20.168,6.93C37.027,-2.625 58.512,3.316 68.066,20.172C77.621,37.027 71.68,58.516 54.824,68.07"
-              android:fillColor="#e8eeed"
-              android:fillType="nonZero"/>
-        </group>
-      </group>
-    </group>
-  </group>
-  <group>
-    <clip-path
         android:pathData="M16,8L59,8L59,57L16,57ZM16,8"/>
     <group>
       <clip-path
@@ -53,7 +17,7 @@
               android:pathData="M-13.617,23.367L51.633,-13.617L88.617,51.633L23.367,88.617ZM-13.617,23.367"/>
           <path
               android:pathData="M58.375,56.93L37.859,42.98L16.246,55.148L39.305,8.77L58.375,56.93"
-              android:fillColor="#25282b"
+              android:fillColor="#df754f"
               android:fillType="nonZero"/>
         </group>
       </group>
