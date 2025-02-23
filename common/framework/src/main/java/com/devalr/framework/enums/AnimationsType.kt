@@ -4,6 +4,7 @@ enum class AnimationsType {
     ActionError,
     ActionWarning,
     Humidity,
+    Wind,
     WeatherCold,
     WeatherClouds,
     WeatherClearDay,

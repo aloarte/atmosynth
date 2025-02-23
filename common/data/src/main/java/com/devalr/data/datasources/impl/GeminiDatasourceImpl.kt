@@ -17,7 +17,7 @@ class GeminiDatasourceImpl(
         private const val HUMIDITY_SUMMARY_PROMPT =
             "Con los siguientes datos que te voy a proporcionar sobre la humedad del día de hoy, generame un texto de no mas de 5 líneas que me explique qué implicaciones tienen esos valores y que me aconseje. Los datos son estos: "
         private const val WIND_SUMMARY_PROMPT =
-            "Con los siguientes datos que te voy a proporcionar sobre el viento del día de hoy, generame un texto de no mas de 5 líneas que me explique qué implicaciones tienen esos valores y que me aconseje. Los datos son estos: "
+            "Con los siguientes datos que te voy a proporcionar sobre el viento del día de hoy, generame un texto de no mas de 5 líneas que me explique qué implicaciones tienen esos valores y que me aconseje. Las unidades son km/h. Los datos son estos: "
 
     }
 
@@ -39,13 +39,14 @@ class GeminiDatasourceImpl(
             ).text ?: ""
         }
 
-    override suspend fun generateWindSummary(dataForPrompt: String): String = runSafely {
-        model.generateContent(
-            content {
-                text(WIND_SUMMARY_PROMPT + dataForPrompt)
-            },
-        ).text ?: ""
-    }
+    override suspend fun generateWindSummary(dataForPrompt: String): String =
+        runSafely {
+            model.generateContent(
+                content {
+                    text(WIND_SUMMARY_PROMPT + dataForPrompt)
+                },
+            ).text ?: ""
+        }
 
     private suspend inline fun runSafely(crossinline execute: suspend () -> String) =
         withContext(Dispatchers.IO) {

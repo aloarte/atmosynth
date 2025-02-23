@@ -1,15 +1,19 @@
 package com.devalr.dayweather
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.devalr.dayweather.composables.details.DetailHumidityBottomSheet
+import com.devalr.dayweather.composables.details.DetailWindBottomSheet
 import com.devalr.dayweather.composables.weather.DayWeatherContent
 import com.devalr.dayweather.interactions.Event.OnRetryDailySummaryPrompt
 import com.devalr.dayweather.interactions.Event.OnStartHumidityDetail
 import com.devalr.dayweather.interactions.Event.OnStartWindDetail
 import com.devalr.dayweather.interactions.Event.OnUploadHumidityDetailVisibility
+import com.devalr.dayweather.interactions.Event.OnUploadWindDetailVisibility
+import com.devalr.dayweather.interactions.State
 import com.devalr.framework.screens.ErrorScreen
 import com.devalr.framework.screens.LoadingScreen
 import org.koin.compose.koinInject
@@ -31,18 +35,7 @@ fun WeatherScreen(
 
                 }
             } else {
-                if (state.loadingStates.displayHumidityDetail) {
-                    state.dailyWeather?.humidity?.let {
-                        DetailHumidityBottomSheet(
-                            humidity = it,
-                            humidityPrompt = state.promptHumidity,
-                            onDismiss = {
-                                viewModel.launchEvent(
-                                    OnUploadHumidityDetailVisibility(isVisible = false)
-                                )
-                            })
-                    }
-                }
+                BottomSheetViews(viewModel = viewModel, state = state)
                 DayWeatherContent(
                     state = state,
                     onDailySummaryPromptRetry = {
@@ -57,6 +50,37 @@ fun WeatherScreen(
                     }
                 )
             }
+        }
+    }
+}
+
+
+@Composable
+private fun BottomSheetViews(viewModel: DayWeatherViewModel, state: State) {
+    if (state.loadingStates.displayHumidityDetail) {
+        state.dailyWeather?.humidity?.let {
+            DetailHumidityBottomSheet(
+                humidity = it,
+                humidityPrompt = state.promptHumidity,
+                onDismiss = {
+                    viewModel.launchEvent(
+                        OnUploadHumidityDetailVisibility(isVisible = false)
+                    )
+                }
+            )
+        }
+    }
+    if (state.loadingStates.displayWindDetail) {
+        state.dailyWeather?.wind?.let {
+            DetailWindBottomSheet(
+                wind = it,
+                windPrompt = state.promptWind,
+                onDismiss = {
+                    viewModel.launchEvent(
+                        OnUploadWindDetailVisibility(isVisible = false)
+                    )
+                }
+            )
         }
     }
 }

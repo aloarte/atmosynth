@@ -80,7 +80,7 @@ private fun DetailWindContent(
                 }
             } else {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    AtmosAnimation(type = AnimationsType.Humidity, size = 60.dp)
+                    AtmosAnimation(type = AnimationsType.Wind, size = 60.dp)
                     AtmosText(
                         text = "${wind.speed} km/h",
                         type = TextType.UltraFeatured

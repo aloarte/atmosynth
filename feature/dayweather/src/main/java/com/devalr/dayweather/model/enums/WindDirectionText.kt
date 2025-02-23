@@ -4,13 +4,13 @@ import androidx.annotation.DrawableRes
 import com.devalr.dayweather.R
 
 enum class WindDirectionText(val text: String, @DrawableRes val drawable: Int) {
-    N("Norte", R.drawable.icon_wind_north),
-    NE("Noreste", R.drawable.icon_wind_north_east),
-    E("Este", R.drawable.icon_wind_east),
-    SE("Sureste", R.drawable.icon_wind_south_east),
-    S("Sur", R.drawable.icon_wind_south),
-    SW("Suroeste", R.drawable.icon_wind_south_west),
-    W("Oeste", R.drawable.icon_wind_west),
-    NW("Noroeste", R.drawable.icon_wind_north_west),
+    N("Norte", R.drawable.icon_south),
+    NE("Noreste", R.drawable.icon_south_west),
+    E("Este", R.drawable.icon_west),
+    SE("Sureste", R.drawable.icon_north_west),
+    S("Sur", R.drawable.icon_north),
+    SW("Suroeste", R.drawable.icon_north_east),
+    W("Oeste", R.drawable.icon_east),
+    NW("Noroeste", R.drawable.icon_south_east),
     None("Ninguna", -1)
 }

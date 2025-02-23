@@ -27,11 +27,13 @@ fun NowWeatherWindContent(
     onWindPressed: () -> Unit
 ) {
     AtmosCard(onCardClicked = { onWindPressed.invoke() }) {
-        Box(Modifier.fillMaxSize().padding(10.dp)) {
+        Box(Modifier
+            .fillMaxSize()
+            .padding(10.dp)) {
             if (windState.direction != WindDirectionText.None) {
                 Image(
                     modifier = Modifier
-                        .size(80.dp)
+                        .size(50.dp)
                         .align(Alignment.Center),
                     painter = painterResource(id = windState.direction.drawable),
                     contentDescription = windState.direction.name
@@ -44,13 +46,12 @@ fun NowWeatherWindContent(
             )
             AtmosText(
                 modifier = Modifier.align(Alignment.BottomCenter),
-                text = "${windState.speed} km/h",
-                type = TextType.Featured
+                text = "${windState.speed} km/h del ${windState.direction.name}",
+                type = TextType.Title
             )
         }
     }
 }
-
 
 @Preview
 @Composable

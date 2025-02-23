@@ -54,7 +54,10 @@ fun DayWeatherContent(
                             humidityPercentage = it.humidity.current.toFloat(),
                             onHumidityPressed = onHumidityPressed
                         )
-                        NowWeatherWindContent(windState = it.wind, onWindPressed = onWindPressed)
+                        NowWeatherWindContent(
+                            windState = it.wind,
+                            onWindPressed = onWindPressed
+                        )
                     }
                 }
             }
