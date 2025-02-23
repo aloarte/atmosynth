@@ -9,7 +9,6 @@ import com.devalr.domain.model.weather.daily.DailyWindState
 class WindStateMapper(
     private val windDirectionMapper: Mapper<String, WindDirection>,
     private val stringDayTimeMapper: Mapper<String, DayTime>
-
 ) : Mapper<DailyWindInTimeDto, DailyWindState>() {
     override fun transform(data: DailyWindInTimeDto): DailyWindState =
         DailyWindState(
