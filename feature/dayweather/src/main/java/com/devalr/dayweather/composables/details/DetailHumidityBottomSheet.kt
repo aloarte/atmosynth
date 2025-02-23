@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,7 +17,6 @@ import com.devalr.dayweather.R
 import com.devalr.dayweather.model.PromptStateVo
 import com.devalr.dayweather.model.now.WeatherMaxMin
 import com.devalr.framework.components.AtmosAnimation
-import com.devalr.framework.components.AtmosButton
 import com.devalr.framework.components.AtmosSeparator
 import com.devalr.framework.components.AtmosText
 import com.devalr.framework.enums.AnimationsType
@@ -25,6 +25,7 @@ import com.devalr.framework.enums.TextType
 import com.devalr.framework.modals.AtmosBottomSheet
 import com.devalr.framework.theme.AtmosynthTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailHumidityBottomSheet(
     humidity: WeatherMaxMin,
@@ -37,8 +38,7 @@ fun DetailHumidityBottomSheet(
     ) {
         DetailHumidityContent(
             humidity = humidity,
-            humidityPrompt = humidityPrompt,
-            onDismiss = onDismiss
+            humidityPrompt = humidityPrompt
         )
     }
 }
@@ -46,8 +46,7 @@ fun DetailHumidityBottomSheet(
 @Composable
 private fun DetailHumidityContent(
     humidity: WeatherMaxMin,
-    humidityPrompt: PromptStateVo,
-    onDismiss: () -> Unit
+    humidityPrompt: PromptStateVo
 ) {
     Column(
         modifier = Modifier
@@ -65,14 +64,11 @@ private fun DetailHumidityContent(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    AtmosAnimation(type = AnimationsType.ActionError, size = 100.dp)
+                    AtmosSeparator(size = 20.dp, type = SeparatorType.Vertical)
                     AtmosText(
                         text = stringResource(R.string.humidity_detail_error_description),
                         type = TextType.Description
-                    )
-                    AtmosSeparator(size = 30.dp, type = SeparatorType.Vertical)
-                    AtmosButton(
-                        text = stringResource(R.string.humidity_detail_error_action),
-                        onClick = onDismiss
                     )
                 }
             } else {
@@ -99,8 +95,7 @@ private fun DetailHumidityContentPreviewLoadedSuccess() {
             humidityPrompt = PromptStateVo(
                 promptResult = stringResource(R.string.lorep_ipsum),
                 loadingAiPrompt = false,
-            ),
-            onDismiss = {}
+            )
         )
     }
 }
@@ -114,8 +109,7 @@ private fun DetailHumidityContentPreviewLoadedFailedNull() {
             humidityPrompt = PromptStateVo(
                 promptResult = null,
                 loadingAiPrompt = false,
-            ),
-            onDismiss = {}
+            )
         )
     }
 }
@@ -129,8 +123,7 @@ private fun DetailHumidityContentPreviewLoadedBlank() {
             humidityPrompt = PromptStateVo(
                 promptResult = "",
                 loadingAiPrompt = false,
-            ),
-            onDismiss = {}
+            )
         )
     }
 }
@@ -144,8 +137,7 @@ private fun DetailHumidityContentPreviewLoading() {
             humidityPrompt = PromptStateVo(
                 promptResult = stringResource(R.string.lorep_ipsum),
                 loadingAiPrompt = true,
-            ),
-            onDismiss = {}
+            )
         )
     }
 }

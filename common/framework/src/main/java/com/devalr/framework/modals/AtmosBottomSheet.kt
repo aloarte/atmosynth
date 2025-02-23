@@ -11,11 +11,11 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -26,6 +26,7 @@ import com.devalr.framework.components.AtmosText
 import com.devalr.framework.enums.SeparatorType
 import com.devalr.framework.enums.TextType
 import com.devalr.framework.theme.AtmosynthTheme
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,13 +36,24 @@ fun AtmosBottomSheet(
     content: @Composable (PaddingValues) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val scope = rememberCoroutineScope()
     ModalBottomSheet(
         containerColor = MaterialTheme.colorScheme.background,
         modifier = Modifier,
         sheetState = sheetState,
         onDismissRequest = onDismiss
     ) {
-        AtmosBottomSheetTitle(title = title, onDismiss = onDismiss)
+        AtmosBottomSheetTitle(
+            title = title,
+            onDismiss = {
+                scope.launch {
+                    sheetState.hide()
+                }.invokeOnCompletion {
+                    if (!sheetState.isVisible) {
+                        onDismiss()
+                    }
+                }
+            })
         content(PaddingValues(5.dp))
     }
 }

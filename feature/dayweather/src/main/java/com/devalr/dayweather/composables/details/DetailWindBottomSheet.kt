@@ -6,20 +6,19 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devalr.dayweather.R
 import com.devalr.dayweather.model.PromptStateVo
 import com.devalr.dayweather.model.enums.WindDirectionText
-import com.devalr.dayweather.model.now.WeatherMaxMin
 import com.devalr.dayweather.model.now.WindState
-import com.devalr.domain.model.enums.WindDirection
 import com.devalr.framework.components.AtmosAnimation
-import com.devalr.framework.components.AtmosButton
 import com.devalr.framework.components.AtmosSeparator
 import com.devalr.framework.components.AtmosText
 import com.devalr.framework.enums.AnimationsType
@@ -28,6 +27,7 @@ import com.devalr.framework.enums.TextType
 import com.devalr.framework.modals.AtmosBottomSheet
 import com.devalr.framework.theme.AtmosynthTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailWindBottomSheet(
     wind: WindState,
@@ -40,8 +40,7 @@ fun DetailWindBottomSheet(
     ) {
         DetailWindContent(
             wind = wind,
-            windPrompt = windPrompt,
-            onDismiss = onDismiss
+            windPrompt = windPrompt
         )
     }
 }
@@ -49,8 +48,7 @@ fun DetailWindBottomSheet(
 @Composable
 private fun DetailWindContent(
     wind: WindState,
-    windPrompt: PromptStateVo,
-    onDismiss: () -> Unit
+    windPrompt: PromptStateVo
 ) {
     Column(
         modifier = Modifier
@@ -65,17 +63,16 @@ private fun DetailWindContent(
         } else {
             if (windPrompt.promptResult.isNullOrBlank()) {
                 Column(
+                    modifier = Modifier.padding(20.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    AtmosAnimation(type = AnimationsType.ActionError, size = 100.dp)
+                    AtmosSeparator(size = 20.dp, type = SeparatorType.Vertical)
                     AtmosText(
+                        textAlign = TextAlign.Center,
                         text = stringResource(R.string.wind_detail_error_description),
                         type = TextType.Description
-                    )
-                    AtmosSeparator(size = 30.dp, type = SeparatorType.Vertical)
-                    AtmosButton(
-                        text = stringResource(R.string.wind_detail_error_action),
-                        onClick = onDismiss
                     )
                 }
             } else {
@@ -104,8 +101,7 @@ private fun DetailWindContentPreviewLoadedSuccessN() {
                     windPrompt = PromptStateVo(
                         promptResult = stringResource(R.string.lorep_ipsum),
                         loadingAiPrompt = false,
-                    ),
-                    onDismiss = {}
+                    )
                 )
             }
         }
@@ -123,8 +119,7 @@ private fun DetailWindContentPreviewLoadedFailedNull() {
             windPrompt = PromptStateVo(
                 promptResult = null,
                 loadingAiPrompt = false,
-            ),
-            onDismiss = {}
+            )
         )
     }
 }
@@ -138,8 +133,7 @@ private fun DetailWindContentPreviewLoadedBlank() {
             windPrompt = PromptStateVo(
                 promptResult = "",
                 loadingAiPrompt = false,
-            ),
-            onDismiss = {}
+            )
         )
     }
 }
@@ -153,8 +147,7 @@ private fun DetailWindContentPreviewLoading() {
             windPrompt = PromptStateVo(
                 promptResult = stringResource(R.string.lorep_ipsum),
                 loadingAiPrompt = true,
-            ),
-            onDismiss = {}
+            )
         )
     }
 }

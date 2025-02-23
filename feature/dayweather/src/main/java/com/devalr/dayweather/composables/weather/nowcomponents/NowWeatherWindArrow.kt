@@ -8,6 +8,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,13 +35,18 @@ fun NowWeatherWindArrow(
     val animatedOffsetX by axisAnimator(offsetX.value, infiniteTransition)
     val animatedOffsetY by axisAnimator(offsetY.value, infiniteTransition)
 
+
     Box(modifier = modifier) {
-        if(windDirection != WindDirectionText.None) {
+        if (windDirection != WindDirectionText.None) {
             Image(
                 modifier = Modifier
                     .size(55.dp)
                     .align(Alignment.Center),
-                painter = painterResource(id = R.drawable.icon_circle),
+                painter = if (isSystemInDarkTheme()) {
+                    painterResource(id = R.drawable.icon_circle_dark)
+                } else {
+                    painterResource(id = R.drawable.icon_circle_light)
+                },
                 contentDescription = windDirection.name
             )
         }
