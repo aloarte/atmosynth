@@ -14,4 +14,10 @@ interface PromptResultDao {
 
     @Query("DELETE FROM promptResults")
     suspend fun removeAllDailyPrompts()
+
+    @Query("DELETE FROM promptResults WHERE date LIKE '%WeatherMaxMin%'")
+    suspend fun removeHumidityDailyPrompts()
+
+    @Query("DELETE FROM promptResults WHERE date LIKE '%WindState%'")
+    suspend fun removeWindDailyPrompts()
 }

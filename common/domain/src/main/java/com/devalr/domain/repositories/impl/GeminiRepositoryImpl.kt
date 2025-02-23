@@ -5,6 +5,7 @@ import com.devalr.data.databases.PromptResultEntity
 import com.devalr.data.datasources.GeminiDatasource
 import com.devalr.domain.repositories.GeminiRepository
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 class GeminiRepositoryImpl(
@@ -31,14 +32,49 @@ class GeminiRepositoryImpl(
         }
     }
 
-    override suspend fun generateHumiditySummary(humidityData: String): String =
-        datasource.generateHumiditySummary(dataForPrompt = humidityData)
+    override suspend fun generateHumiditySummary(humidityData: String): String {
+        val humidityPromptKey = getDate() + humidityData
+        val databasePrompt = database.getDailyPrompt(humidityPromptKey)
+        return if (databasePrompt != null) {
+            databasePrompt.promptResult
+        } else {
+            val promptResult = datasource.generateHumiditySummary(dataForPrompt = humidityData)
 
-    override suspend fun generateWindSummary(windData: String): String =
-        datasource.generateWindSummary(dataForPrompt = windData)
+            if (promptResult.isBlank().not()) {
+                database.removeHumidityDailyPrompts()
+                database.insertDailyPromptResult(
+                    PromptResultEntity(
+                        date = humidityPromptKey,
+                        promptResult = promptResult
+                    )
+                )
+            }
+            promptResult
+        }
+    }
+
+    override suspend fun generateWindSummary(windData: String): String {
+        val humidityPromptKey = getDate() + windData
+        val databasePrompt = database.getDailyPrompt(humidityPromptKey)
+        return if (databasePrompt != null) {
+            databasePrompt.promptResult
+        } else {
+            val promptResult = datasource.generateWindSummary(dataForPrompt = windData)
+            if (promptResult.isBlank().not()) {
+                database.removeHumidityDailyPrompts()
+                database.insertDailyPromptResult(
+                    PromptResultEntity(
+                        date = humidityPromptKey,
+                        promptResult = promptResult
+                    )
+                )
+            }
+            promptResult
+        }
+    }
 
     private fun getDate(): String {
-        val date = LocalDateTime.now()
+        val date = LocalDateTime.now(ZoneId.of("Europe/Madrid"))
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         return date.format(formatter)
     }
