@@ -52,7 +52,8 @@ class NowWeatherMapper(
                         ?.state ?: SkyState.Unknown,
                     temperature = currentTemperature ?: 0,
                     windValue = 3)
-            )
+            ),
+            uvValue = data.uvMax.toString()
         )
     }
 

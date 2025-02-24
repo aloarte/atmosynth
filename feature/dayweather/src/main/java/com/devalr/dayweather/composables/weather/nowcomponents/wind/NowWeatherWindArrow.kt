@@ -1,4 +1,4 @@
-package com.devalr.dayweather.composables.weather.nowcomponents
+package com.devalr.dayweather.composables.weather.nowcomponents.wind
 
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.InfiniteTransition

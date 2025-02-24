@@ -76,7 +76,8 @@ private fun NowWeatherContentPreviewCold() {
                 thermalSensation = WeatherMaxMin("18º", "2º", "23º"),
                 humidity = WeatherMaxMin("40%", "40%", "40%"),
                 skyAnimation = AnimationsType.WeatherCold,
-                wind = WindState(WindDirectionText.W, 3)
+                wind = WindState(WindDirectionText.W, 3),
+                uvValue = "2",
             )
         )
     }

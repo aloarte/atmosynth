@@ -6,6 +6,7 @@
     <string name="now_weather_maxmin_temperature">Máxima %s  Mínima %s</string>
     <string name="now_weather_humidity_label">Humedad</string>
     <string name="now_weather_wind_label">Viento</string>
+    <string name="now_weather_uv_label">Índice UV</string>
     <string name="now_weather_summary_title">Resumen de la previsión de hoy:</string>
     <string name="now_weather_summary_error_description">Algo salió mal y no se pudo generar el resumen de la previsión diaria. Por favor, pulsa en reintentar.</string>
     <string name="now_weather_summary_error_action">Reintentar</string>

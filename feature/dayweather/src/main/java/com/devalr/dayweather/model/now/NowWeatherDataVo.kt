@@ -7,7 +7,8 @@ data class NowWeatherDataVo(
     val thermalSensation: WeatherMaxMin,
     val humidity: WeatherMaxMin,
     val skyAnimation: AnimationsType,
-    val wind: WindState
+    val wind: WindState,
+    val uvValue:String
 ) {
 
     fun mutateValues(newTemperature: String?, newThermalSensation: String?) =

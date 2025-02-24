@@ -12,10 +12,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devalr.dayweather.R
 import com.devalr.dayweather.composables.weather.hourlycomponents.HourlyWeatherContent
-import com.devalr.dayweather.composables.weather.nowcomponents.DailySummaryContent
+import com.devalr.dayweather.composables.weather.nowcomponents.summary.DailySummaryContent
 import com.devalr.dayweather.composables.weather.nowcomponents.NowWeatherContent
-import com.devalr.dayweather.composables.weather.nowcomponents.NowWeatherHumidityContent
-import com.devalr.dayweather.composables.weather.nowcomponents.NowWeatherWindContent
+import com.devalr.dayweather.composables.weather.nowcomponents.humidity.NowWeatherHumidityContent
+import com.devalr.dayweather.composables.weather.nowcomponents.uv.NowWeatherUvContent
+import com.devalr.dayweather.composables.weather.nowcomponents.wind.NowWeatherWindContent
 import com.devalr.dayweather.interactions.State
 import com.devalr.dayweather.model.PromptStateVo
 import com.devalr.dayweather.model.enums.HourlyEvent
@@ -34,7 +35,8 @@ fun DayWeatherContent(
     state: State,
     onDailySummaryPromptRetry: () -> Unit,
     onHumidityPressed: () -> Unit,
-    onWindPressed: () -> Unit
+    onWindPressed: () -> Unit,
+    onUvPressed: () -> Unit
 ) {
     LazyColumn {
         item {
@@ -59,6 +61,12 @@ fun DayWeatherContent(
                             onWindPressed = onWindPressed
                         )
                     }
+                    Row {
+                        NowWeatherUvContent(
+                            uvValue = it.uvValue,
+                            onUvPressed = onUvPressed
+                        )
+                    }
                 }
             }
         }
@@ -76,7 +84,8 @@ private fun DayWeatherContentPreview() {
                     temperature = WeatherMaxMin("20", "22", "2"),
                     thermalSensation = WeatherMaxMin("20", "22", "2"),
                     skyAnimation = AnimationsType.WeatherRain,
-                    wind = WindState(WindDirectionText.W, 3)
+                    wind = WindState(WindDirectionText.W, speed = 3),
+                    uvValue = "3"
                 ),
                 weatherByHours = listOf(
                     HourlyEventVo(
@@ -97,7 +106,8 @@ private fun DayWeatherContentPreview() {
             ),
             onDailySummaryPromptRetry = {},
             onHumidityPressed = {},
-            onWindPressed = {})
+            onWindPressed = {},
+            onUvPressed = {})
     }
 
 }

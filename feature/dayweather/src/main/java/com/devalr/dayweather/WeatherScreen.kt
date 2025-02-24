@@ -47,6 +47,9 @@ fun WeatherScreen(
                     },
                     onWindPressed = {
                         viewModel.launchEvent(OnStartWindDetail(state.dailyWeather?.wind))
+                    },
+                    onUvPressed = {
+
                     }
                 )
             }
