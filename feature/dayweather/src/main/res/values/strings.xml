@@ -18,6 +18,10 @@
     <string name="wind_detail_title">Estado y previsión del viento</string>
     <string name="wind_detail_error_description">Algo salió mal y no se pudieron generar los consejos relativos al viento.</string>
     <string name="wind_detail_error_action">Volver</string>
+    <!--Wind detail screen -->
+    <string name="uv_detail_title">Índice UV</string>
+    <string name="uv_detail_error_description">Algo salió mal y no se pudieron generar los consejos relativos al índice UV.</string>
+    <string name="uv_detail_error_action">Volver</string>
 
 
     <!--Previews / test -->

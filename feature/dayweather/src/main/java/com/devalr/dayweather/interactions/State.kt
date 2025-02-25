@@ -8,6 +8,7 @@ data class State(
     val loadingStates: BooleanLoadingStates = BooleanLoadingStates(),
     val promptWind: PromptStateVo = PromptStateVo(),
     val promptHumidity: PromptStateVo = PromptStateVo(),
+    val promptUv: PromptStateVo = PromptStateVo(),
     val promptSummary: PromptStateVo = PromptStateVo(),
     val weatherByHours: List<HourlyDataVo> = emptyList(),
     val dailyWeather: NowWeatherDataVo? = null

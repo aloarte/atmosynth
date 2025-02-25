@@ -4,15 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devalr.dayweather.extensions.toCelsius
 import com.devalr.dayweather.interactions.Event
-import com.devalr.dayweather.interactions.Event.ChangeCity
-import com.devalr.dayweather.interactions.Event.LoadScreen
-import com.devalr.dayweather.interactions.Event.OnRetryDailySummaryPrompt
-import com.devalr.dayweather.interactions.Event.OnStartHumidityDetail
-import com.devalr.dayweather.interactions.Event.OnStartWindDetail
-import com.devalr.dayweather.interactions.Event.OnUploadErrorState
-import com.devalr.dayweather.interactions.Event.OnUploadHumidityDetailVisibility
-import com.devalr.dayweather.interactions.Event.OnUploadLoadingState
-import com.devalr.dayweather.interactions.Event.OnUploadWindDetailVisibility
+import com.devalr.dayweather.interactions.Event.*
 import com.devalr.dayweather.interactions.State
 import com.devalr.dayweather.mergers.HourlyMerger
 import com.devalr.dayweather.model.PromptStateVo
@@ -62,8 +54,10 @@ class DayWeatherViewModel(
             is OnUploadLoadingState -> updateLoadingState(event.loading)
             is OnUploadHumidityDetailVisibility -> changeHumidityDetailVisibility(event.isVisible)
             is OnUploadWindDetailVisibility -> changeWindDetailVisibility(event.isVisible)
-            is OnStartHumidityDetail -> launchAiQueryHumiditySummary(event.humidityData)
+            is OnUploadUvDetailVisibility -> changeUvDetailVisibility(event.isVisible)
+            is OnStartHumidityDetail -> launchAiQueryHumiditySummary(event.humidityData, event.temperatureData)
             is OnStartWindDetail -> launchAiQueryWindSummary(event.wind)
+            is OnStartUvDetail -> launchAiQueryUvSummary(event.uv)
         }
     }
 
@@ -79,6 +73,12 @@ class DayWeatherViewModel(
         }
     }
 
+    private fun changeUvDetailVisibility(visible: Boolean) {
+        _state.update { currentState ->
+            currentState.copy(loadingStates = currentState.loadingStates.copy(displayUvDetail = visible))
+        }
+    }
+
     private fun updateErrorState(error: Boolean) {
         _state.update { currentState ->
             currentState.copy(loadingStates = currentState.loadingStates.copy(errorReceived = error))
@@ -90,7 +90,6 @@ class DayWeatherViewModel(
             currentState.copy(loadingStates = currentState.loadingStates.copy(loadingWeather = loading))
         }
     }
-
 
     private fun launchAiQueryWindSummary(wind: WindState?) = viewModelScope.launch(Dispatchers.IO) {
         launchEvent(OnUploadWindDetailVisibility(true))
@@ -110,14 +109,18 @@ class DayWeatherViewModel(
         }
     }
 
-    private fun launchAiQueryHumiditySummary(humidityData: WeatherMaxMin?) =
+    private fun launchAiQueryHumiditySummary(
+        humidityData: WeatherMaxMin?,
+        temperatureData: WeatherMaxMin?
+    ) =
         viewModelScope.launch(Dispatchers.IO) {
             launchEvent(OnUploadHumidityDetailVisibility(true))
             _state.update { currentState ->
                 currentState.copy(promptHumidity = PromptStateVo(loadingAiPrompt = true))
             }
             val promptResult = geminiRepository.generateHumiditySummary(
-                humidityData.toString()
+                humidityData.toString(),
+                temperatureData.toString()
             )
             _state.update { currentState ->
                 currentState.copy(
@@ -128,6 +131,22 @@ class DayWeatherViewModel(
                 )
             }
         }
+
+    private fun launchAiQueryUvSummary(uv: String) = viewModelScope.launch(Dispatchers.IO) {
+        launchEvent(OnUploadUvDetailVisibility(true))
+        _state.update { currentState ->
+            currentState.copy(promptUv = PromptStateVo(loadingAiPrompt = true))
+        }
+        val promptResult = geminiRepository.generateUvSummary(uv)
+        _state.update { currentState ->
+            currentState.copy(
+                promptUv = PromptStateVo(
+                    promptResult = promptResult,
+                    loadingAiPrompt = false
+                )
+            )
+        }
+    }
 
     private fun launchAiQueryWeatherSummary(promptData: String) =
         viewModelScope.launch(Dispatchers.IO) {

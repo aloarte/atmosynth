@@ -10,11 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devalr.dayweather.R
 import com.devalr.dayweather.model.PromptStateVo
-import com.devalr.dayweather.model.now.WeatherMaxMin
 import com.devalr.framework.components.AtmosAnimation
 import com.devalr.framework.components.AtmosSeparator
 import com.devalr.framework.components.AtmosText
@@ -25,26 +25,26 @@ import com.devalr.framework.modals.AtmosBottomSheet
 import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
-fun DetailHumidityBottomSheet(
-    humidity: WeatherMaxMin,
-    humidityPrompt: PromptStateVo,
+fun DetailUvBottomSheet(
+    uv: String,
+    uvPrompt: PromptStateVo,
     onDismiss: () -> Unit,
 ) {
     AtmosBottomSheet(
-        title = stringResource(R.string.humidity_detail_title),
+        title = stringResource(R.string.uv_detail_title),
         onDismiss = onDismiss
     ) {
-        DetailHumidityContent(
-            humidity = humidity,
-            humidityPrompt = humidityPrompt
+        DetailUvContent(
+            uv = uv,
+            uvPrompt = uvPrompt
         )
     }
 }
 
 @Composable
-private fun DetailHumidityContent(
-    humidity: WeatherMaxMin,
-    humidityPrompt: PromptStateVo
+private fun DetailUvContent(
+    uv: String,
+    uvPrompt: PromptStateVo
 ) {
     Column(
         modifier = Modifier
@@ -54,31 +54,33 @@ private fun DetailHumidityContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        if (humidityPrompt.loadingAiPrompt) {
+        if (uvPrompt.loadingAiPrompt) {
             AtmosAnimation(type = AnimationsType.LoadingAi, size = 120.dp)
         } else {
-            if (humidityPrompt.promptResult.isNullOrBlank()) {
+            if (uvPrompt.promptResult.isNullOrBlank()) {
                 Column(
+                    modifier = Modifier.padding(20.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     AtmosAnimation(type = AnimationsType.ActionError, size = 100.dp)
                     AtmosSeparator(size = 20.dp, type = SeparatorType.Vertical)
                     AtmosText(
-                        text = stringResource(R.string.humidity_detail_error_description),
+                        textAlign = TextAlign.Center,
+                        text = stringResource(R.string.uv_detail_error_description),
                         type = TextType.Description
                     )
                 }
             } else {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    AtmosAnimation(type = AnimationsType.Humidity, size = 60.dp)
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    AtmosAnimation(type = AnimationsType.WeatherClearDay, size = 60.dp)
                     AtmosText(
-                        text = "${humidity.current}%",
+                        text = "Nivel $uv",
                         type = TextType.UltraFeatured
                     )
                 }
                 AtmosSeparator(size = 40.dp, type = SeparatorType.Vertical)
-                AtmosText(text = humidityPrompt.promptResult, type = TextType.Description)
+                AtmosText(text = uvPrompt.promptResult, type = TextType.Description)
             }
         }
     }
@@ -86,25 +88,28 @@ private fun DetailHumidityContent(
 
 @Preview(showBackground = true)
 @Composable
-private fun DetailHumidityContentPreviewLoadedSuccess() {
+private fun DetailUvContentPreviewSuccessN() {
     AtmosynthTheme {
-        DetailHumidityContent(
-            humidity = WeatherMaxMin("50", "60", "20"),
-            humidityPrompt = PromptStateVo(
-                promptResult = stringResource(R.string.lorep_ipsum),
-                loadingAiPrompt = false,
+        Column {
+            DetailUvContent(
+                uv = "4",
+                uvPrompt = PromptStateVo(
+                    promptResult = stringResource(R.string.lorep_ipsum),
+                    loadingAiPrompt = false,
+                )
             )
-        )
+
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun DetailHumidityContentPreviewLoadedFailedNull() {
+private fun DetailUvContentPreviewLoadedFailedNull() {
     AtmosynthTheme {
-        DetailHumidityContent(
-            humidity = WeatherMaxMin("50", "60", "20"),
-            humidityPrompt = PromptStateVo(
+        DetailUvContent(
+            uv = "4",
+            uvPrompt = PromptStateVo(
                 promptResult = null,
                 loadingAiPrompt = false,
             )
@@ -114,11 +119,11 @@ private fun DetailHumidityContentPreviewLoadedFailedNull() {
 
 @Preview(showBackground = true)
 @Composable
-private fun DetailHumidityContentPreviewLoadedBlank() {
+private fun DetailUvContentPreviewLoadedBlank() {
     AtmosynthTheme {
-        DetailHumidityContent(
-            humidity = WeatherMaxMin("50", "60", "20"),
-            humidityPrompt = PromptStateVo(
+        DetailUvContent(
+            uv = "4",
+            uvPrompt = PromptStateVo(
                 promptResult = "",
                 loadingAiPrompt = false,
             )
@@ -128,15 +133,14 @@ private fun DetailHumidityContentPreviewLoadedBlank() {
 
 @Preview(showBackground = true)
 @Composable
-private fun DetailHumidityContentPreviewLoading() {
+private fun DDetailUvContentPreviewLoading() {
     AtmosynthTheme {
-        DetailHumidityContent(
-            humidity = WeatherMaxMin("50", "60", "20"),
-            humidityPrompt = PromptStateVo(
+        DetailUvContent(
+            uv = "4",
+            uvPrompt = PromptStateVo(
                 promptResult = stringResource(R.string.lorep_ipsum),
                 loadingAiPrompt = true,
             )
         )
     }
 }
-

@@ -32,13 +32,19 @@ class GeminiRepositoryImpl(
         }
     }
 
-    override suspend fun generateHumiditySummary(humidityData: String): String {
+    override suspend fun generateHumiditySummary(
+        humidityData: String,
+        temperatureData: String
+    ): String {
         val humidityPromptKey = getDate() + humidityData
         val databasePrompt = database.getDailyPrompt(humidityPromptKey)
         return if (databasePrompt != null) {
             databasePrompt.promptResult
         } else {
-            val promptResult = datasource.generateHumiditySummary(dataForPrompt = humidityData)
+            val promptResult = datasource.generateHumiditySummary(
+                dataHumidityForPrompt = humidityData,
+                dataTemperatureForPrompt = temperatureData
+            )
 
             if (promptResult.isBlank().not()) {
                 database.removeHumidityDailyPrompts()
@@ -54,17 +60,37 @@ class GeminiRepositoryImpl(
     }
 
     override suspend fun generateWindSummary(windData: String): String {
-        val humidityPromptKey = getDate() + windData
-        val databasePrompt = database.getDailyPrompt(humidityPromptKey)
+        val windPromptKey = getDate() + windData
+        val databasePrompt = database.getDailyPrompt(windPromptKey)
         return if (databasePrompt != null) {
             databasePrompt.promptResult
         } else {
             val promptResult = datasource.generateWindSummary(dataForPrompt = windData)
             if (promptResult.isBlank().not()) {
-                database.removeHumidityDailyPrompts()
+                database.removeWindDailyPrompts()
                 database.insertDailyPromptResult(
                     PromptResultEntity(
-                        date = humidityPromptKey,
+                        date = windPromptKey,
+                        promptResult = promptResult
+                    )
+                )
+            }
+            promptResult
+        }
+    }
+
+    override suspend fun generateUvSummary(uv: String): String {
+        val uvPromptKey = getDate() + "Uv: " + uv
+        val databasePrompt = database.getDailyPrompt(uvPromptKey)
+        return if (databasePrompt != null) {
+            databasePrompt.promptResult
+        } else {
+            val promptResult = datasource.generateUvSummary(dataForPrompt = uv)
+            if (promptResult.isBlank().not()) {
+                database.removeUvDailyPrompts()
+                database.insertDailyPromptResult(
+                    PromptResultEntity(
+                        date = uvPromptKey,
                         promptResult = promptResult
                     )
                 )
