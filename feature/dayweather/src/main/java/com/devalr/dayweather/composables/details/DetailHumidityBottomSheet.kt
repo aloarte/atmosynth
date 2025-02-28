@@ -78,7 +78,11 @@ private fun DetailHumidityContent(
                     )
                 }
                 AtmosSeparator(size = 40.dp, type = SeparatorType.Vertical)
-                AtmosText(text = humidityPrompt.promptResult, type = TextType.Description)
+                AtmosText(
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    text = humidityPrompt.promptResult,
+                    type = TextType.Description
+                )
             }
         }
     }

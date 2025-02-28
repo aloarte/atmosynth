@@ -33,7 +33,7 @@ fun NowWeatherHumidityContent(
     humidityPercentage: Float,
     onHumidityPressed: () -> Unit
 ) {
-    AtmosCard(halfScreen = true, onCardClicked = { onHumidityPressed.invoke() }) {
+    AtmosCard(onCardClicked = { onHumidityPressed.invoke() }) {
         Box(Modifier.fillMaxSize()) {
             HumidityCanvas(humidityPercentage = humidityPercentage)
             AtmosText(

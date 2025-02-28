@@ -25,7 +25,7 @@ fun NowWeatherWindContent(
     windState: WindState,
     onWindPressed: () -> Unit
 ) {
-    AtmosCard(onCardClicked = { onWindPressed.invoke() }) {
+    AtmosCard(halfScreen = true, onCardClicked = { onWindPressed.invoke() }) {
         Box(
             Modifier
                 .fillMaxSize()

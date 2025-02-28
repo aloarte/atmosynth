@@ -18,9 +18,11 @@ class HourlyWeatherMapper(private val skyMapper: Mapper<SkyState, SkyStateIcon>)
             precipitationProbability = maxOf(
                 data.rainProbability,
                 data.snowProbability
-            ).takeIf { it > 0.05F }
-                ?.let { String.format("%.0f%%", it * 100) }
-                .orEmpty(),
+            ).takeIf { it > 0F }
+                ?.let {
+                    "${it.toInt()}%"
+                }
+                ?: "0%",
             temperature = "${data.temperature}º",
             thermalSensation = data.thermalSensation.toString(),
             skyState = skyMapper.transform(data.skyState)

@@ -25,7 +25,6 @@ fun NowWeatherUvContent(
     onUvPressed: () -> Unit
 ) {
     AtmosCard(
-        halfScreen = true,
         onCardClicked = { onUvPressed.invoke() }) {
         Box(
             Modifier
@@ -50,8 +49,23 @@ fun NowWeatherUvContent(
                 UvIndexSemaphore(
                     uvIndex = uvValue.toInt()
                 )
+                AtmosSeparator(10.dp, SeparatorType.Vertical)
+                AtmosText(
+                    text = getUvText(uvValue.toInt()),
+                    type = TextType.Title
+                )
             }
         }
+    }
+}
+
+private fun getUvText(uvIndex: Int): String {
+    return when (uvIndex) {
+        in 0..2 -> "Bajo"
+        in 3..5 -> "Moderado"
+        in 6..7 -> "Alto"
+        in 8..10 -> "Muy alto"
+        else -> "Extremo"
     }
 }
 

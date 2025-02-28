@@ -9,4 +9,8 @@ interface GeminiDatasource {
 
     suspend fun generateWindSummary(dataForPrompt: String): String
     suspend fun generateUvSummary(dataForPrompt: String): String
+    suspend fun generatePrecipitationsSummary(
+        dataHourlyPrecipitations: String,
+        dataTodayPrecipitations: String
+    ): String
 }

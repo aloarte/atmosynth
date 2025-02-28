@@ -14,11 +14,11 @@ fun UvIndexSemaphore(uvIndex: Int) {
         horizontalArrangement = Arrangement.spacedBy(3.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        UvLevel(uvIndex <= 2, "< 2")
-        UvLevel(uvIndex in 3..5)
-        UvLevel(uvIndex in 6..7)
-        UvLevel(uvIndex in 8..10)
-        UvLevel(uvIndex >= 11, "> 11")
+        Ball(uvIndex <= 2)
+        Ball(uvIndex in 3..5)
+        Ball(uvIndex in 6..7)
+        Ball(uvIndex in 8..10)
+        Ball(uvIndex >= 11)
     }
 }
 

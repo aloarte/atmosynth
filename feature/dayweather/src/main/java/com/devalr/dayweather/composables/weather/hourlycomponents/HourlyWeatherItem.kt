@@ -2,6 +2,7 @@ package com.devalr.dayweather.composables.weather.hourlycomponents
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -11,8 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil3.compose.AsyncImage
 import com.devalr.dayweather.R
-import com.devalr.dayweather.model.hourly.HourlyWeatherVo
 import com.devalr.dayweather.model.enums.SkyStateIcon
+import com.devalr.dayweather.model.hourly.HourlyWeatherVo
 import com.devalr.framework.components.AtmosCard
 import com.devalr.framework.components.AtmosText
 import com.devalr.framework.enums.TextType
@@ -21,14 +22,16 @@ import java.time.LocalDateTime
 
 @Composable
 fun HourlyWeatherItem(data: HourlyWeatherVo) {
-    AtmosCard(isClickable = false) {  paddingValues ->
+    AtmosCard(
+        isClickable = false,
+        backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
+    ) { paddingValues ->
         ConstraintLayout(
             modifier = Modifier
                 .size(width = 40.dp, height = 100.dp)
                 .padding(paddingValues)
         ) {
             val (temperature, icon, precipitation, hour) = createRefs()
-
             AtmosText(
                 modifier = Modifier.constrainAs(temperature) {
                     top.linkTo(parent.top)
@@ -39,7 +42,6 @@ fun HourlyWeatherItem(data: HourlyWeatherVo) {
                 text = data.temperature,
                 type = TextType.LabelS
             )
-
             WeatherImage(
                 modifier = Modifier.constrainAs(icon) {
                     top.linkTo(temperature.bottom)
@@ -48,7 +50,7 @@ fun HourlyWeatherItem(data: HourlyWeatherVo) {
                 },
                 skyStateIcon = data.skyState
             )
-            if (data.precipitationProbability.isNotBlank()) {
+            if ((data.precipitationProbability == "0%").not()) {
                 AtmosText(
                     modifier = Modifier
                         .constrainAs(precipitation) {

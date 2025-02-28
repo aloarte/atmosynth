@@ -12,5 +12,5 @@ enum class WindDirectionText(val text: String, @DrawableRes val drawable: Int) {
     SW("Suroeste", R.drawable.icon_north_east),
     W("Oeste", R.drawable.icon_east),
     NW("Noroeste", R.drawable.icon_south_east),
-    None("Ninguna", R.drawable.icon_no_direction)
+    None("Ninguna", R.drawable.icon_no_direction_)
 }

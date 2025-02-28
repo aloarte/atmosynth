@@ -1,5 +1,6 @@
 package com.devalr.dayweather.composables.weather.hourlycomponents
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -26,12 +27,18 @@ import java.time.LocalDateTime
 @Composable
 fun HourlyWeatherContent(weatherByHours: List<HourlyDataVo>) {
     AtmosCard { paddingValues ->
-        Column(modifier = Modifier.padding(15.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier.padding(15.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             AtmosText(
                 text = stringResource(R.string.now_weather_hourly_content_title),
                 type = TextType.Title
             )
-            LazyRow(modifier = Modifier.fillMaxSize()) {
+            LazyRow(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.spacedBy(0.dp)
+            ) {
                 items(weatherByHours) {
                     when (it) {
                         is HourlyWeatherVo -> HourlyWeatherItem(it)

@@ -2,7 +2,6 @@ package com.devalr.dayweather.composables.details
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -80,7 +79,11 @@ private fun DetailUvContent(
                     )
                 }
                 AtmosSeparator(size = 40.dp, type = SeparatorType.Vertical)
-                AtmosText(text = uvPrompt.promptResult, type = TextType.Description)
+                AtmosText(
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    text = uvPrompt.promptResult,
+                    type = TextType.Description
+                )
             }
         }
     }

@@ -7,18 +7,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.devalr.dayweather.R
 import com.devalr.dayweather.composables.weather.hourlycomponents.HourlyWeatherContent
-import com.devalr.dayweather.composables.weather.nowcomponents.summary.DailySummaryContent
 import com.devalr.dayweather.composables.weather.nowcomponents.NowWeatherContent
 import com.devalr.dayweather.composables.weather.nowcomponents.humidity.NowWeatherHumidityContent
+import com.devalr.dayweather.composables.weather.nowcomponents.precipitation.NowWeatherPrecipitationContent
 import com.devalr.dayweather.composables.weather.nowcomponents.uv.NowWeatherUvContent
 import com.devalr.dayweather.composables.weather.nowcomponents.wind.NowWeatherWindContent
 import com.devalr.dayweather.interactions.State
-import com.devalr.dayweather.model.PromptStateVo
 import com.devalr.dayweather.model.enums.HourlyEvent
 import com.devalr.dayweather.model.enums.WindDirectionText
 import com.devalr.dayweather.model.hourly.HourlyEventVo
@@ -33,45 +30,67 @@ import java.time.LocalDateTime
 @Composable
 fun DayWeatherContent(
     state: State,
-    onDailySummaryPromptRetry: () -> Unit,
+    onDailySummaryPressed: () -> Unit,
+    onPrecipitationPressed: () -> Unit,
     onHumidityPressed: () -> Unit,
     onWindPressed: () -> Unit,
     onUvPressed: () -> Unit
 ) {
-    LazyColumn {
-        item {
-            FlowRow(modifier = Modifier.padding(8.dp)) {
-                state.dailyWeather?.let {
-                    NowWeatherContent(nowStatus = it)
+    state.dailyWeather?.let { weather ->
+        LazyColumn {
+            item {
+                FlowRow(modifier = Modifier.padding(8.dp)) {
+                    NowWeatherContent(
+                        nowStatus = weather,
+                        onDailySummaryPressed = onDailySummaryPressed
+                    )
+                    HourlyWeatherContent(weatherByHours = state.weatherByHours)
+                    WeatherHalfCards(
+                        weather = weather,
+                        onPrecipitationPressed = onPrecipitationPressed,
+                        onHumidityPressed = onHumidityPressed,
+                        onWindPressed = onWindPressed,
+                        onUvPressed = onUvPressed
+                    )
                 }
-                DailySummaryContent(
-                    loadingAiPrompt = state.promptSummary.loadingAiPrompt,
-                    promptResult = state.promptSummary.promptResult,
-                    onRetry = onDailySummaryPromptRetry
-                )
-                HourlyWeatherContent(weatherByHours = state.weatherByHours)
-                state.dailyWeather?.let {
-                    Row {
-                        NowWeatherHumidityContent(
-                            humidityPercentage = it.humidity.current.toFloat(),
-                            onHumidityPressed = onHumidityPressed
-                        )
-                        NowWeatherWindContent(
-                            windState = it.wind,
-                            onWindPressed = onWindPressed
-                        )
-                    }
-                    Row {
-                        NowWeatherUvContent(
-                            uvValue = it.uvValue,
-                            onUvPressed = onUvPressed
-                        )
-                    }
-                }
+
             }
         }
     }
 }
+
+@Composable
+private fun WeatherHalfCards(
+    weather: NowWeatherDataVo,
+    onPrecipitationPressed: () -> Unit,
+    onHumidityPressed: () -> Unit,
+    onWindPressed: () -> Unit,
+    onUvPressed: () -> Unit
+) {
+    Row {
+        NowWeatherPrecipitationContent(
+            rainPrecipitationProbability = weather.rainProbability.toFloat(),
+            snowPrecipitationProbability = weather.snowProbability.toFloat(),
+            onPrecipitationPressed = onPrecipitationPressed
+        )
+        NowWeatherHumidityContent(
+            humidityPercentage = weather.humidity.current.toFloat(),
+            onHumidityPressed = onHumidityPressed
+        )
+
+    }
+    Row {
+        NowWeatherWindContent(
+            windState = weather.wind,
+            onWindPressed = onWindPressed
+        )
+        NowWeatherUvContent(
+            uvValue = weather.uvValue,
+            onUvPressed = onUvPressed
+        )
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
@@ -85,7 +104,9 @@ private fun DayWeatherContentPreview() {
                     thermalSensation = WeatherMaxMin("20", "22", "2"),
                     skyAnimation = AnimationsType.WeatherRain,
                     wind = WindState(WindDirectionText.W, speed = 3),
-                    uvValue = "3"
+                    uvValue = "3",
+                    snowProbability = "0",
+                    rainProbability = "20"
                 ),
                 weatherByHours = listOf(
                     HourlyEventVo(
@@ -99,15 +120,13 @@ private fun DayWeatherContentPreview() {
                         completeTime = LocalDateTime.now()
                     )
                 ),
-                promptSummary = PromptStateVo(
-                    promptResult = stringResource(R.string.lorep_ipsum),
-                    loadingAiPrompt = false
-                ),
             ),
-            onDailySummaryPromptRetry = {},
+            onDailySummaryPressed = {},
+            onPrecipitationPressed = {},
             onHumidityPressed = {},
             onWindPressed = {},
-            onUvPressed = {})
+            onUvPressed = {}
+        )
     }
 
 }

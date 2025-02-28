@@ -4,6 +4,7 @@
     <string name="now_weather_hourly_content_title">Tiempo por horas</string>
     <string name="now_weather_current_temperature">Sensación térmica de %s</string>
     <string name="now_weather_maxmin_temperature">Máxima %s  Mínima %s</string>
+    <string name="now_weather_precipitations_label">Precipitaciones</string>
     <string name="now_weather_humidity_label">Humedad</string>
     <string name="now_weather_wind_label">Viento</string>
     <string name="now_weather_uv_label">Índice UV</string>

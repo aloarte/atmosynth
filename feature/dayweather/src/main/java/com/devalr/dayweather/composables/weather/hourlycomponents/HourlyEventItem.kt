@@ -3,6 +3,7 @@ package com.devalr.dayweather.composables.weather.hourlycomponents
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -19,7 +20,7 @@ import java.time.LocalDateTime
 
 @Composable
 fun HourlyEventItem(event: HourlyEventVo) {
-    AtmosCard(isClickable = false) {
+    AtmosCard(isClickable = false, backgroundColor = MaterialTheme.colorScheme.tertiaryContainer) {
         ConstraintLayout(
             modifier = Modifier
                 .size(width = 60.dp, height = 100.dp)

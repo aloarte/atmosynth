@@ -16,8 +16,7 @@ import java.time.LocalTime
 class NowWeatherMapper(
     private val animationSkyMapper: Mapper<AnimationSkyEnumMapper.Params, AnimationsType>,
     private val windDirectionMapper: Mapper<DailyWindState?, WindState>,
-
-    ) : Mapper<DailyWeatherBo, NowWeatherDataVo>() {
+) : Mapper<DailyWeatherBo, NowWeatherDataVo>() {
     override fun transform(data: DailyWeatherBo): NowWeatherDataVo {
         val currentTemperature = data.temperatures.valuesPerDayTime
             .find { it.time == getNowDayTime() }
@@ -50,10 +49,16 @@ class NowWeatherMapper(
                     skyState = data.skyStates
                         .find { it.time == getNowDayTime() }
                         ?.state ?: SkyState.Unknown,
-                    temperature = currentTemperature ?: 0,
-                    windValue = 3)
+                    temperature = currentTemperature ?: throw IllegalStateException("Temperature not found"),
+                    windValue = 3) //TODO Check this wind value
             ),
-            uvValue = data.uvMax.toString()
+            uvValue = data.uvMax.toString(),
+            snowProbability = data.snowProbabilities
+                .find { it.time == getNowDayTime() }
+                ?.probability.toString(),
+            rainProbability = data.rainProbabilities
+                .find { it.time == getNowDayTime() }
+                ?.probability.toString()
         )
     }
 

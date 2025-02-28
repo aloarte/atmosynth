@@ -1,5 +1,6 @@
 package com.devalr.framework.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -21,16 +23,22 @@ import com.devalr.framework.theme.AtmosynthTheme
 fun AtmosCard(
     width: Dp? = null,
     height: Dp? = null,
-    isClickable:Boolean = true,
+    isClickable: Boolean = true,
     halfScreen: Boolean = false,
+    backgroundColor: Color = MaterialTheme.colorScheme.surface,
     onCardClicked: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
     Card(
+        onClick = {
+            if (isClickable) onCardClicked.invoke()
+        },
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.inverseOnSurface),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = backgroundColor,
         ),
         modifier = Modifier
+            .clickable(isClickable) {}
             .padding(5.dp)
             .then(
                 Modifier.run {
@@ -50,9 +58,7 @@ fun AtmosCard(
                     } ?: height(150.dp)
                 }
             )
-            .clickable(isClickable){
-                onCardClicked.invoke()
-            }
+
     ) {
         content(PaddingValues(5.dp))
     }

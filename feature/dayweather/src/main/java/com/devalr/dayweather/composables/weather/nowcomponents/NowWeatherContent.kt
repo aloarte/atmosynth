@@ -26,8 +26,10 @@ import com.devalr.framework.enums.TextType
 import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
-fun NowWeatherContent(nowStatus: NowWeatherDataVo) {
-    AtmosCard(width = 400.dp, isClickable = false) { paddingValues ->
+fun NowWeatherContent(
+    nowStatus: NowWeatherDataVo, onDailySummaryPressed: () -> Unit,
+) {
+    AtmosCard(width = 400.dp, onCardClicked = onDailySummaryPressed) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -78,7 +80,10 @@ private fun NowWeatherContentPreviewCold() {
                 skyAnimation = AnimationsType.WeatherCold,
                 wind = WindState(WindDirectionText.W, 3),
                 uvValue = "2",
-            )
+                snowProbability = "0",
+                rainProbability = "0"
+            ),
+            {}
         )
     }
 }
