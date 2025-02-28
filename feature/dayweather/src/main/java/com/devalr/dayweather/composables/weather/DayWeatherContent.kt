@@ -31,6 +31,7 @@ import java.time.LocalDateTime
 fun DayWeatherContent(
     state: State,
     onDailySummaryPressed: () -> Unit,
+    onHourlyPressed: () -> Unit,
     onPrecipitationPressed: () -> Unit,
     onHumidityPressed: () -> Unit,
     onWindPressed: () -> Unit,
@@ -44,7 +45,10 @@ fun DayWeatherContent(
                         nowStatus = weather,
                         onDailySummaryPressed = onDailySummaryPressed
                     )
-                    HourlyWeatherContent(weatherByHours = state.weatherByHours)
+                    HourlyWeatherContent(
+                        weatherByHours = state.weatherByHours,
+                        onHourlyPressed = onHourlyPressed
+                    )
                     WeatherHalfCards(
                         weather = weather,
                         onPrecipitationPressed = onPrecipitationPressed,
@@ -122,6 +126,7 @@ private fun DayWeatherContentPreview() {
                 ),
             ),
             onDailySummaryPressed = {},
+            onHourlyPressed = {},
             onPrecipitationPressed = {},
             onHumidityPressed = {},
             onWindPressed = {},

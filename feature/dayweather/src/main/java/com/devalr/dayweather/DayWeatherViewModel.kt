@@ -1,14 +1,29 @@
 package com.devalr.dayweather
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devalr.dayweather.extensions.toCelsius
 import com.devalr.dayweather.interactions.Event
-import com.devalr.dayweather.interactions.Event.*
+import com.devalr.dayweather.interactions.Event.ChangeCity
+import com.devalr.dayweather.interactions.Event.LoadScreen
+import com.devalr.dayweather.interactions.Event.OnStartDailySummaryDetail
+import com.devalr.dayweather.interactions.Event.OnStartHourlySummaryDetail
+import com.devalr.dayweather.interactions.Event.OnStartHumidityDetail
+import com.devalr.dayweather.interactions.Event.OnStartPrecipitationsDetail
+import com.devalr.dayweather.interactions.Event.OnStartUvDetail
+import com.devalr.dayweather.interactions.Event.OnStartWindDetail
+import com.devalr.dayweather.interactions.Event.OnUploadErrorState
+import com.devalr.dayweather.interactions.Event.OnUploadHourlyDetailVisibility
+import com.devalr.dayweather.interactions.Event.OnUploadHumidityDetailVisibility
+import com.devalr.dayweather.interactions.Event.OnUploadLoadingState
+import com.devalr.dayweather.interactions.Event.OnUploadPrecipitationsDetailVisibility
+import com.devalr.dayweather.interactions.Event.OnUploadUvDetailVisibility
+import com.devalr.dayweather.interactions.Event.OnUploadWeatherDetailVisibility
+import com.devalr.dayweather.interactions.Event.OnUploadWindDetailVisibility
 import com.devalr.dayweather.interactions.State
 import com.devalr.dayweather.mergers.HourlyMerger
 import com.devalr.dayweather.model.PromptStateVo
+import com.devalr.dayweather.model.hourly.HourlyDataVo
 import com.devalr.dayweather.model.hourly.HourlyWeatherVo
 import com.devalr.dayweather.model.now.NowWeatherDataVo
 import com.devalr.dayweather.model.now.WeatherMaxMin
@@ -39,7 +54,7 @@ class DayWeatherViewModel(
     private lateinit var weatherPromptData: String
     private lateinit var todayWeather: DailyWeatherBo
 
-        private val _state = MutableStateFlow(State())
+    private val _state = MutableStateFlow(State())
     val state = _state
         .onStart {
             if (!isDataLoaded) {
@@ -57,12 +72,14 @@ class DayWeatherViewModel(
             is OnUploadLoadingState -> updateLoadingState(event.loading)
 
             is OnUploadWeatherDetailVisibility -> changeWeatherDetailVisibility(event.isVisible)
+            is OnUploadHourlyDetailVisibility -> changeHourlyDetailVisibility(event.isVisible)
             is OnUploadPrecipitationsDetailVisibility -> changePrecipitationsDetailVisibility(event.isVisible)
             is OnUploadHumidityDetailVisibility -> changeHumidityDetailVisibility(event.isVisible)
             is OnUploadWindDetailVisibility -> changeWindDetailVisibility(event.isVisible)
             is OnUploadUvDetailVisibility -> changeUvDetailVisibility(event.isVisible)
 
             OnStartDailySummaryDetail -> launchAiQueryWeatherSummary()
+            is OnStartHourlySummaryDetail -> launchAiQueryHourlySummary(event.hourlyTime)
             is OnStartPrecipitationsDetail -> launchAiQueryPrecipitationsSummary(event.hourlyTime)
             is OnStartHumidityDetail -> launchAiQueryHumiditySummary(
                 event.humidityData,
@@ -79,6 +96,14 @@ class DayWeatherViewModel(
         _state.update { currentState ->
             currentState.copy(
                 loadingStates = currentState.loadingStates.copy(displayWeatherSummaryDetail = visible)
+            )
+        }
+    }
+
+    private fun changeHourlyDetailVisibility(visible: Boolean) {
+        _state.update { currentState ->
+            currentState.copy(
+                loadingStates = currentState.loadingStates.copy(displayHourlySummaryDetail = visible)
             )
         }
     }
@@ -123,6 +148,60 @@ class DayWeatherViewModel(
         }
     }
 
+
+    private fun launchAiQueryWeatherSummary() =
+        viewModelScope.launch(Dispatchers.IO) {
+            launchEvent(OnUploadWeatherDetailVisibility(true))
+            _state.update { currentState ->
+                currentState.copy(
+                    promptResults = currentState.promptResults.copy(
+                        promptWeatherSummary = PromptStateVo(loadingAiPrompt = true)
+                    )
+                )
+            }
+
+            val promptResult = geminiRepository.generateDaySummary(weatherPromptData)
+
+            _state.update { currentState ->
+                currentState.copy(
+                    promptResults = currentState.promptResults.copy(
+                        promptWeatherSummary = PromptStateVo(
+                            promptResult = promptResult,
+                            loadingAiPrompt = false
+                        )
+                    )
+                )
+            }
+        }
+
+    private fun launchAiQueryHourlySummary(hourlyEvents: List<HourlyDataVo>) =
+        viewModelScope.launch(Dispatchers.IO) {
+            launchEvent(OnUploadHourlyDetailVisibility(true))
+            _state.update { currentState ->
+                currentState.copy(
+                    promptResults = currentState.promptResults.copy(
+                        promptHourlySummary = PromptStateVo(loadingAiPrompt = true)
+                    )
+                )
+            }
+
+            val promptResult = geminiRepository.generateHourlySummary(
+                dataForPrompt = hourlyEvents.getCompletePromptForPrecipitationByHours()
+            )
+
+            _state.update { currentState ->
+                currentState.copy(
+                    promptResults = currentState.promptResults.copy(
+                        promptHourlySummary = PromptStateVo(
+                            promptResult = promptResult,
+                            loadingAiPrompt = false
+                        )
+                    )
+                )
+            }
+        }
+
+
     private fun launchAiQueryWindSummary(wind: WindState?) = viewModelScope.launch(Dispatchers.IO) {
         launchEvent(OnUploadWindDetailVisibility(true))
         _state.update { currentState ->
@@ -135,7 +214,7 @@ class DayWeatherViewModel(
             )
         }
         val promptResult = geminiRepository.generateWindSummary(
-            wind.toString()
+            windData = wind.toString()
         )
         _state.update { currentState ->
             currentState.copy(
@@ -150,9 +229,7 @@ class DayWeatherViewModel(
         }
     }
 
-    private fun launchAiQueryPrecipitationsSummary(
-        hourlyEvents:List<HourlyWeatherVo>
-    ) =
+    private fun launchAiQueryPrecipitationsSummary(hourlyEvents: List<HourlyWeatherVo>) =
         viewModelScope.launch(Dispatchers.IO) {
             launchEvent(OnUploadPrecipitationsDetailVisibility(true))
             _state.update { currentState ->
@@ -194,8 +271,8 @@ class DayWeatherViewModel(
                 )
             }
             val promptResult = geminiRepository.generateHumiditySummary(
-                humidityData.toString(),
-                temperatureData.toString()
+                humidityData = humidityData.toString(),
+                temperatureData = temperatureData.toString()
             )
             _state.update { currentState ->
                 currentState.copy(
@@ -218,7 +295,7 @@ class DayWeatherViewModel(
                 )
             )
         }
-        val promptResult = geminiRepository.generateUvSummary(uv)
+        val promptResult = geminiRepository.generateUvSummary(uv = uv)
         _state.update { currentState ->
             currentState.copy(
                 promptResults = currentState.promptResults.copy(
@@ -230,31 +307,6 @@ class DayWeatherViewModel(
             )
         }
     }
-
-    private fun launchAiQueryWeatherSummary() =
-        viewModelScope.launch(Dispatchers.IO) {
-            launchEvent(OnUploadWeatherDetailVisibility(true))
-            _state.update { currentState ->
-                currentState.copy(
-                    promptResults = currentState.promptResults.copy(
-                        promptWeatherSummary = PromptStateVo(loadingAiPrompt = true)
-                    )
-                )
-            }
-
-            val promptResult = geminiRepository.generateDaySummary(weatherPromptData)
-
-            _state.update { currentState ->
-                currentState.copy(
-                    promptResults = currentState.promptResults.copy(
-                        promptWeatherSummary = PromptStateVo(
-                            promptResult = promptResult,
-                            loadingAiPrompt = false
-                        )
-                    )
-                )
-            }
-        }
 
     private fun loadData() = viewModelScope.launch(Dispatchers.IO) {
         launchEvent(OnUploadLoadingState(true))

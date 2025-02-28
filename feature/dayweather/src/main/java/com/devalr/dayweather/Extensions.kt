@@ -1,6 +1,8 @@
 package com.devalr.dayweather
 
+import com.devalr.dayweather.model.enums.SkyStateIcon
 import com.devalr.dayweather.model.hourly.HourlyDataVo
+import com.devalr.dayweather.model.hourly.HourlyEventVo
 import com.devalr.dayweather.model.hourly.HourlyWeatherVo
 import com.devalr.domain.model.weather.daily.DailyWeatherBo
 import com.devalr.domain.model.weather.daily.DailyWeatherDataBo
@@ -34,6 +36,35 @@ fun List<HourlyDataVo>.getPromptForPrecipitationByHours() =
             .append(" Time: ${it.hour}")
             .append("}").toString()
     }
+
+fun List<HourlyDataVo>.getCompletePromptForPrecipitationByHours() =
+    joinToString(",") {
+        when(it) {
+            is HourlyWeatherVo -> {
+                StringBuilder()
+                    .append("{")
+                    .append(" SkyState: ${it.skyState}")
+                    .append(" Humidity: ${it.humidity}")
+                    .append(" PrecipitationProbability: ${it.precipitationProbability}")
+                    .append(" Temperature: ${it.temperature}")
+                    .append(" thermalSensation: ${it.thermalSensation}")
+                    .append(" Time: ${it.hour}")
+                    .append("}").toString()
+
+            }
+            is HourlyEventVo -> {
+                StringBuilder()
+                    .append("{")
+                    .append(" Event: ${it.event}")
+                    .append(" Time: ${it.hour}")
+                    .append("}").toString()
+            }
+            else -> ""
+        }
+
+
+    }
+
 
 
 fun DailyWeatherBo.getPromptForTodayPrecipitations() =

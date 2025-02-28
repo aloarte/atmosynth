@@ -2,6 +2,7 @@ package com.devalr.dayweather.interactions
 
 data class BooleanLoadingStates(
     val displayWeatherSummaryDetail: Boolean = false,
+    val displayHourlySummaryDetail: Boolean = false,
     val displayPrecipitationsDetail: Boolean = false,
     val displayWindDetail: Boolean = false,
     val displayHumidityDetail: Boolean = false,

@@ -32,6 +32,26 @@ class GeminiRepositoryImpl(
         }
     }
 
+    override suspend fun generateHourlySummary(dataForPrompt: String): String {
+        val databasePrompt = database.getDailyPrompt(getDate() + " Hourly")
+        return if (databasePrompt != null) {
+            databasePrompt.promptResult
+        } else {
+            val promptResult = datasource.generateHourlySummary(dataForPrompt = dataForPrompt)
+            if (promptResult.isBlank().not()) {
+                database.removeAllHourlyPrompts()
+                database.insertDailyPromptResult(
+                    PromptResultEntity(
+                        date = getDate(),
+                        promptResult = promptResult
+                    )
+                )
+            }
+
+            promptResult
+        }
+    }
+
     override suspend fun generatePrecipitationsSummary(
         hourlyPrecipitations: String,
         todayPrecipitations: String

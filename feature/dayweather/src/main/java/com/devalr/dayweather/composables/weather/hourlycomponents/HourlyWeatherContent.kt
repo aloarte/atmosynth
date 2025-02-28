@@ -25,8 +25,11 @@ import com.devalr.framework.theme.AtmosynthTheme
 import java.time.LocalDateTime
 
 @Composable
-fun HourlyWeatherContent(weatherByHours: List<HourlyDataVo>) {
-    AtmosCard { paddingValues ->
+fun HourlyWeatherContent(
+    weatherByHours: List<HourlyDataVo>,
+    onHourlyPressed: () -> Unit
+) {
+    AtmosCard(onCardClicked = onHourlyPressed) { paddingValues ->
         Column(
             modifier = Modifier.padding(15.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -75,7 +78,8 @@ private fun HourlyWeatherContentPreview() {
                     event = HourlyEvent.Sunset,
                     completeTime = LocalDateTime.now()
                 )
-            )
+            ),
+            onHourlyPressed = {}
         )
     }
 }

@@ -23,24 +23,20 @@ import com.devalr.framework.modals.AtmosBottomSheet
 import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
-fun DetailPrecipitationsBottomSheet(
-    precipitationPrompt: PromptStateVo,
-    onDismiss: () -> Unit
+fun DetailHourlyContent(
+    hourlyPrompt: PromptStateVo,
+    onDismiss: () -> Unit,
 ) {
     AtmosBottomSheet(
-        title = stringResource(R.string.precipitations_detail_title),
+        title = stringResource(R.string.hourly_detail_title),
         onDismiss = onDismiss
     ) {
-        DetailPrecipitationsContent(
-            precipitationPrompt = precipitationPrompt
-        )
+        DetailHourlyContent(hourlyPrompt = hourlyPrompt)
     }
 }
 
 @Composable
-private fun DetailPrecipitationsContent(
-    precipitationPrompt: PromptStateVo
-) {
+private fun DetailHourlyContent(hourlyPrompt: PromptStateVo) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -49,10 +45,10 @@ private fun DetailPrecipitationsContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        if (precipitationPrompt.loadingAiPrompt) {
+        if (hourlyPrompt.loadingAiPrompt) {
             AtmosAnimation(type = AnimationsType.LoadingAi, size = 120.dp)
         } else {
-            if (precipitationPrompt.promptResult.isNullOrBlank()) {
+            if (hourlyPrompt.promptResult.isNullOrBlank()) {
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -60,16 +56,16 @@ private fun DetailPrecipitationsContent(
                     AtmosAnimation(type = AnimationsType.ActionError, size = 100.dp)
                     AtmosSeparator(size = 20.dp, type = SeparatorType.Vertical)
                     AtmosText(
-                        text = stringResource(R.string.precipitations_detail_error_description),
+                        text = stringResource(R.string.hourly_detail_error_description),
                         type = TextType.Description
                     )
                 }
             } else {
-                AtmosAnimation(type = AnimationsType.WeatherRain, size = 100.dp)
-                AtmosSeparator(size = 10.dp, type = SeparatorType.Vertical)
+                AtmosAnimation(type = AnimationsType.Clock, size = 60.dp)
+                AtmosSeparator(size = 40.dp, type = SeparatorType.Vertical)
                 AtmosText(
                     modifier = Modifier.padding(horizontal = 10.dp),
-                    text = precipitationPrompt.promptResult,
+                    text = hourlyPrompt.promptResult,
                     type = TextType.Description
                 )
             }
@@ -79,10 +75,10 @@ private fun DetailPrecipitationsContent(
 
 @Preview(showBackground = true)
 @Composable
-private fun DetailHourlyContentContentPreviewLoadedSuccess() {
+private fun DetailHourlyContentPreviewLoadedSuccess() {
     AtmosynthTheme {
-        DetailPrecipitationsContent(
-            precipitationPrompt = PromptStateVo(
+        DetailHourlyContent(
+            hourlyPrompt = PromptStateVo(
                 promptResult = stringResource(R.string.lorep_ipsum),
                 loadingAiPrompt = false,
             )
@@ -94,8 +90,8 @@ private fun DetailHourlyContentContentPreviewLoadedSuccess() {
 @Composable
 private fun DetailHourlyContentContentPreviewLoadedFailedNull() {
     AtmosynthTheme {
-        DetailPrecipitationsContent(
-            precipitationPrompt = PromptStateVo(
+        DetailHourlyContent(
+            hourlyPrompt = PromptStateVo(
                 promptResult = null,
                 loadingAiPrompt = false,
             )
@@ -107,8 +103,8 @@ private fun DetailHourlyContentContentPreviewLoadedFailedNull() {
 @Composable
 private fun DetailHourlyContentContentPreviewLoadedBlank() {
     AtmosynthTheme {
-        DetailPrecipitationsContent(
-            precipitationPrompt = PromptStateVo(
+        DetailHourlyContent(
+            hourlyPrompt = PromptStateVo(
                 promptResult = "",
                 loadingAiPrompt = false,
             )
@@ -120,8 +116,8 @@ private fun DetailHourlyContentContentPreviewLoadedBlank() {
 @Composable
 private fun DetailHourlyContentContentPreviewLoading() {
     AtmosynthTheme {
-        DetailPrecipitationsContent(
-            precipitationPrompt = PromptStateVo(
+        DetailHourlyContent(
+            hourlyPrompt = PromptStateVo(
                 promptResult = stringResource(R.string.lorep_ipsum),
                 loadingAiPrompt = true,
             )

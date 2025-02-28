@@ -7,22 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.devalr.dayweather.composables.details.DetailHourlyContent
 import com.devalr.dayweather.composables.details.DetailHumidityBottomSheet
 import com.devalr.dayweather.composables.details.DetailPrecipitationsBottomSheet
 import com.devalr.dayweather.composables.details.DetailUvBottomSheet
 import com.devalr.dayweather.composables.details.DetailWeatherBottomSheet
 import com.devalr.dayweather.composables.details.DetailWindBottomSheet
 import com.devalr.dayweather.composables.weather.DayWeatherContent
-import com.devalr.dayweather.interactions.Event.OnStartDailySummaryDetail
-import com.devalr.dayweather.interactions.Event.OnStartHumidityDetail
-import com.devalr.dayweather.interactions.Event.OnStartPrecipitationsDetail
-import com.devalr.dayweather.interactions.Event.OnStartUvDetail
-import com.devalr.dayweather.interactions.Event.OnStartWindDetail
-import com.devalr.dayweather.interactions.Event.OnUploadHumidityDetailVisibility
-import com.devalr.dayweather.interactions.Event.OnUploadPrecipitationsDetailVisibility
-import com.devalr.dayweather.interactions.Event.OnUploadUvDetailVisibility
-import com.devalr.dayweather.interactions.Event.OnUploadWeatherDetailVisibility
-import com.devalr.dayweather.interactions.Event.OnUploadWindDetailVisibility
+import com.devalr.dayweather.interactions.Event.*
 import com.devalr.dayweather.interactions.State
 import com.devalr.dayweather.model.hourly.HourlyWeatherVo
 import com.devalr.framework.screens.ErrorScreen
@@ -49,6 +41,13 @@ fun WeatherScreen(viewModel: DayWeatherViewModel = koinInject()) {
                     state = state,
                     onDailySummaryPressed = {
                         viewModel.launchEvent(OnStartDailySummaryDetail)
+                    },
+                    onHourlyPressed = {
+                        viewModel.launchEvent(
+                            OnStartHourlySummaryDetail(
+                                state.weatherByHours
+                            )
+                        )
                     },
                     onPrecipitationPressed = {
                         viewModel.launchEvent(
@@ -86,6 +85,16 @@ private fun BottomSheetViews(viewModel: DayWeatherViewModel, state: State) {
             onDismiss = {
                 viewModel.launchEvent(
                     OnUploadWeatherDetailVisibility(isVisible = false)
+                )
+            }
+        )
+    }
+    if (state.loadingStates.displayHourlySummaryDetail) {
+        DetailHourlyContent(
+            hourlyPrompt = state.promptResults.promptHourlySummary,
+            onDismiss = {
+                viewModel.launchEvent(
+                    OnUploadHourlyDetailVisibility(isVisible = false)
                 )
             }
         )
