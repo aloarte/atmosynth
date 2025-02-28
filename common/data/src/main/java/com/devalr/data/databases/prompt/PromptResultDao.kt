@@ -1,4 +1,4 @@
-package com.devalr.data.databases
+package com.devalr.data.databases.prompt
 
 import androidx.room.Dao
 import androidx.room.Insert

@@ -1,5 +1,6 @@
 package com.devalr.domain.di
 
+import com.devalr.data.databases.city.CityEntity
 import com.devalr.data.di.dataModules
 import com.devalr.data.dto.CityDto
 import com.devalr.data.dto.dailyweather.daily.DailyDto
@@ -15,6 +16,7 @@ import com.devalr.data.dto.dailyweather.hourly.HourlySkyValueInTimeDto
 import com.devalr.data.dto.dailyweather.hourly.HourlyValueInTimeDto
 import com.devalr.data.dto.dailyweather.hourly.HourlyWeatherDto
 import com.devalr.domain.mappers.Mapper
+import com.devalr.domain.mappers.city.CitiesDatabaseMapper
 import com.devalr.domain.mappers.city.CitiesMapper
 import com.devalr.domain.mappers.daily.DailyMapper
 import com.devalr.domain.mappers.daily.DailyStateMapper
@@ -75,7 +77,7 @@ import java.time.LocalDateTime
 private val repositoriesModules =
     module {
         factory<GeminiRepository> {
-            GeminiRepositoryImpl(get(),get())
+            GeminiRepositoryImpl(get(), get())
         }
 
         factory<WeatherRepository> {
@@ -89,7 +91,9 @@ private val repositoriesModules =
         factory<CityRepository> {
             CityRepositoryImpl(
                 get(),
-                get(named("CitiesMapper"))
+                get(),
+                get(named("CitiesMapper")),
+                get(named("CitiesDatabaseMapper"))
             )
         }
     }
@@ -228,6 +232,10 @@ private val mapperModules =
         factory<Mapper<List<CityDto>, List<CityBo>>>(named("CitiesMapper")) {
             CitiesMapper()
         }
+        factory<Mapper<List<CityBo>, List<CityEntity>>>(named("CitiesDatabaseMapper")) {
+            CitiesDatabaseMapper()
+        }
+
     }
 
 private val mergerModules =

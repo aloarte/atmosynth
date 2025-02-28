@@ -1,7 +1,7 @@
 package com.devalr.domain.repositories.impl
 
-import com.devalr.data.databases.PromptResultDao
-import com.devalr.data.databases.PromptResultEntity
+import com.devalr.data.databases.prompt.PromptResultDao
+import com.devalr.data.databases.prompt.PromptResultEntity
 import com.devalr.data.datasources.GeminiDatasource
 import com.devalr.domain.repositories.GeminiRepository
 import java.time.LocalDateTime

@@ -1,4 +1,4 @@
-package com.devalr.data.databases
+package com.devalr.data.databases.prompt
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

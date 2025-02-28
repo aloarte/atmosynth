@@ -3,8 +3,10 @@ package com.devalr.data.di
 import android.app.Application
 import androidx.room.Room
 import com.devalr.data.Secrets
-import com.devalr.data.databases.PromptResultDao
-import com.devalr.data.databases.PromptResultDatabase
+import com.devalr.data.databases.city.CityDao
+import com.devalr.data.databases.city.CityDatabase
+import com.devalr.data.databases.prompt.PromptResultDao
+import com.devalr.data.databases.prompt.PromptResultDatabase
 import com.devalr.data.datasources.CityDatasource
 import com.devalr.data.datasources.GeminiDatasource
 import com.devalr.data.datasources.WeatherDatasource
@@ -16,10 +18,6 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.ANDROID
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logger
-import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.android.ext.koin.androidApplication
@@ -40,23 +38,35 @@ private val dataSourcesModule =
     }
 
 private val databaseModule = module {
-    single { provideDataBase(androidApplication()) }
-    single { provideDao(get()) }
+    single { providePromptDataBase(androidApplication()) }
+    single { provideCitiesDataBase(androidApplication()) }
+    single { providePromptDao(get()) }
+    single { provideCitiesDao(get()) }
 }
 
-private fun provideDataBase(application: Application): PromptResultDatabase {
-    return Room.databaseBuilder(
+private fun providePromptDataBase(application: Application): PromptResultDatabase =
+    Room.databaseBuilder(
         application,
         PromptResultDatabase::class.java,
         "PromptResultDatabase"
     )
         .fallbackToDestructiveMigration()
         .build()
-}
 
-private fun provideDao(dataBase: PromptResultDatabase): PromptResultDao {
-    return dataBase.promptResultDao()
-}
+private fun provideCitiesDataBase(application: Application): CityDatabase =
+    Room.databaseBuilder(
+        application,
+        CityDatabase::class.java,
+        "CitiesDatabase"
+    )
+        .fallbackToDestructiveMigration()
+        .build()
+
+private fun providePromptDao(dataBase: PromptResultDatabase): PromptResultDao =
+    dataBase.promptResultDao()
+
+private fun provideCitiesDao(dataBase: CityDatabase): CityDao =
+    dataBase.cityDao()
 
 private val dataFrameworkModule =
     module {
