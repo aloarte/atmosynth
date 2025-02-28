@@ -2,6 +2,10 @@ package com.devalr.dayweather
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,7 +18,18 @@ import com.devalr.dayweather.composables.details.DetailUvBottomSheet
 import com.devalr.dayweather.composables.details.DetailWeatherBottomSheet
 import com.devalr.dayweather.composables.details.DetailWindBottomSheet
 import com.devalr.dayweather.composables.weather.DayWeatherContent
-import com.devalr.dayweather.interactions.Event.*
+import com.devalr.dayweather.interactions.Event.OnStartDailySummaryDetail
+import com.devalr.dayweather.interactions.Event.OnStartHourlySummaryDetail
+import com.devalr.dayweather.interactions.Event.OnStartHumidityDetail
+import com.devalr.dayweather.interactions.Event.OnStartPrecipitationsDetail
+import com.devalr.dayweather.interactions.Event.OnStartUvDetail
+import com.devalr.dayweather.interactions.Event.OnStartWindDetail
+import com.devalr.dayweather.interactions.Event.OnUploadHourlyDetailVisibility
+import com.devalr.dayweather.interactions.Event.OnUploadHumidityDetailVisibility
+import com.devalr.dayweather.interactions.Event.OnUploadPrecipitationsDetailVisibility
+import com.devalr.dayweather.interactions.Event.OnUploadUvDetailVisibility
+import com.devalr.dayweather.interactions.Event.OnUploadWeatherDetailVisibility
+import com.devalr.dayweather.interactions.Event.OnUploadWindDetailVisibility
 import com.devalr.dayweather.interactions.State
 import com.devalr.dayweather.model.hourly.HourlyWeatherVo
 import com.devalr.framework.screens.ErrorScreen
@@ -22,7 +37,10 @@ import com.devalr.framework.screens.LoadingScreen
 import org.koin.compose.koinInject
 
 @Composable
-fun WeatherScreen(viewModel: DayWeatherViewModel = koinInject()) {
+fun WeatherScreen(
+    viewModel: DayWeatherViewModel = koinInject(),
+    onNavigateToCitySelector: () -> Unit
+) {
     val state by viewModel.state.collectAsState()
     Column(modifier = Modifier.background(MaterialTheme.colorScheme.onTertiary)) {
         if (state.loadingStates.loadingWeather) {
@@ -71,6 +89,11 @@ fun WeatherScreen(viewModel: DayWeatherViewModel = koinInject()) {
                         viewModel.launchEvent(OnStartUvDetail(state.dailyWeather?.uvValue ?: "0"))
                     }
                 )
+                FloatingActionButton(
+                    onClick = { onNavigateToCitySelector() },
+                ) {
+                    Icon(Icons.Filled.Add, "Floating action button.")
+                }
             }
         }
     }

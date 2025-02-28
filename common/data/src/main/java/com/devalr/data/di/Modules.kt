@@ -5,8 +5,10 @@ import androidx.room.Room
 import com.devalr.data.Secrets
 import com.devalr.data.databases.PromptResultDao
 import com.devalr.data.databases.PromptResultDatabase
+import com.devalr.data.datasources.CityDatasource
 import com.devalr.data.datasources.GeminiDatasource
 import com.devalr.data.datasources.WeatherDatasource
+import com.devalr.data.datasources.impl.CityDatasourceImpl
 import com.devalr.data.datasources.impl.GeminiDatasourceImpl
 import com.devalr.data.datasources.impl.WeatherDatasourceImpl
 import com.google.ai.client.generativeai.GenerativeModel
@@ -31,6 +33,9 @@ private val dataSourcesModule =
         }
         factory<WeatherDatasource> {
             WeatherDatasourceImpl(get(), get())
+        }
+        factory<CityDatasource> {
+            CityDatasourceImpl(get(), get())
         }
     }
 
@@ -75,10 +80,10 @@ private val dataFrameworkModule =
                         },
                     )
                 }
-                install(Logging) {
-                    level = LogLevel.ALL
-                    logger = Logger.ANDROID
-                }
+//                install(Logging) {
+//                    level = LogLevel.ALL
+//                    logger = Logger.ANDROID
+//                }
                 install(HttpTimeout) {
                     requestTimeoutMillis = 20_000
                     connectTimeoutMillis = 10_000

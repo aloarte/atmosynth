@@ -148,7 +148,6 @@ class DayWeatherViewModel(
         }
     }
 
-
     private fun launchAiQueryWeatherSummary() =
         viewModelScope.launch(Dispatchers.IO) {
             launchEvent(OnUploadWeatherDetailVisibility(true))

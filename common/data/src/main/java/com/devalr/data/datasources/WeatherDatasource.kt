@@ -6,5 +6,4 @@ import com.devalr.data.dto.dailyweather.hourly.HourlyWeatherDto
 interface WeatherDatasource {
     suspend fun fetchDailyWeather(cityCode: String): DailyWeatherDto?
     suspend fun fetchHourlyWeather(cityCode: String): HourlyWeatherDto?
-
 }

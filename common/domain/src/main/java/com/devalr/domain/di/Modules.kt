@@ -1,6 +1,7 @@
 package com.devalr.domain.di
 
 import com.devalr.data.di.dataModules
+import com.devalr.data.dto.CityDto
 import com.devalr.data.dto.dailyweather.daily.DailyDto
 import com.devalr.data.dto.dailyweather.daily.DailyMaxMinValuesDto
 import com.devalr.data.dto.dailyweather.daily.DailySkyValueInTimeDto
@@ -14,6 +15,7 @@ import com.devalr.data.dto.dailyweather.hourly.HourlySkyValueInTimeDto
 import com.devalr.data.dto.dailyweather.hourly.HourlyValueInTimeDto
 import com.devalr.data.dto.dailyweather.hourly.HourlyWeatherDto
 import com.devalr.domain.mappers.Mapper
+import com.devalr.domain.mappers.city.CitiesMapper
 import com.devalr.domain.mappers.daily.DailyMapper
 import com.devalr.domain.mappers.daily.DailyStateMapper
 import com.devalr.domain.mappers.daily.DailyValuesInTimeMapper
@@ -39,6 +41,7 @@ import com.devalr.domain.mappers.hourly.TimeMapper
 import com.devalr.domain.mappers.params.DateMapperParams
 import com.devalr.domain.mappers.params.ValueInTimeParams
 import com.devalr.domain.mergers.DayMerger
+import com.devalr.domain.model.CityBo
 import com.devalr.domain.model.enums.DayTime
 import com.devalr.domain.model.enums.SkyState
 import com.devalr.domain.model.enums.WeatherTime
@@ -58,8 +61,10 @@ import com.devalr.domain.model.weather.daily.PrecipitationProbability
 import com.devalr.domain.model.weather.daily.ValuesDayTimeBo
 import com.devalr.domain.model.weather.hourly.HourlyPredictionBo
 import com.devalr.domain.model.weather.hourly.HourlyWeatherDataBo
+import com.devalr.domain.repositories.CityRepository
 import com.devalr.domain.repositories.GeminiRepository
 import com.devalr.domain.repositories.WeatherRepository
+import com.devalr.domain.repositories.impl.CityRepositoryImpl
 import com.devalr.domain.repositories.impl.GeminiRepositoryImpl
 import com.devalr.domain.repositories.impl.WeatherRepositoryImpl
 import com.devalr.domain.usecases.WeatherUseCase
@@ -78,6 +83,13 @@ private val repositoriesModules =
                 get(),
                 get(named("HourlyWeatherMapper")),
                 get(named("DailyWeatherMapper"))
+            )
+        }
+
+        factory<CityRepository> {
+            CityRepositoryImpl(
+                get(),
+                get(named("CitiesMapper"))
             )
         }
     }
@@ -146,18 +158,6 @@ private val mapperModules =
             DayTimeIntStateMapper()
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
         factory<Mapper<HourlyWeatherDto?, HourlyWeatherDataBo?>>(named("HourlyWeatherMapper")) {
             HourlyWeatherMapper(get(named("HourlyMapper")))
         }
@@ -223,6 +223,10 @@ private val mapperModules =
 
         factory<Mapper<String, SkyState>>(named("SkyMapper")) {
             SkyMapper()
+        }
+
+        factory<Mapper<List<CityDto>, List<CityBo>>>(named("CitiesMapper")) {
+            CitiesMapper()
         }
     }
 

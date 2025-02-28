@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.devalr.cityselector.compose.CitySelectorScreen
 import com.devalr.dayweather.WeatherScreen
 import com.devalr.framework.theme.AtmosynthTheme
 
@@ -29,10 +30,12 @@ class MainActivity : ComponentActivity() {
                         startDestination = NavScreen.DayWeather.route
                     ) {
                         composable(NavScreen.DayWeather.route) {
-                            WeatherScreen()
+                            WeatherScreen{
+                                navController.navigate(NavScreen.CitySelection.route)
+                            }
                         }
                         composable(NavScreen.CitySelection.route) {
-                            TODO("Implement city selection screen")
+                            CitySelectorScreen()
                         }
                     }
                 }
