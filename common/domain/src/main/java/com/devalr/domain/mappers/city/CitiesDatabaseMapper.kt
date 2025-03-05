@@ -9,7 +9,9 @@ class CitiesDatabaseMapper : Mapper<List<CityBo>, List<CityEntity>>() {
         CityEntity(
             cityId = it.id,
             name = it.name,
-            population = it.population
+            population = it.population,
+            selected = it.selected,
+            active = it.active
         )
     }
 
@@ -17,7 +19,9 @@ class CitiesDatabaseMapper : Mapper<List<CityBo>, List<CityEntity>>() {
         CityBo(
             id = it.cityId,
             name = it.name,
-            population = it.population
+            population = it.population,
+            selected = it.selected,
+            active = it.active
         )
     }
 

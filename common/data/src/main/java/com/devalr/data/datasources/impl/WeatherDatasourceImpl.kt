@@ -24,6 +24,14 @@ class WeatherDatasourceImpl(
         ByHours, ByDays
     }
 
+
+    /*
+    *  {
+            "descripcion" : "Error al obtener los datos",
+            "estado" : 404
+       }
+    * */
+
     companion object {
         const val AEMET_HOST = "opendata.aemet.es"
         const val FETCH_HOURLY_WEATHER_PATH =

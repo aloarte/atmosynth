@@ -15,6 +15,9 @@ interface CityDao {
     @Query("SELECT * FROM cities WHERE selected=1")
     suspend fun getSelectedCities(): List<CityEntity>
 
+    @Query("SELECT * FROM cities WHERE active=1")
+    suspend fun getActiveCity(): List<CityEntity>
+
     @Query("UPDATE cities SET selected = 1 WHERE name = :cityName")
     suspend fun selectCity(cityName: String)
 

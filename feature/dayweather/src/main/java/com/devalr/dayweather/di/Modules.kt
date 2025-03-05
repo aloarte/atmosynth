@@ -31,6 +31,7 @@ private val viewModelModules =
                 get(),
                 get(),
                 get(),
+                get(),
                 get(named("NowWeatherMapper"))
             )
         }

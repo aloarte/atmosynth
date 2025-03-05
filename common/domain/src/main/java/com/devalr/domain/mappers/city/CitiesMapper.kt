@@ -9,7 +9,7 @@ class CitiesMapper : Mapper<List<CityDto>, List<CityBo>>() {
     override fun transform(data: List<CityDto>): List<CityBo> {
         return data.map {
             CityBo(
-                id = it.id,
+                id = it.id.replace("id", ""),
                 population = it.population,
                 name = it.name,
                 geographicData = GeographicDataBo(

@@ -1,5 +1,6 @@
 package com.devalr.domain.repositories.impl
 
+import android.util.Log
 import com.devalr.data.databases.city.CityDao
 import com.devalr.data.databases.city.CityEntity
 import com.devalr.data.datasources.CityDatasource
@@ -28,7 +29,15 @@ class CityRepositoryImpl(
     override suspend fun activateCity(city: CityBo) {
         database.deactivateCities()
         database.activateCity(city.name)
+        Log.d("ALRALR","activating $city")
+        val c=database.getActiveCity().firstOrNull()
+        Log.d("ALRALR","is active? $c")
+
     }
+
+    override suspend fun getActiveCity(): CityBo? =
+        citiesDatabaseMapper.transformReverse(database.getActiveCity()).firstOrNull()
+
 
     override suspend fun selectCity(city: CityBo) =
         database.selectCity(city.name)

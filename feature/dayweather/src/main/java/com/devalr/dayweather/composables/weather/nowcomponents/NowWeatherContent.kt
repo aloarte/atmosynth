@@ -16,6 +16,7 @@ import com.devalr.dayweather.model.enums.WindDirectionText
 import com.devalr.dayweather.model.now.NowWeatherDataVo
 import com.devalr.dayweather.model.now.WeatherMaxMin
 import com.devalr.dayweather.model.now.WindState
+import com.devalr.domain.model.CityBo
 import com.devalr.framework.components.AtmosAnimation
 import com.devalr.framework.components.AtmosCard
 import com.devalr.framework.components.AtmosSeparator
@@ -27,7 +28,9 @@ import com.devalr.framework.theme.AtmosynthTheme
 
 @Composable
 fun NowWeatherContent(
-    nowStatus: NowWeatherDataVo, onDailySummaryPressed: () -> Unit,
+    activeCity: CityBo,
+    nowStatus: NowWeatherDataVo,
+    onDailySummaryPressed: () -> Unit
 ) {
     AtmosCard(width = 400.dp, onCardClicked = onDailySummaryPressed) { paddingValues ->
         Column(
@@ -37,7 +40,7 @@ fun NowWeatherContent(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AtmosText(text = "Ciudad Real", type = TextType.Title)
+            AtmosText(text = activeCity.name, type = TextType.Title)
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
@@ -83,7 +86,8 @@ private fun NowWeatherContentPreviewCold() {
                 snowProbability = "0",
                 rainProbability = "0"
             ),
-            {}
+            activeCity = CityBo(name = "Ciudad Real", id = "123123", population = "1000"),
+            onDailySummaryPressed = {}
         )
     }
 }

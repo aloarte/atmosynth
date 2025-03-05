@@ -43,6 +43,7 @@ fun DayWeatherContent(
                 FlowRow(modifier = Modifier.padding(8.dp)) {
                     NowWeatherContent(
                         nowStatus = weather,
+                        activeCity = state.activeCity?:throw Exception("City active not found"),
                         onDailySummaryPressed = onDailySummaryPressed
                     )
                     HourlyWeatherContent(

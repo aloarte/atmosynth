@@ -31,6 +31,7 @@ import com.devalr.dayweather.model.now.WindState
 import com.devalr.domain.mappers.Mapper
 import com.devalr.domain.model.FetchedWeatherData
 import com.devalr.domain.model.weather.daily.DailyWeatherBo
+import com.devalr.domain.repositories.CityRepository
 import com.devalr.domain.repositories.GeminiRepository
 import com.devalr.domain.usecases.Result
 import com.devalr.domain.usecases.WeatherUseCase
@@ -45,6 +46,7 @@ import kotlinx.coroutines.launch
 class DayWeatherViewModel(
     private val geminiRepository: GeminiRepository,
     private val weatherUseCase: WeatherUseCase,
+    private val cityRepository: CityRepository,
     private val hourlyMerger: HourlyMerger,
     private val nowWeatherMapper: Mapper<DailyWeatherBo, NowWeatherDataVo>
 ) : ViewModel() {
@@ -183,7 +185,6 @@ class DayWeatherViewModel(
                     )
                 )
             }
-
             val promptResult = geminiRepository.generateHourlySummary(
                 dataForPrompt = hourlyEvents.getCompletePromptForPrecipitationByHours()
             )
@@ -309,9 +310,16 @@ class DayWeatherViewModel(
 
     private fun loadData() = viewModelScope.launch(Dispatchers.IO) {
         launchEvent(OnUploadLoadingState(true))
+        val city =
+            cityRepository.getActiveCity() ?: throw Exception("Couldn't find any active city")
+        _state.update { currentState ->
+            currentState.copy(
+                activeCity = city
+            )
+        }
         when (val weatherResult = weatherUseCase.execute(
             scope = viewModelScope,
-            params = WeatherUseCase.Params("13034")
+            params = WeatherUseCase.Params(city.id)
         )) {
             is Result.Error -> {
                 launchEvent(OnUploadLoadingState(false))
@@ -325,7 +333,6 @@ class DayWeatherViewModel(
 
     private fun processWeatherData(weatherResult: Result.Success<FetchedWeatherData>) {
         weatherPromptData = weatherResult.data.dailyData.getPromptForNowWeatherData()
-        //launchAiQueryWeatherSummary(weatherPromptData)
         val hourlyNow = weatherResult.data.hourlyData.predictions.first()
             .hourlyData.findClosestDate()
         val weatherByHoursInRange = hourlyMerger.merge(

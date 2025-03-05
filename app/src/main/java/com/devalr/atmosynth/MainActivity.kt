@@ -1,5 +1,6 @@
 package com.devalr.atmosynth
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,6 +19,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+
+
         setContent {
             AtmosynthTheme {
                 Surface(
@@ -27,15 +31,21 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = NavScreen.DayWeather.route
+                        startDestination = if (sharedPref.getBoolean("CITY_SELECTED", false)) {
+                            NavScreen.DayWeather.route
+                        } else {
+                            NavScreen.CitySelection.route
+                        }
                     ) {
                         composable(NavScreen.DayWeather.route) {
-                            WeatherScreen{
+                            WeatherScreen {
                                 navController.navigate(NavScreen.CitySelection.route)
                             }
                         }
                         composable(NavScreen.CitySelection.route) {
-                            CitySelectorScreen()
+                            CitySelectorScreen{
+                                sharedPref.edit().putBoolean("CITY_SELECTED", true).apply()
+                            }
                         }
                     }
                 }
