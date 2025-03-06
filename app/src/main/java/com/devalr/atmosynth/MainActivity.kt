@@ -18,10 +18,7 @@ import com.devalr.framework.theme.AtmosynthTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
-
-
         setContent {
             AtmosynthTheme {
                 Surface(
@@ -43,8 +40,9 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable(NavScreen.CitySelection.route) {
-                            CitySelectorScreen{
+                            CitySelectorScreen {
                                 sharedPref.edit().putBoolean("CITY_SELECTED", true).apply()
+                                navController.navigate(NavScreen.DayWeather.route)
                             }
                         }
                     }

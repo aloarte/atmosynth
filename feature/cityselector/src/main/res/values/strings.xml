@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="search_city">Busca más ciudades</string>
-
-
+    <string name="search_city">Busca tu ciudad</string>
+    <string name="current_location_label">Ubicación actual</string>
+    <string name="saved_location_label">Ubicaciones guardadas</string>
+    <string name="pick_city_title">Escribe el nombre de la ciudad</string>
 </resources>
