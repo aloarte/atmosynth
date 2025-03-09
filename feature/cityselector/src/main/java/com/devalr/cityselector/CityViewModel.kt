@@ -1,5 +1,6 @@
 package com.devalr.cityselector
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devalr.cityselector.interactions.Effect
@@ -10,6 +11,7 @@ import com.devalr.cityselector.interactions.Event.OnUploadLoadingCitiesState
 import com.devalr.cityselector.interactions.State
 import com.devalr.domain.model.CityBo
 import com.devalr.domain.repositories.CityRepository
+import com.devalr.domain.repositories.GeminiRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +22,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CityViewModel(private val cityRepository: CityRepository) : ViewModel() {
+class CityViewModel(
+    private val cityRepository: CityRepository,
+    private val geminiRepository: GeminiRepository
+) : ViewModel() {
 
     private val _effectFlow = MutableSharedFlow<Effect>()
     val effectFlow = _effectFlow.asSharedFlow()
@@ -68,6 +73,8 @@ class CityViewModel(private val cityRepository: CityRepository) : ViewModel() {
     }
 
     private fun activateCity(it: CityBo) = viewModelScope.launch(Dispatchers.IO) {
+        Log.d("ALRALR", "Select and activate")
+        geminiRepository.resetSavedSummaries()
         cityRepository.selectCity(it)
         cityRepository.activateCity(it)
         loadData()

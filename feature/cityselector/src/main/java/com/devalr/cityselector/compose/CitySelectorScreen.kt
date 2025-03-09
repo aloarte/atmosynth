@@ -1,6 +1,5 @@
 package com.devalr.cityselector.compose
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -36,7 +35,7 @@ fun CitySelectorScreen(
     if (state.loadingStates.loadingCities) {
         LoadingScreen()
     } else {
-        val selectedCities = state.cities.filter { it.selected && !it.active }
+        val selectedCities = state.cities.filter { it.selected }
         val navController = rememberNavController()
         NavHost(
             navController = navController,
@@ -50,7 +49,7 @@ fun CitySelectorScreen(
                 val activeCity = state.cities.firstOrNull { it.active }
                     ?: throw Exception("Empty number of selected cities")
                 SelectedCitiesScreen(
-                    selectedCities = selectedCities,
+                    selectedCities = selectedCities.filter { !it.active },
                     activeCity = activeCity,
                     onActivateCity = { viewModel.launchEvent(Event.OnActivateCity(it)) },
                     onNavigateSearchCity = { navController.navigate(NavScreen.CitySearch.route) }

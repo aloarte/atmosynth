@@ -12,6 +12,7 @@ class GeminiRepositoryImpl(
     private val datasource: GeminiDatasource,
     private val database: PromptResultDao
 ) : GeminiRepository {
+
     override suspend fun generateDaySummary(dataForPrompt: String): String {
         val databasePrompt = database.getDailyPrompt(getDate())
         return if (databasePrompt != null) {
@@ -144,6 +145,10 @@ class GeminiRepositoryImpl(
             }
             promptResult
         }
+    }
+
+    override suspend fun resetSavedSummaries() {
+        database.removeAllDailyPrompts()
     }
 
     private fun getDate(): String {

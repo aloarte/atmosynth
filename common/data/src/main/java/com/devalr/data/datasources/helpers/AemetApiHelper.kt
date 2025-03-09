@@ -7,6 +7,7 @@ import com.devalr.data.dto.DataResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.network.sockets.SocketTimeoutException
+import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
@@ -15,7 +16,9 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
 import io.ktor.http.encodedPath
 import kotlinx.coroutines.delay
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
+import java.io.EOFException
 
 class AemetApiHelper(private val secrets: Secrets) {
 
@@ -48,7 +51,25 @@ class AemetApiHelper(private val secrets: Secrets) {
                 currentRetries++
                 delay(1000L + currentRetries * 300L)
                 if (currentRetries >= 5) {
-                    throw Exception("Max retries reached due to socket timeout")
+                    throw Exception("Max retries reached due to SocketTimeoutException")
+                }
+            } catch (exception: HttpRequestTimeoutException) {
+                currentRetries++
+                delay(1000L + currentRetries * 300L)
+                if (currentRetries >= 5) {
+                    throw Exception("Max retries reached due to HttpRequestTimeoutException")
+                }
+            } catch (exception: SerializationException) {
+                currentRetries++
+                delay(1000L + currentRetries * 300L)
+                if (currentRetries >= 5) {
+                    throw Exception("Max retries reached due to SerializationException")
+                }
+            } catch (exception: EOFException) {
+                currentRetries++
+                delay(1000L + currentRetries * 300L)
+                if (currentRetries >= 5) {
+                    throw Exception("Max retries reached due to EOFException")
                 }
             } catch (exception: Exception) {
                 throw exception

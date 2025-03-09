@@ -53,15 +53,14 @@ private fun DetailHourlyContent(hourlyPrompt: PromptStateVo) {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    AtmosAnimation(type = AnimationsType.ActionError, size = 100.dp)
-                    AtmosSeparator(size = 20.dp, type = SeparatorType.Vertical)
+                    AtmosAnimation(type = AnimationsType.ActionError, size = 80.dp)
+                    AtmosSeparator(size = 10.dp, type = SeparatorType.Vertical)
                     AtmosText(
                         text = stringResource(R.string.hourly_detail_error_description),
                         type = TextType.Description
                     )
                 }
             } else {
-                AtmosAnimation(type = AnimationsType.Clock, size = 60.dp)
                 AtmosSeparator(size = 40.dp, type = SeparatorType.Vertical)
                 AtmosText(
                     modifier = Modifier.padding(horizontal = 10.dp),

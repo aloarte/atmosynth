@@ -17,7 +17,7 @@ class GeminiDatasourceImpl(
         private const val HOURLY_SUMMARY_PROMPT =
             "Con los siguientes datos que te voy a proporcionar sobre el tiempo atmosférico por horas, generame un resumen del pronóstico en unas 6 líneas de texto. Debe incluir recomendaciones y explicaciones sobre lo que consideres. No incluyas ningúna palabra que describa el resultado de lo que se te pide. Los datos son estos:"
         private const val PRECIPITATIONS_SUMMARY_PROMPT =
-            "Te voy a pasar el detalle por horas en las 24h siguientes respecto al estado del cielo y de las precipitaciones de lluvia y/o nieve. También te voy a pasar la predicción del día de hoy en concreto. Generame un texto de no mas de 8 líneas que me explique qué implicaciones tienen esos valores y que me aconseje al respecto. Los datos son: "
+            "Te voy a pasar el detalle por horas en las 24h siguientes respecto al estado del cielo y de las precipitaciones de lluvia y/o nieve. También te voy a pasar la predicción del día de hoy en concreto. Generame un texto de no mas de 6 líneas que me explique qué implicaciones tienen esos valores y que me aconseje al respecto. Los datos son: "
         private const val HUMIDITY_SUMMARY_PROMPT =
             "Con los siguientes datos que te voy a proporcionar sobre la humedad y la temperatura del día de hoy, generame un texto de no mas de 5 líneas que me explique qué implicaciones tienen esos valores y que me aconseje. Centrate en la humedad, describirla y sus implicaciones, la temperatura utilizala a modo de contexto, no la menciones. Los datos son estos: "
         private const val WIND_SUMMARY_PROMPT =

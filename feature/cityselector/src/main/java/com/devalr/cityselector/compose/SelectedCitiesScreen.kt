@@ -57,17 +57,18 @@ fun SelectedCitiesScreen(
             }
             item { City(city = activeCity, cityClicked = onActivateCity) }
             item { AtmosSeparator(size = 30.dp, type = SeparatorType.Vertical) }
-            item {
-                LabelIconText(
-                    text = R.string.saved_location_label,
-                    icon = R.drawable.icon_saved_location
-                )
+            if (selectedCities.isNotEmpty()) {
+                item {
+                    LabelIconText(
+                        text = R.string.saved_location_label,
+                        icon = R.drawable.icon_saved_location
+                    )
+                }
+                items(selectedCities) { city ->
+                    City(city = city, cityClicked = onActivateCity)
+                    AtmosSeparator(type = SeparatorType.Vertical, size = 5.dp)
+                }
             }
-            items(selectedCities) { city ->
-                City(city = city, cityClicked = onActivateCity)
-                AtmosSeparator(type = SeparatorType.Vertical, size = 5.dp)
-            }
-
         }
         AtmosButton(
             modifier = Modifier.align(Alignment.BottomCenter),

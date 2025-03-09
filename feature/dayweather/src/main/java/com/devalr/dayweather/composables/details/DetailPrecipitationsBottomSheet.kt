@@ -57,8 +57,8 @@ private fun DetailPrecipitationsContent(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    AtmosAnimation(type = AnimationsType.ActionError, size = 100.dp)
-                    AtmosSeparator(size = 20.dp, type = SeparatorType.Vertical)
+                    AtmosAnimation(type = AnimationsType.ActionError, size = 80.dp)
+                    AtmosSeparator(size = 10.dp, type = SeparatorType.Vertical)
                     AtmosText(
                         text = stringResource(R.string.precipitations_detail_error_description),
                         type = TextType.Description

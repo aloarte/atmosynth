@@ -83,14 +83,13 @@ private val dataFrameworkModule =
             )
         }
         single<HttpClient> {
-
             HttpClient(engine = CIO.create()) {
                 install(ContentNegotiation) {
                     json(
                         Json {
                             ignoreUnknownKeys = true
                             isLenient = true
-                        },
+                        }
                     )
                 }
 //                install(Logging) {
