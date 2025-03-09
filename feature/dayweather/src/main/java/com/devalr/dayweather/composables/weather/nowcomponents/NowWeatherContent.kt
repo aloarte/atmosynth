@@ -1,10 +1,16 @@
 package com.devalr.dayweather.composables.weather.nowcomponents
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,41 +39,46 @@ fun NowWeatherContent(
     onDailySummaryPressed: () -> Unit
 ) {
     AtmosCard(width = 400.dp, onCardClicked = onDailySummaryPressed) { paddingValues ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(paddingValues)
         ) {
-            AtmosText(text = activeCity.name, type = TextType.Title)
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                AtmosAnimation(size = 50.dp, type = nowStatus.skyAnimation)
-                AtmosSeparator(size = 5.dp, type = SeparatorType.Horizontal)
+                AtmosText(text = activeCity.name, type = TextType.Title)
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    AtmosAnimation(size = 50.dp, type = nowStatus.skyAnimation)
+                    AtmosSeparator(size = 5.dp, type = SeparatorType.Horizontal)
+                    AtmosText(
+                        text = nowStatus.temperature.current,
+                        type = TextType.UltraFeatured
+                    )
+                }
                 AtmosText(
-                    text = nowStatus.temperature.current,
-                    type = TextType.UltraFeatured
+                    text = stringResource(
+                        R.string.now_weather_current_temperature,
+                        nowStatus.thermalSensation.current
+                    ),
+                    type = TextType.LabelL
+                )
+                AtmosText(
+                    text = stringResource(
+                        R.string.now_weather_maxmin_temperature,
+                        nowStatus.thermalSensation.max,
+                        nowStatus.thermalSensation.min
+                    ),
+                    type = TextType.LabelS
                 )
             }
-            AtmosText(
-                text = stringResource(
-                    R.string.now_weather_current_temperature,
-                    nowStatus.thermalSensation.current
-                ),
-                type = TextType.LabelL
-            )
-            AtmosText(
-                text = stringResource(
-                    R.string.now_weather_maxmin_temperature,
-                    nowStatus.thermalSensation.max,
-                    nowStatus.thermalSensation.min
-                ),
-                type = TextType.LabelS
-            )
         }
+
     }
 }
 

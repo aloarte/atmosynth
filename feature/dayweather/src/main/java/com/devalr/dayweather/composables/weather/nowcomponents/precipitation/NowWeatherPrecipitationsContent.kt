@@ -69,7 +69,7 @@ private fun PrecipitationComponent(
 
         }
         AtmosText(
-            text = "${precipitationProbability}%",
+            text = "${precipitationProbability.toInt()}%",
             type = TextType.Featured
         )
     }

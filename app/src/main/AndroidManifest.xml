@@ -8,9 +8,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/atmosynth_icon"
+        android:icon="@drawable/icon_atmos"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/atmosynth_icon"
+        android:roundIcon="@drawable/icon_atmos"
         android:supportsRtl="true"
         android:theme="@style/Theme.Atmosynth"
         tools:targetApi="31">

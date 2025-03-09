@@ -22,6 +22,7 @@ import com.devalr.dayweather.model.hourly.HourlyEventVo
 import com.devalr.dayweather.model.now.NowWeatherDataVo
 import com.devalr.dayweather.model.now.WeatherMaxMin
 import com.devalr.dayweather.model.now.WindState
+import com.devalr.domain.model.CityBo
 import com.devalr.framework.enums.AnimationsType
 import com.devalr.framework.theme.AtmosynthTheme
 import java.time.LocalDateTime
@@ -43,7 +44,7 @@ fun DayWeatherContent(
                 FlowRow(modifier = Modifier.padding(8.dp)) {
                     NowWeatherContent(
                         nowStatus = weather,
-                        activeCity = state.activeCity?:throw Exception("City active not found"),
+                        activeCity = state.activeCity ?: throw Exception("City active not found"),
                         onDailySummaryPressed = onDailySummaryPressed
                     )
                     HourlyWeatherContent(
@@ -82,7 +83,6 @@ private fun WeatherHalfCards(
             humidityPercentage = weather.humidity.current.toFloat(),
             onHumidityPressed = onHumidityPressed
         )
-
     }
     Row {
         NowWeatherWindContent(
@@ -96,13 +96,13 @@ private fun WeatherHalfCards(
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 private fun DayWeatherContentPreview() {
     AtmosynthTheme {
         DayWeatherContent(
             state = State(
+                activeCity = CityBo(id="123", name = "Madrid", population = "12000"),
                 dailyWeather = NowWeatherDataVo(
                     humidity = WeatherMaxMin("50", "22", "2"),
                     temperature = WeatherMaxMin("20", "22", "2"),
@@ -111,7 +111,7 @@ private fun DayWeatherContentPreview() {
                     wind = WindState(WindDirectionText.W, speed = 3),
                     uvValue = "3",
                     snowProbability = "0",
-                    rainProbability = "20"
+                    rainProbability = "20",
                 ),
                 weatherByHours = listOf(
                     HourlyEventVo(
@@ -134,7 +134,6 @@ private fun DayWeatherContentPreview() {
             onUvPressed = {}
         )
     }
-
 }
 
 

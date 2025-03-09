@@ -13,7 +13,7 @@ class SnowPrecipitationMapper(
         PrecipitationProbability(
             probability = data.value
                 .takeIf { it.isDigitsOnly() && it.isNotEmpty() }
-                ?.toFloat() ?: 0f,
+                ?.toFloat()?.takeIf { it <= 100F } ?: 0f,
             time = data.time?.let { dayTimeMapper.transform(it) } ?: DayTime.Unknown
         )
 }

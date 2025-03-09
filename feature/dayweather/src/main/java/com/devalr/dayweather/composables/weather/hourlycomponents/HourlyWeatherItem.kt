@@ -83,7 +83,7 @@ private fun WeatherImage(modifier: Modifier = Modifier, skyStateIcon: SkyStateIc
         modifier = modifier,
         model = "https://openweathermap.org/img/wn/${skyStateIcon.pngValue}@2x.png",
         contentDescription = null,
-        placeholder = painterResource(R.drawable.error_weather),
+        placeholder = painterResource(R.drawable.weather_loading),
     )
 }
 
